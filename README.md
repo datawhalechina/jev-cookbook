@@ -92,13 +92,16 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 
 ## 🙏 致谢
 
-**核心贡献者**：
+**核心贡献者**（飞书 wiki Day1–Day3 分工实录 → [原始文档](https://my.feishu.cn/wiki/CfWlwnbA4ieoi0kR2hdcNpmWn7f)）：
 
-- [Bald0Wang](https://github.com/Bald0Wang)（Bald0Wang）- 项目负责人 / 教程与应用作者
-- [Micheal024](https://github.com/Micheal024)（博辰）- 第 6 章评测框架与 JevBench 基准（[PR #6](https://github.com/datawhalechina/jev-cookbook/pull/6)）
-- [lzdFeiFei](https://github.com/lzdFeiFei)（征答）- 第 7 章 jev-games 三游戏 + React 统一入口（[PR #3](https://github.com/datawhalechina/jev-cookbook/pull/3)）
-- [Fyuan0206](https://github.com/Fyuan0206)（辅元）- 第 7 章迷宫 / 移动靶 / 浏览器智能体三应用 + 第 8 章 JevHarness 分析（[PR #4](https://github.com/datawhalechina/jev-cookbook/pull/4)）
-- [yeyeyeyeeeee](https://github.com/yeyeyeyeeeee)（荞麦）- 第 9 章 DSH × Jev 决策协作 Notebook + 七章中文实验 Notebook（[PR #5](https://github.com/datawhalechina/jev-cookbook/pull/5)）
+| 成员 | GitHub | 负责内容 |
+|---|---|---|
+| Bald0Wang | [Bald0Wang](https://github.com/Bald0Wang) | 项目负责人 · 官方文档中文翻译站（109 页）· 数独 / 马里奥复现 · 第十一章知识库汇总 · 全部章节集成与维护 |
+| 征达 | [lzdFeiFei](https://github.com/lzdFeiFei) | 第 7 章 jev-games（贪吃蛇 / 扫雷 / 狼人杀 + React 入口）· 上下文压缩（fast-jev-compaction）· 第 9 章 Pi Agent 集成 · 第 10 章 Laya 模型介绍 · 多篇深度研究 |
+| 辅元 | [Fyuan0206](https://github.com/Fyuan0206) | 第 7 章迷宫 / 移动靶 / 浏览器智能体三应用 · 第 8 章 JevHarness 分析 · 官方文档实践 |
+| 博辰 | [Micheal024](https://github.com/Micheal024) | 第 6 章评测框架与 JevBench 基准 · 五模型对比快照 · 第 10 章 Laya 与 Jev 对比测评 |
+| 荞麦 | [yeyeyeyeeeee](https://github.com/yeyeyeyeeeee) | 第 9 章 DSH × Jev 决策协作 Notebook · 七章中文实验 Notebook |
+| 王熠明 | — | Datawhale 官号新闻稿 · X 内容推文 · 第 10 章 Laya 模型介绍 |
 
 **特别感谢** [TypeSafe AI](https://typesafe.ai) 提供优秀的官方文档与 Playground；感谢 [NanoJev](https://github.com/TianyuCodings/NanoJev)、[JevBench](https://github.com/fstandhartinger/jevbench)、[Jev-Mem](https://github.com/libingzheren/Jev-Mem) 等上游开源项目。
 
