@@ -101,7 +101,7 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 | 辅元 | [Fyuan0206](https://github.com/Fyuan0206) | 第 7 章迷宫 / 移动靶 / 浏览器智能体三应用 · 第 8 章 JevHarness 分析 · 官方文档实践 |
 | 博辰 | [Micheal024](https://github.com/Micheal024) | 第 6 章评测框架与 JevBench 基准 · 五模型对比快照 · 第 10 章 Laya 与 Jev 对比测评 |
 | 荞麦 | [yeyeyeyeeeee](https://github.com/yeyeyeyeeeee) | 第 9 章 DSH × Jev 决策协作 Notebook · 七章中文实验 Notebook |
-| 王熠明 | — | Datawhale 官号新闻稿 · X 内容推文 · 第 10 章 Laya 模型介绍 |
+| 王熠明 | [Bald0Wang](https://github.com/Bald0Wang) | Datawhale 官号新闻稿 · X 内容推文 · 第 10 章 Laya 模型介绍 |
 
 **特别感谢** [TypeSafe AI](https://typesafe.ai) 提供优秀的官方文档与 Playground；感谢 [NanoJev](https://github.com/TianyuCodings/NanoJev)、[JevBench](https://github.com/fstandhartinger/jevbench)、[Jev-Mem](https://github.com/libingzheren/Jev-Mem) 等上游开源项目。
 
