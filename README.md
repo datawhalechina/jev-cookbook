@@ -99,7 +99,7 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 | 王熠明 | [Bald0Wang](https://github.com/Bald0Wang) | 项目负责人  · 基础教程 · laya部署及微调 · 部分应用实现 |
 | 征达 | [lzdFeiFei](https://github.com/lzdFeiFei) | 教程作者 · 基础教程 · 部分应用实现 · pi jev应用 |
 | 辅元 | [Fyuan0206](https://github.com/Fyuan0206) | 教程作者 · 基础教程 · 部分应用实现 · jev harness |
-| 博辰 | [Micheal024](https://github.com/Micheal024) |  |教程作者 · 基础教程 · 模型测评 |
+| 博辰 | [Micheal024](https://github.com/Micheal024) |  |教程作者 · 基础教程 · 模型测评  |
 | 荞麦 | [yeyeyeyeeeee](https://github.com/yeyeyeyeeeee) | 教程作者 · 基础教程  · jev dsh插件 |
 
 **特别感谢** [TypeSafe AI](https://typesafe.ai) 提供优秀的官方文档与 Playground；感谢 [NanoJev](https://github.com/TianyuCodings/NanoJev)、[JevBench](https://github.com/fstandhartinger/jevbench)、[Jev-Mem](https://github.com/libingzheren/Jev-Mem) 等上游开源项目。
