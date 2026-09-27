@@ -25,7 +25,7 @@ The fix here
 ------------
 ``CorrectedParser`` subclasses the upstream parser and, after the normal parse, rebuilds
 the 11x9 grid from the same RAM with the camera-derived base and patches it into the
-frozen snapshot.  Every derived fact the model sees (``terrain.obstacle_ahead``,
+frozen snapshot. Every derived terrain fact published in the state (``terrain.obstacle_ahead``,
 ``gap_distance_tiles``, the local grid itself) is recomputed from the corrected grid,
 because the upstream snapshot derives them from ``local_grid`` lazily.  Nothing upstream
 is modified; the wrapper is injected wherever our scripts construct the runner.

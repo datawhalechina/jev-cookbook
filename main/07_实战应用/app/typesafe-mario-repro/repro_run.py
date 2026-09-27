@@ -5,10 +5,11 @@ contained were removed when the folder was tidied (the real-emulator path made t
 redundant; the full story is in REPORT.md).  What remains is the load-bearing part
 that the real-emulator scripts import:
 
-* ``ScriptedPilotTransport`` — answers ``system_one`` requests in the exact wire
-  format, choosing via a rule-based pilot that reads only the published state.  The
-  answers are NOT Jev's; they exist so experiments run without an API key.  Setting
-  ``TYPESAFE_API_KEY`` and dropping the transport swap is all a real run needs.
+* ``ScriptedPilotTransport`` — answers ``system_one`` requests in the SDK wire
+  format, choosing via a rule-based pilot that reads only the published state. The
+  answers are NOT Jev's; they exist so experiments run without an API key. The
+  experiment entry points intentionally install this transport; setting
+  ``TYPESAFE_API_KEY`` alone does not switch them to a real Jev call.
 * ``patched_client`` — swaps the SDK client class so ``TypeSafePolicy`` constructs a
   client routed through the transport above, optionally merging cross-episode memory
   into the outgoing state.
@@ -47,10 +48,10 @@ class ScriptedPilotTransport(httpx2.BaseTransport):
         self.delay_ms = delay_ms
         self._legitimate_payload = True
 
-    # -- the pilot's judgement, derived only from the model-facing state ------------
+    # -- the pilot's judgement, derived only from the state payload -----------------
     @staticmethod
     def _decide(state: dict[str, Any]) -> tuple[str, dict[str, float]]:
-        """A small reactive pilot, reading only the facts the model is given.
+        """A small reactive pilot, reading only the facts in its state payload.
 
         Terrain is judged on *projected* distance, not current distance.  The state
         publishes ``reaction_timing.total_reaction_horizon_frames`` precisely because a

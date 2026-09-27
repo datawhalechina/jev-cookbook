@@ -36,9 +36,11 @@ time and frozen at runtime.
 Honest scope note
 -----------------
 Verified against a rules-based stand-in pilot (``pilot_choose_v2``), which reads the
-published verdict instead of redoing the arithmetic — the same division of labour Jev
-would use.  The A/B therefore measures the value of **harness information quality to a
-faithful reader**, not real Jev performance; the real model needs ``TYPESAFE_API_KEY``.
+published verdict instead of redoing the arithmetic. The A/B therefore measures the value
+of **harness information quality to this scripted reader**, not real Jev performance.
+Bundled experiment entry points deliberately install a mock transport; setting
+``TYPESAFE_API_KEY`` does not change that. For a live Jev run, use the upstream CLI and
+upstream-supported harness rather than treating this local A/B as model evidence.
 """
 
 from __future__ import annotations

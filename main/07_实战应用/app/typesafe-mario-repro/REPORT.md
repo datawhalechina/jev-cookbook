@@ -2,6 +2,8 @@
 
 > 本文件是完整研究报告（方法、数据、失败机制链、更正记录）。快速启动与项目概览见 [README.md](README.md)。
 
+> **阅读范围：** 报告记录了多轮复现与后续扩展。上游源码仓库保持未修改，但本地运行器会 monkey-patch 解析器、策略或传输层；其中浏览器入口默认使用修正解析器、v2 harness 与 scripted pilot。请区分“上游源码”“本地复现扩展”和“真实 Jev 调用”：本文的 pilot 数据不构成 Jev 评测。
+
 上游仓库：[`fhshaik/typesafe-mario`](https://github.com/fhshaik/typesafe-mario) @ `ca22449`（2026-09-15）
 工作副本：`../typesafe-mario/`（原样克隆，未改动一行）
 
@@ -9,9 +11,8 @@
 
 ## 一句话结论
 
-**在作者的原始环境（真实 NES 模拟器 + 真实 ROM）上跑通了**，唯一的替换是模型那一跳的
-HTTP 请求（本机没有 `TYPESAFE_API_KEY`）。在真机上确认了一处上游缺陷：
-**`--display none`（headless）路径缺少跳跃按键的抬起沿，导致 Mario 撞上水管后永久卡死**
+**在 NES 模拟器 + ROM 的本地环境上跑通了模拟器闭环**，策略判断由 scripted pilot 替代，未调用 Jev。在一条对照路径中观察到：
+**`--display none`（headless）路径缺少跳跃按键的抬起沿，导致 Mario 撞上水管后卡住**
 —— 基线卡在 x=594 不动 369 个决策，加上抬起沿后跑到 x=1124 并越过水管。
 
 ## 0. 关于 ROM 的更正（重要）
@@ -29,7 +30,7 @@ HTTP 请求（本机没有 `TYPESAFE_API_KEY`）。在真机上确认了一处�
 基于错误前提继续推进。合成环境因此是对一个不存在的问题的解法；真实环境一直可用。
 
 合成环境仍保留在仓库里，但**结论不再依赖它** —— 它的唯一价值是在受控条件下单独变化一个变量
-（`ab_release_edge.py` 的 level 1），而真机证据（`ab_real_env.py`）才是决定性的。
+（`ab_release_edge.py` 的 level 1），而真实 NES 模拟器环境证据（`ab_real_env.py`）才是决定性的。
 真实环境下的复现见 §3.6，文件清单见 §8。
 
 ---
@@ -56,14 +57,14 @@ NES 模拟器 → 遥测/RAM 解析 → 结构化 JSON → Jev 选择动作 → 
 精确的时序算术留在代码里（如 `hazard.jump_must_start_this_decision` 由实测延迟、敌人运动、
 动作节拍与跳跃腾空时间共同算出），Jev 只负责解释这些事实并做选择 —— 没有任何脚本化的兜底动作。
 
-## 2. 复现方式：只替换一个外部输入
+## 2. 复现方式：区分上游基线与本地扩展
 
 | 输入 | 上游要求 | 本复现的处理 |
 |---|---|---|
-| ROM + 模拟器 | 合法获取的 SMB ROM + `nes-py` | **无需处理** —— ROM 随 `gym-super-mario-bros` 一起安装（见 §0），真机路径直接可用 |
-| Jev API | `TYPESAFE_API_KEY` | **这是唯一被替换的输入**：HTTP 那一跳换成按真实报文格式作答的本地替身 |
+| ROM + 模拟器 | 合法获取的 SMB ROM + `nes-py` | **无需处理** —— ROM 随 `gym-super-mario-bros` 一起安装（见 §0），真实模拟器路径直接可用 |
+| Jev API | `TYPESAFE_API_KEY` | 用本地替身回答以便离线复现；这只验证 mock 传输与策略管道，不验证 Jev 行为 |
 
-**除模型应答之外的一切都是真的**：
+**在 `repro_real_env.py` 指定路径中，除策略应答外使用上游闭环组件；浏览器入口另有本地扩展：**
 
 - `run_episode` / `_run_realtime_dashboard` —— 上游运行器原封不动，包括线程化提交-回收、
   按键抬起沿处理、JSONL artifacts 写入；
@@ -74,14 +75,16 @@ NES 模拟器 → 遥测/RAM 解析 → 结构化 JSON → Jev 选择动作 → 
 - `ACTION_TO_INDEX` —— 与真实 `gym_super_mario_bros.actions.SIMPLE_MOVEMENT` 逐项核对
   （索引 0–6 完全一致）。
 
+浏览器入口 `viz_server.py` 还用 `CorrectedParser`、`MarioHarnessV2` 和 `AttemptMemory` 做本地实验扩展。因此它用于解释决策闭环及扩展实验，不是上游原版 dashboard 的等价运行，也不会访问真实 Jev。
+
 **替身不是 Jev。** 本地 pilot 只读模型可见的状态 JSON，按固定规则作答，用来证明"管道通"，
-不证明"Jev 会怎么打"。换成真实 API 只需一个环境变量，这正是本复现要验证的命题。
+不证明"Jev 会怎么打"。当前脚本显式替换了 transport；真实 Jev 运行请按上游 README 使用 CLI，不能只设置环境变量就把本地 mock 当成在线策略。
 
 ### 合成环境（受控实验用，结论不依赖它）
 
 `--env synthetic` 走的是 `synthetic_nes.py`：一个与真环境同形状的无 ROM 世界。它存在的理由
 不是"没有 ROM"，而是**能单独变化一个变量**（例如只改动作序列去隔离抬起沿的影响，见 §4.3）。
-真机证据见 §3.6 与 §4.4。
+真实 NES 模拟器证据见 §3.6 与 §4.4。
 
 三条规则被刻意做严，因为受控实验也必须在真实形状的输入上检验解析器：
 
@@ -180,8 +183,7 @@ PASS: every resident grid cell matched ground truth at all camera offsets,
 $PY repro_real_env.py --decisions 300
 ```
 
-这条路径**只替换了模型的 HTTP 一跳**：模拟器、ROM、2KB NES 内存、解析器、运行器、
-策略、SDK 编解码全部是上游原代码。
+这条路径使用模拟器、ROM 和上游闭环组件；模型 HTTP 一跳由 scripted pilot 代答。因此结果反映本地策略与执行链，不反映 Jev 的决策质量。
 
 真解析器读取真 NES 内存在 1-1 开局的表现（`grounded=True`、9 行网格正确、
 地形摘要正常）确认了接口对齐：
@@ -207,7 +209,7 @@ terrain: {geometry_available: True, obstacle_ahead: False, clear_forward_tiles: 
 | 策略 | 决策数 | 最远 x | 结局 |
 |---|---:|---:|---|
 | heuristic | 14 | 309 | 撞上第一只板栗仔死亡 |
-| typesafe | 300 | 594 | **卡死在水管前**（369 个决策原地不动） |
+| scripted pilot（历史日志名 typesafe） | 300 | 594 | **卡在水管前**（369 个决策原地不动） |
 
 `heuristic` 撞板栗仔属预期行为（它就是"一直往前跑"，上游 README 也明说它不是基准）。
 `typesafe` 的卡死则是缺陷，见 §4.5。
@@ -266,7 +268,7 @@ release edge added               49         9   stage_clear      960
 同一序列、同一世界、同一种子：**起跳 1 次 vs 10 次，x=285 坠坑 vs x=960 通关**。
 Level 2 确认这个效应能穿过真实运行器的批处理与日志，不只是手写循环里的产物。
 
-### 4.4 真机上的决定性证据
+### 4.4 真实 NES 模拟器上的决定性证据
 
 合成环境的对照见 §4.3；下面是在**真实模拟器 + 真实 ROM**上重做的同一个实验
 （`ab_real_env.py`），这才是这个发现的分量所在。
@@ -297,7 +299,7 @@ with release edge          1124                   1               5
 
 ### 4.5 结论的边界
 
-- 真机证据已经确凿：同一环境、同一策略、同一 ROM、同一种子，唯一变量是抬起沿。
+- NES 模拟器证据已经确凿：同一环境、同一策略、同一 ROM、同一种子，唯一变量是抬起沿。
 - 触发取决于策略输出的动作序列：只要连续两次决策落在跳跃宏上就会踩到。一个总在跳跃间
   插入 `right_run` 的策略不会触发它 —— 这是**路径间不一致**，不是"跑不起来"。
 - `--display none` 的定位是 headless benchmark，可能被视为"简化路径"；但从"同一策略在两条
@@ -324,14 +326,12 @@ with release edge          1124                   1               5
 | 项 | 状态 | 补齐方式 |
 |---|---|---|
 | 真实 ROM 上的行为 | **已验证** | `gym-super-mario-bros` 自带 ROM，见 §3.6 与 §4.4 |
-| Jev 的真实决策质量 | **未验证** | 设置 `TYPESAFE_API_KEY`（console.typesafe.ai/keys），去掉本复现的 transport 替换；这是唯一还缺的外部输入 |
+| Jev 的真实决策质量 | **未验证** | 按上游 README 配置真实 API 并运行上游 CLI；当前浏览器 mock / v2 harness 不支持把环境变量当作一键切换 |
 | 真实 API 延迟与 8 帧节拍是否匹配 | **未验证** | 需真实 Key 测量；本复现只能模拟（60ms → 约 5 帧，120ms → 7 帧） |
 | `--display game` 路径 | 未测 | 需真实渲染窗口（`--display dashboard` 与 `none` 都已跑过） |
 | 上游其余文件（`cli.py` / `dashboard.py` / `tests/`） | 未逐行审计 | 本次只读了决策闭环相关路径 |
 
-接入真实 API 的最小改动：把 `repro_run.py` 里 `patched_client()` 换成普通
-`typesafe_sdk.TypeSafeClient()`（它读 `TYPESAFE_API_KEY`），其余代码不动。
-合成环境换成真环境只需把 `runner_module.create_mario_env` 的替换去掉。
+浏览器 mock 路径没有经过真实 Jev 验证，不应通过随手设置环境变量就宣称切换成功。真实模型试用请直接按上游 README 使用 `typesafe-mario play`；若要在线评测本地扩展，应另行实现、记录并验证 API transport。
 
 ## 7. 本地可视化服务
 
@@ -340,21 +340,18 @@ with release edge          1124                   1               5
 ../typesafe-mario/.venv/bin/python viz_server.py --env synthetic        # 合成对照环境
 ```
 
-浏览器打开 <http://127.0.0.1:8770/>，即可实时观看决策循环。**默认跑真实环境**：真 NES 模拟器、
-真 ROM、真 RAM、真解析器。服务驱动的是**上游真实的 `_run_realtime_dashboard`**（含按键抬起沿
-的那条路径），只是把 `LiveDashboard` 换成一个实现同样 `draw`/`save`/`close` 协议、改为向浏览器
-发布的 `WebDashboard`；唯一的替换是模型那一跳的 HTTP 请求。
+浏览器打开 <http://127.0.0.1:8770/>，即可观看决策循环。默认使用 NES 模拟器和 RAM；服务复用上游 runner / dashboard protocol，同时以本地 `WebDashboard` 发布遥测，并 monkey-patch `CorrectedParser` 与 `MarioHarnessV2`。HTTP hop 由 scripted pilot 替代，因此这一页是本地扩展示范，不是未经修改的上游 baseline，也不是真实 Jev 调用。
 
 页面上能看到：
 
 - **游戏画面**：256×240 实时帧，以原始 RGBA 直传（不编码，浏览器端解码）；
-- **模型被问到的问题**：选中的动作、`ACTION_DESCRIPTIONS` 里的原始描述、置信度、推理延迟、累计回报；
-- **七个手柄宏的完整概率分布**：当前选中项高亮；
-- **处境判断**：`Noul` 的"此刻前跳是否有利"、`Score` 的危险度（映射到 0–1 显示）、
+- **本地 pilot 示意输出**：选中的动作、候选分布、mock 置信度、模拟延迟、累计回报；
+- **七个手柄宏的示意分布**：由规则 pilot 生成，不是 Jev 概率；
+- **处境判断示意**：mock 的 `Noul` / `Score` 数值，
   反应地平线帧数、`jump_must_start_this_decision` 是否为真；
-- **模型看到的碰撞网格** `local_grid` 与地形摘要；
+- **原始调试网格** `local_grid` 与地形摘要；原始网格不会发送给 Jev，结构化 `terrain` / `hazard` 特征才会进入 state；
 - **进度曲线**：每次决策一个点，落地决策为蓝色、空中为橙色，旗杆 960 画成红线；
-- **发给模型的完整 JSON 状态**（可展开）。
+- **发给本地 pilot 的结构化 JSON state**（可展开）；
 
 控件：重新开始 / 暂停 / 自动重开开关 / 画面速率（12–240 帧每秒）/ 保存截图。
 
@@ -365,7 +362,7 @@ with release edge          1124                   1               5
 | `GET /frame.rgba` | 当前帧原始 RGBA 字节（256×240×4） |
 | `GET /snapshot.png` | 当前帧 PNG |
 | `GET /state.json` | 当前决策的全部遥测 |
-| `GET /model_input.json` | 发给模型的 state 对象 |
+| `GET /model_input.json` | 发给本地 pilot 的结构化 state 对象 |
 | `GET /history.json` | 每个决策一条的进度序列 |
 | `POST /control` | `{"command": "restart"｜"pause"｜"resume"｜"speed"｜"auto_restart", ...}` |
 
@@ -374,15 +371,15 @@ with release edge          1124                   1               5
 通关次数）实时显示。
 
 > 注意：本地 pilot 替身是个**固定规则的简单策略**（"该跳就跳、否则向前跑"），不是 Jev。
-> 它经常过早起跳而撞上敌人 —— 上表里通关 1/17 就是它的成绩，不是模型的。这恰好说明 harness
-> 的价值：策略的失败会被清晰地暴露出来。换成真实 API 后这个数字才有意义。
+> 它经常过早起跳而撞上敌人 —— 上表里的通关数只描述该规则策略。页面可以暴露失败状态，
+> 但不能据此评价 Jev，也不能证明 harness 会提升模型表现。
 
 ## 8. 文件清单与运行方式
 
 ```
 typesafe-mario-repro/
 ├── repro_real_env.py       真实模拟器 + 真实 ROM 上的完整闭环（主要复现）
-├── ab_real_env.py          真机上的抬起沿 A/B（决定性证据）
+├── ab_real_env.py          NES 模拟器上的抬起沿 A/B（决定性证据）
 ├── synthetic_nes.py        无 ROM 的同形状 NES 环境（受控实验用，非必需）
 ├── repro_run.py            决策闭环 + headless 路径对照（合成环境）
 ├── repro_dashboard.py      上游 README 推荐的 dashboard 路径，跑到通关 + 截图
@@ -399,7 +396,7 @@ PY=../typesafe-mario/.venv/bin/python
 
 $PY viz_server.py --port 8770                          # 实时可视化，真实模拟器（浏览器打开）
 $PY repro_real_env.py --decisions 300                   # 真实 ROM 上的完整闭环
-$PY ab_real_env.py --decisions 400                      # 真机 A/B：抬起沿（决定性）
+$PY ab_real_env.py --decisions 400                      # NES 模拟器 A/B：抬起沿（决定性）
 $PY verify_parser.py                                   # 瓦片寻址校验（合成环境）
 $PY repro_run.py --episodes 1                          # headless 闭环（对照）
 $PY repro_dashboard.py --screenshot --delay-ms 120      # dashboard 路径，跑到通关
@@ -430,12 +427,12 @@ during development. Freeze the strategy. Let Jev make fast, fuzzy decisions."）
 
 | JevHarness 模式（宝可梦样例） | 马里奥 v2 的对应实现 |
 |---|---|
-| 状态带**预计算衍生事实**（伤害竞争：几回合 KO） | `takeoff_window`：从真机实测跳跃弧（峰值 68px/47 帧/跨度 82px）推出起跳窗口，对每个障碍/坑给出 `jump_now / wait / too_late / regain_speed` 判定 |
+| 状态带**预计算衍生事实**（伤害竞争：几回合 KO） | `takeoff_window`：从实测跳跃弧（峰值 68px/47 帧/跨度 82px）推出起跳窗口，对每个障碍/坑给出 `jump_now / wait / too_late / regain_speed` 判定 |
 | **每个动作的 criterion 带本局量化后果**（"68% HP、2 回合 KO"） | 每个手柄宏的 criterion 按当前判定动态重写（"4 格障碍 64px 外，窗口 55–83px：现在起跳"） |
 | instructions 是**策略陈述**（"有 KO 就拿"） | "verdict 说 jump_now 才跳；说 wait 就继续跑——早跳和晚跳一样必死" |
 | memory 经反思更新 | 原始死亡记录蒸馏为 per-hazard 教训（"此处起跳过早，靠近窗口边缘再跳"） |
 
-`harness_ab.py` 在真机（同 ROM、同种子、双臂都带抬起沿 wrap）跑了 A/B，随后按数据做了
+`harness_ab.py` 在 NES 模拟器中（同 ROM、同种子、双臂都带抬起沿 wrap）跑了 A/B，随后按数据做了
 3 轮反思修复（速度单位错 8 倍、空中松键、贴墙死锁）——完整复刻了 JevHarness 的
 reflection→propose→evaluate 循环。
 
@@ -458,26 +455,24 @@ reflection→propose→evaluate 循环。
    规则替身不读文本——记忆注入后 6 局行为逐字节相同，正是因为替身只响应 verdict 数值。
    所以本 A/B 验证的是**harness 管道**（payload 组装、记忆注入、真实性校验）而非模型收益；
    替身里的 v2 劣势说明的是"这套窗口规则写得不如连跳启发式"，不是"结构化事实没用"。
-   要测真实收益，设 `TYPESAFE_API_KEY` 后同一脚本即为真 Jev 评测（`harness_ab.py` 的
-   reader 换成 `MarioHarnessV2` 即可，传输层零改动）。
+   要测真实收益，需要为本地扩展单独接入并验证真实 API transport；`harness_ab.py` 当前固定使用规则替身，设置 `TYPESAFE_API_KEY` 不会自动把它变成 Jev 评测。
 
 文件：`mario_harness_v2.py`（v2 harness + 判定逻辑 + 教训蒸馏）、`harness_ab.py`（A/B 驱动），
-产物在 `artifacts/harness_ab/`。所有运行均为真机 + 内置 ROM，上游仓库未改动一行。
+产物在 `artifacts/harness_ab/`。这些对照在 NES 模拟器 + ROM 上运行，由本地策略替身作答；上游仓库源码未改动，但 harness 行为有本地扩展。
 
-## 11. 发现：上游网格的相机页错位 —— 模型的主障碍传感器一半时间是瞎的（用户观察触发）
+## 11. 发现：上游地形网格的相机页错位会污染派生事实（用户观察触发）
 
-分享展示时用户发现：「模型看到的碰撞网格里没有坑的地方，一直死在这里」。追查证实这是
-上游 harness 在真机上最严重的一个缺陷。
+分享展示时用户发现：「调试网格看不到坑，Mario 却总在附近失败」。追查发现，上游 parser 的原始网格可能与滚动相机错位。注意：`local_grid` 只用于调试，不直接发送给 Jev；由网格派生的 `terrain` / `hazard` 特征会进入结构化 state，因此解析错误仍可能影响后续判断。
 
 **机制**：`MarioStateParser._extract_local_grid` 用**关卡绝对坐标**对 0x0500 的双页
-nametable 采样（`page = (x // 256) % 2`）。但真机上这对页面跟随相机滚动，缓冲覆盖的
+nametable 采样（`page = (x // 256) % 2`）。但游戏模拟器中这对页面跟随相机滚动，缓冲覆盖的
 关卡窗口是 `[256×⌊camera/256⌋, +512)`。相机落在**奇数** 256px 页时，上游的页选择恰好
 错开一页（错位 256px）——大约一半的游玩位置。
 
 **实测**（`grid_evidence` 取证，Mario 在 x=1094、相机 971、⌊971/256⌋=3 为奇数）：
 
 ```
-上游网格（模型看到的）：     修正网格（相机基址）：
+上游 parser 的调试网格：     修正后的调试网格：
   ..M........                ..M........
   ..M........                #.M........
   ..M........                ..M........
@@ -489,21 +484,20 @@ nametable 采样（`page = (x // 256) % 2`）。但真机上这对页面跟随�
   ..M........                ..M....##..
 ```
 
-模型看到 Mario 悬浮在**一片虚空**里——没有坑、没有地面、没有管道。地形事实
-（`obstacle_ahead`、`gap_distance_tiles`）全部由这张网格推导，因此同样失明。
-这精确解释了此前所有「十几局反复死在同一个坑」的记录：模型每次到那里都被
-告知「前方通畅 8 格」，然后径直走进坑里。它不是决策错了，是看不见。
+调试网格里 Mario 看似悬浮在**一片虚空**里——没有坑、没有地面、没有管道。地形事实
+（`obstacle_ahead`、`gap_distance_tiles`）由网格推导，因此结构化 state 也可能携带错误的
+地形信息。mock pilot 的失败位置与修正后的网格变化能帮助定位 parser 问题，但不能断言
+真实 Jev 当时“看见了什么”或证明所有重复死亡均由这一问题造成。
 
 **修复**（`parser_fix.py`，复现层，上游零改动）：`CorrectedParser` 子类化上游解析器，
 parse 后用相机推导基址（`camera = x - ((ram[0x86]-ram[0x071C]) % 256)`，
 `base = 256×⌊camera/256⌋`）重建 11×9 网格并替换进冻结快照。所有下游派生事实
 （terrain、起跳窗口判定）自动修正，因为它们从 `local_grid` 惰性推导。
-`viz_server` 与 `harness_ab` 均已接入。
+`viz_server` 与 `harness_ab` 均已接入。浏览器页把原始网格标为调试视图，并明确说明它不发送给模型。
 
 **修复后效果**（28 局实时观察）：死亡从「全部堆在同一坑位」打散为
 `[843, 843, 843, 843, 1149, 1416]`——一局越过了此前从未通过的 1104 坑并推进到 1416。
-当前替身仍卡在 x=722/843 的 4 格高双管段：那是规则替身的棋力极限（需要满速+精确窗口
-的连续起跳），不再是传感器问题——网格里现在能看到了。
+当前替身仍卡在 x=722/843 的 4 格高双管段：这说明当前规则策略仍受连续起跳时机限制；本结果仅是本地 mock 策略行为。修复后网格对齐改善，可作为 parser 证据，但不构成 Jev 策略验证。
 
 ## 许可与合规
 

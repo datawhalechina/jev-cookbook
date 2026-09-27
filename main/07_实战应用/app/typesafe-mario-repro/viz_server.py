@@ -2,21 +2,18 @@
 
 What runs here
 --------------
-The upstream dashboard loop — ``_run_realtime_dashboard``, the display path that honours
-the jump button-up edge — driven through the real ``run_episode``.  ``LiveDashboard`` is
-swapped for :class:`WebDashboard`, which implements the same tiny protocol
-(``draw`` / ``save`` / ``close``) but publishes the frame and telemetry to a browser
-instead of a pygame window.  Everything else is upstream code running on the real
-emulator: the real NES ROM that ``gym-super-mario-bros`` ships, the real 2 KB RAM, the real
-parser.  The only substitution is the model's HTTP hop (no ``TYPESAFE_API_KEY`` here),
-answered by a local scripted pilot and labelled as *not Jev* on the page itself.
+The browser wrapper uses the upstream runner, emulator and dashboard protocol, but it
+also installs the local ``CorrectedParser`` and ``MarioHarnessV2`` extensions.  The
+``LiveDashboard`` is replaced by :class:`WebDashboard`, which publishes the frame and
+telemetry to a browser.  The model HTTP hop is always replaced by a scripted local pilot;
+this entry point does not call Jev and labels all decision values as mock.
 
 Endpoints
 ---------
 ``GET  /``                the page
 ``GET  /frame.rgba``      the current emulator frame, raw RGBA (256x240, no encoding cost)
 ``GET  /state.json``      telemetry for the current decision
-``GET  /model_input.json`` the exact state object sent to the model
+``GET  /model_input.json`` the exact state object sent to the local pilot adapter
 ``GET  /history.json``    one entry per decision, for the progress chart
 ``GET  /snapshot.png``    the current frame as a PNG
 ``POST /control``         ``{"command": "restart"|"pause"|"resume"|"quit", "fps": 30}``
@@ -126,7 +123,7 @@ class VizHub:
         self.death_marks: list[dict] = []
         self.clear_marks: list[dict] = []
         self.flag_x: int | None = None
-        # What earlier attempts looked like to the model, replayed into later prompts.
+        # What earlier attempts looked like to the local pilot, replayed into later prompts.
         self.memory = AttemptMemory()
         self.memory_enabled = True
 
@@ -185,12 +182,12 @@ class VizHub:
 
 
 class V2HubTransport(ScriptedPilotTransport):
-    """The harness-v2 reader plus a simulated round-trip and a tap on the model payload.
+    """The harness-v2 reader plus simulated round-trip and a tap on the pilot payload.
 
     ``_decide`` is overridden so the stand-in judge answers from the published
     ``takeoff_window`` verdicts — the JevHarness division of labour, where the harness
     does the arithmetic and the judge reads conclusions.  Every outgoing request is kept
-    verbatim, so a death can be attributed to the exact state the model was given.
+    verbatim, so a death can be attributed to the exact state the pilot was given.
     """
 
     _decide = staticmethod(pilot_choose_v2)
@@ -479,7 +476,7 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TypeSafe plays Mario — 本地可视化</title>
+<title>Jev × Mario — 结构化决策闭环</title>
 <style>
   :root {
     --canvas:#0f1115; --surface:#16191f; --raised:#1d2128; --line:#303640;
@@ -528,7 +525,7 @@ PAGE = """<!doctype html>
      whole stage without distorting the picture or pushing the panels below the fold. */
   canvas#view {
     display:block; image-rendering: pixelated;
-    width:auto; height:auto; max-width:100%; max-height:56vh;
+    width:auto; height:auto; max-width:100%; max-height:64vh;
   }
   .stats { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; }
   .stat { background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:11px 13px; }
@@ -564,11 +561,31 @@ PAGE = """<!doctype html>
   .hintline { color:var(--muted); font-size:12.5px; margin-top:8px; }
   details summary { cursor:pointer; color:var(--muted); font-size:12.5px; }
   .flag { color:var(--danger); font-weight:600; }
+  .learning-strip { max-width:1500px; margin:14px auto 0; padding:0 22px; }
+  .learning-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:0 0 9px; }
+  .learning-head strong { font-size:14px; }
+  .learning-head span, .loop-note { color:var(--muted); font-size:12px; }
+  .decision-loop { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px; }
+  .loop-step { min-width:0; padding:10px 12px; background:var(--surface); border:1px solid var(--line); border-radius:8px; }
+  .loop-step .step-no { color:var(--accent); font:11px ui-monospace,monospace; }
+  .loop-step strong { display:block; margin:2px 0 3px; font-size:13px; }
+  .loop-step span:last-child { display:block; color:var(--muted); font-size:11.5px; line-height:1.45; }
+  .loop-note { margin:7px 2px 0; line-height:1.55; }
+  .loop-note b { color:var(--warning); font-weight:600; }
+  @media (max-width:760px) {
+    header { flex-wrap:wrap; gap:9px; padding:10px 14px; }
+    header .spacer { display:none; }
+    .learning-strip { padding:0 14px; }
+    .decision-loop { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .learning-head { display:block; }
+    .learning-head span { display:block; margin-top:3px; }
+    main { padding:14px; }
+  }
 </style>
 </head>
 <body>
 <header>
-  <div class="brand">TypeSafe plays Mario<span class="sub">本地复现可视化</span></div>
+  <div class="brand">Jev × Mario<span class="sub">结构化决策闭环</span></div>
   <div class="status"><span id="dot" class="dot"></span><span id="statusText">连接中…</span></div>
   <div class="spacer"></div>
   <button id="restart">重新开始</button>
@@ -583,17 +600,21 @@ PAGE = """<!doctype html>
   <a class="btn" href="/snapshot.png" download="typesafe-mario.png">保存截图</a>
 </header>
 <div class="banner">
-  模型应答来自 <b>本地 pilot 替身</b>，不是真实 TypeSafe API。模拟器、ROM、NES 内存、解析器、
-  决策循环、策略与 SDK 编解码均为上游真实代码。
+  当前运行 <b>本地规则 pilot（mock）</b>，不是 Jev。页面中的分布、置信度、Noul 与 Score 均为替身演示值；真实模拟器闭环不等于真实模型评测。
 </div>
-<details style="width:min(1180px,calc(100% - 32px));margin:14px auto;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:10px;padding:10px 14px">
-<summary style="cursor:pointer;font-weight:700">📖 实验解读：这一页在做什么</summary>
-<p style="margin:8px 0 0;line-height:1.8">
-这是 <b>NES 模拟器实况</b>：本地替身驾驶员在真实上游代码里逐帧决策。每一帧的决策遥测
-（模型拿到的 state、候选动作、选中结果）都可在页面下方查看；顶部工具栏提供
-<b>重新开始 / 暂停 / 速度（0.4×–240 帧/秒）/ 截图保存</b>。
-黄色横幅是诚实的标注：模型应答来自本地 pilot 替身——接真 Jev 只需设置
-TYPESAFE_API_KEY 并去掉 transport 替换，其余代码零改动（见 REPORT.md「未验证」一节）。</p></details>
+<section class="learning-strip" aria-label="Mario 结构化决策流程">
+  <div class="learning-head">
+    <strong>一拍决策的闭环</strong>
+    <span>跟着 ①→④ 看一轮，再回到 ① 观察环境反馈</span>
+  </div>
+  <div class="decision-loop">
+    <div class="loop-step"><span class="step-no">01 · OBSERVE</span><strong>读取状态</strong><span>从 NES 内存提取位置、速度、地形和敌人；截图只供人观看。</span></div>
+    <div class="loop-step"><span class="step-no">02 · STRUCTURE</span><strong>整理成事实</strong><span>程序推导轨迹、危险窗口与反应时间，组成结构化 state。</span></div>
+    <div class="loop-step"><span class="step-no">03 · CHOOSE</span><strong>选择有限动作</strong><span>Choice 在 7 个控制宏中选一个，例如右跑、右跑跳或松开。</span></div>
+    <div class="loop-step"><span class="step-no">04 · EXECUTE</span><strong>程序执行并反馈</strong><span>控制器把动作映射为按键并推进若干帧，再读取新状态。</span></div>
+  </div>
+  <p class="loop-note"><b>读图提示：</b>原始 <code>local_grid</code> 仅作调试可视化，不直接发送给模型；本地 pilot 用于演示数据流，不能据此解读为 Jev 的行为或能力。</p>
+</section>
 <main>
   <section class="stage">
     <div class="screen"><canvas id="view" width="768" height="720"></canvas></div>
@@ -623,28 +644,28 @@ TYPESAFE_API_KEY 并去掉 transport 替换，其余代码零改动（见 REPORT
 
   <aside class="panel">
     <div class="block">
-      <div class="label">模型被问到的问题 · next_action</div>
+      <div class="label">本地 pilot 的 Choice 示意输出 <span class="hint">· mock，不是 Jev</span></div>
       <div class="action" id="actionName">等待首个决策…</div>
       <div class="desc" id="actionDesc"></div>
       <div class="metrics">
-        <div class="metric"><div class="k">置信度</div><div class="v" id="mConf">—</div></div>
-        <div class="metric"><div class="k">推理延迟</div><div class="v" id="mLat">—</div></div>
+        <div class="metric"><div class="k">示意置信度</div><div class="v" id="mConf">—</div></div>
+        <div class="metric"><div class="k">模拟往返延迟</div><div class="v" id="mLat">—</div></div>
         <div class="metric"><div class="k">累计回报</div><div class="v" id="mRew">—</div></div>
       </div>
     </div>
 
     <div class="block">
-      <div class="label">七个手柄宏的概率分布</div>
+      <div class="label">七个动作的示意分布 <span class="hint">· mock 值</span></div>
       <div id="bars"></div>
     </div>
 
     <div class="block">
-      <div class="label">处境判断</div>
+      <div class="label">辅助判断示意 <span class="hint">· mock Noul / Score</span></div>
       <div id="situation"></div>
     </div>
 
     <div class="block">
-      <div class="label">模型看到的碰撞网格 <span class="hint">local_grid</span></div>
+      <div class="label">调试视图：原始碰撞网格 <span class="hint">local_grid · 未发送给模型</span></div>
       <pre class="grid" id="grid">—</pre>
       <div class="hintline" id="terrain"></div>
     </div>
@@ -655,10 +676,10 @@ TYPESAFE_API_KEY 并去掉 transport 替换，其余代码零改动（见 REPORT
     </div>
 
     <div class="block">
-      <div class="label">Jev 的跨局记忆
-        <span class="hint">· 每次阵亡的上下文会注入下一次请求</span></div>
+      <div class="label">本地扩展：跨局尝试记忆
+        <span class="hint">· 不属于上游默认策略</span></div>
       <label class="toggle" style="margin-bottom:8px">
-        <input type="checkbox" id="memtoggle" checked> 启用记忆注入
+        <input type="checkbox" id="memtoggle" checked> 启用本地记忆扩展
       </label>
       <div id="memlist"></div>
       <button id="forget" style="margin-top:9px">清空记忆</button>
@@ -666,7 +687,7 @@ TYPESAFE_API_KEY 并去掉 transport 替换，其余代码零改动（见 REPORT
     </div>
 
     <details class="block">
-      <summary>发给模型的完整 JSON 状态（点击展开）</summary>
+      <summary>发给本地 pilot 的结构化 state（点击展开）</summary>
       <pre class="json" id="modelInput" style="margin-top:10px">—</pre>
     </details>
   </aside>
@@ -887,7 +908,7 @@ async function tick() {
       statusText.textContent = (s.auto_restart && secs !== null)
         ? `${what}，${secs}s 后重开` : `${what}（可重新开始）`;
     }
-    else if (s.waiting) { dot.classList.add('waiting'); statusText.textContent = '等待模型应答…'; }
+    else if (s.waiting) { dot.classList.add('waiting'); statusText.textContent = '等待本地 pilot…'; }
     else { statusText.textContent = '决策循环运行中'; }
 
     document.getElementById('sIdx').textContent = s.decision_index ?? '—';
@@ -929,7 +950,7 @@ async function tick() {
       kv('剩余时间 / 生命', s.state.time_left + ' · ' + s.state.lives) +
       kv('旗杆 960', s.state.stage_clear
           ? '<span class="flag">已到达 ✓</span>' : '未到达') +
-      kv('代理状态', s.model_proxy ? '本地 pilot 替身' : '—');
+      kv('当前策略', s.model_proxy ? '规则 pilot（mock）' : '—');
 
     const mi = await (await fetch('/model_input.json', {cache: 'no-store'})).json();
     document.getElementById('modelInput').textContent = mi.state
@@ -986,7 +1007,7 @@ function renderMemory(s) {
     }).join('');
   }
   document.getElementById('memhint').textContent = s.memory_enabled
-    ? `已尝试 ${s.attempts || 0} 局；最近 ${recs.length} 次阵亡会随每次请求发给 Jev`
+    ? `已尝试 ${s.attempts || 0} 局；最近 ${recs.length} 次阵亡会注入本地扩展 state`
     : '记忆已关闭：请求里不含 prior_attempts';
 }
 document.getElementById('memtoggle').onchange = e => fetch('/control', {
@@ -1237,7 +1258,7 @@ def main() -> int:
         "--latency-ms",
         type=float,
         default=60.0,
-        help="simulated round-trip to the model, so reaction_timing is non-trivial",
+        help="simulated mock-pilot wait, so reaction_timing is non-trivial",
     )
     parser.add_argument("--frames-per-decision", type=int, default=8)
     parser.add_argument("--seed", type=int, default=123)
@@ -1275,7 +1296,7 @@ def main() -> int:
         print("  ⚠️  已监听所有网络接口：同一网络内的任何设备都能访问，且该服务没有认证。")
         print("     仅在可信网络（如自己的局域网）使用；避免在公共网络或直接暴露到公网。")
     print(f"  模拟器     真实 gym_super_mario_bros + 内置 NES ROM（{args.frames_per_decision} 帧/决策）")
-    print(f"  模型应答   本地 pilot 替身（非真实 TypeSafe API），模拟往返 {args.latency_ms:.0f}ms")
+    print(f"  策略应答   本地 scripted pilot（mock，非 Jev），模拟等待 {args.latency_ms:.0f}ms")
     print(f"  画面速率   {args.fps:.0f} 帧/秒（网页上可调）")
     print("  按 Ctrl+C 结束")
     if not args.no_browser:

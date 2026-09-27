@@ -139,12 +139,12 @@
 
 ### 11. Mario 复现：模拟器闭环
 
-**看点：** NES 画面旁的判断卡展示候选动作分布、决策延迟和环境状态。一个“右跑跳”判断还要落实到多个模拟器帧；帧同步、碰撞箱、镜头和输入保持时间都可能影响结果。
+**看点：** 参考上游 [typesafe-mario](https://github.com/fhshaik/typesafe-mario)，沿着“内存遥测 → 结构化 state → Choice 选择控制宏 → Python 推进模拟器 → 新状态反馈”看完整决策闭环。NES 截图只供人观察；原始 `local_grid` 只用于调试，解析后的地形与危险字段才进入 state。按键边沿、相机滚动和每拍推进帧数都会影响闭环表现。
 
-![Mario 本地模拟器复现：游戏画面、动作分布与帧状态](app/typesafe-mario-repro/images/viz.png)
+![NES 模拟器中的 Mario 游戏画面，Jev 使用结构化 state 而不是这张截图](app/typesafe-mario-repro/images/mario-frame.png)
 
-- [项目代码与说明](app/typesafe-mario-repro/) · [实验报告](app/typesafe-mario-repro/EXPERIMENT.md)
-- **边界：** 页面标注的是本地 pilot 替身，不是真实 TypeSafe API；复现结论只适用于仓库记录的模拟器与输入设置。
+- [本地案例说明](app/typesafe-mario-repro/) · [八节实验报告](app/typesafe-mario-repro/EXPERIMENT.md) · [完整排查记录](app/typesafe-mario-repro/REPORT.md)
+- **边界：** 浏览器页面默认使用本地 scripted pilot，Choice / Noul / Score 数值不是 Jev 输出。按键与模拟器现象可作为工程观察，模型表现需运行上游项目的真实 Jev 路径后单独评测。
 
 ### 12. 智能家居：从判断到设备派发
 

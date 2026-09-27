@@ -1,4 +1,4 @@
-"""Cross-episode memory: what the model saw when it died, replayed into later prompts.
+"""Cross-episode memory extension for the Mario decision state.
 
 Why this lives in the harness rather than the policy
 ----------------------------------------------------
@@ -6,22 +6,24 @@ The upstream ``TypeSafePolicy`` builds one request per decision from the current
 only; it has no notion of previous attempts.  Adding memory therefore must not touch the
 upstream files.  It is injected one layer above them, by wrapping the SDK client's
 ``system_one`` and merging an extra key into the outgoing ``state`` object.  TypeSafe
-accepts arbitrary JSON as state, so this is an ordinary use of the API: the model simply
-receives its own history as additional context.
+accepts arbitrary JSON as state, so a real policy could receive its own history as
+additional context. In this reproduction, however, the experiment entry points route
+requests to ``ScriptedPilotTransport``; the local pilot receives this state and no Jev
+API call is made.
 
 What is recorded
 ----------------
-Whatever was actually sent, not a reconstruction: the transport keeps the last few request
-payloads verbatim, and a death stores the most recent one along with the outcome.  That
-keeps the record honest — the memory contains exactly the bytes the model was given,
-retrievable and auditable rather than summarised after the fact.
+The request payload as it was handed to the local transport, not a reconstruction: the
+transport keeps the last few payloads verbatim, and a death stores the most recent one along
+with the outcome. This keeps the local replay auditable rather than summarised after the fact.
 
-What the model receives
------------------------
+What the added state contains
+-----------------------------
 A ``prior_attempts`` block, clearly labelled as history so it cannot be mistaken for the
-current situation.  Each death carries the position, the action that was being committed
-to, the published facts that were on the table (terrain, hazard, jump phase), and a short
-trace of the final decisions.
+current situation. Each death carries the position, the action that was being committed to,
+the published facts that were on the table (terrain, hazard, jump phase), and a short trace
+of the final decisions. In the bundled browser and experiment path this is context for the
+scripted pilot, not evidence that Jev received or used it.
 """
 
 from __future__ import annotations
@@ -35,7 +37,7 @@ MAX_TRACE_DECISIONS = 8
 
 @dataclass
 class PromptSnapshot:
-    """One request payload that was actually sent to the model."""
+    """One state payload handed to the configured transport."""
 
     state: dict[str, Any]
     chosen: str | None = None
@@ -43,7 +45,7 @@ class PromptSnapshot:
 
 @dataclass
 class DeathRecord:
-    """One failed attempt, as the model experienced it."""
+    """One failed attempt, recorded from the state exposed to the policy."""
 
     episode: int
     at_x: int
@@ -58,7 +60,7 @@ class DeathRecord:
     trace: list[dict[str, Any]] = field(default_factory=list)
 
     def to_context(self) -> dict[str, Any]:
-        """The compact form handed back to the model."""
+        """The compact history block added to subsequent state payloads."""
         return {
             "at_x": self.at_x,
             "at_y": self.at_y,
@@ -74,7 +76,7 @@ class DeathRecord:
 
 
 class AttemptMemory:
-    """Accumulates what happened across episodes and renders it as model context."""
+    """Accumulates episode outcomes and renders them as additional state context."""
 
     def __init__(self, max_deaths: int = 6) -> None:
         self._recent_prompts: deque[PromptSnapshot] = deque(maxlen=MAX_TRACE_DECISIONS)
@@ -96,7 +98,7 @@ class AttemptMemory:
         return snapshot
 
     def note_choice(self, chosen: str) -> None:
-        """Attach the model's answer to the request it was answering."""
+        """Attach the configured policy/transport's answer to the recorded request."""
         if self._recent_prompts:
             self._recent_prompts[-1].chosen = chosen
 
@@ -127,11 +129,11 @@ class AttemptMemory:
         return "unknown"
 
     def note_death(self, outcome: dict[str, Any]) -> DeathRecord | None:
-        """Record a death from the last prompt the model saw, plus where it ended up.
+        """Record a death from the last state exposed to the policy, plus its outcome.
 
         ``outcome`` carries the live position at the end of the episode; the published
-        facts come from the stored prompt, because that is what the model was actually
-        reasoning about.
+        facts come from the stored payload, because those are the facts the configured
+        policy path was given. In bundled runs that path is the local scripted pilot.
         """
         last = self._recent_prompts[-1] if self._recent_prompts else None
         state = dict(last.state) if last else {}
