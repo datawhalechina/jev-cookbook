@@ -56,14 +56,7 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 
 ### 社区贡献精选
 
-欢迎通过 PR 投稿你的 Jev 实验与实践，以下内容已收录进教程：
-
-| 社区精选 | 内容总结 |
-|---|---|
-| [第 6 章 模型评测](main/06_模型评测/01_模型评测.ipynb) | JevBench 式评测框架与 Laya vs Jev 基准（作者 [Micheal024](https://github.com/Micheal024)） |
-| [第 7 章 jev-games](main/07_实战应用/app/jev-games/) | 贪吃蛇 / 扫雷 / 狼人杀 + React 统一入口（作者 [lzdFeiFei](https://github.com/lzdFeiFei)） |
-| [第 11 章 知识库](main/11_知识库/jev-cookbook/README.md) | 21 板块 500+ 文件的 Jev 资料库快照 |
-
+欢迎通过 PR 投稿你的 Jev 实验与实践
 ### 配套资源
 
 - **官方文档中文站**：[https://datawhalechina.github.io/jev-cookbook/](https://datawhalechina.github.io/jev-cookbook/)（非官方社区翻译，以[英文原版](https://docs.typesafe.ai)为准）
@@ -92,14 +85,13 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 
 ## 🙏 致谢
 
-**核心贡献者**（飞书 wiki Day1–Day3 分工实录 → [原始文档](https://my.feishu.cn/wiki/CfWlwnbA4ieoi0kR2hdcNpmWn7f)）：
 
 | 成员 | GitHub | 负责内容 |
 |---|---|---|
 | 王熠明 | [Bald0Wang](https://github.com/Bald0Wang) | 项目负责人  · 基础教程 · laya部署及微调 · 部分应用实现 |
 | 征达 | [lzdFeiFei](https://github.com/lzdFeiFei) | 教程作者 · 基础教程 · 部分应用实现 · pi jev应用 |
 | 辅元 | [Fyuan0206](https://github.com/Fyuan0206) | 教程作者 · 基础教程 · 部分应用实现 · jev harness |
-| 博辰 | [Micheal024](https://github.com/Micheal024) |  | 教程作者 · 基础教程 · 模型测评  |
+| 博辰 | [Micheal024](https://github.com/Micheal024) | 教程作者 · 基础教程 · 模型测评 |
 | 荞麦 | [yeyeyeyeeeee](https://github.com/yeyeyeyeeeee) | 教程作者 · 基础教程  · jev dsh插件 |
 
 **特别感谢** [TypeSafe AI](https://typesafe.ai) 提供优秀的官方文档与 Playground；感谢 [NanoJev](https://github.com/TianyuCodings/NanoJev)、[JevBench](https://github.com/fstandhartinger/jevbench)、[Jev-Mem](https://github.com/libingzheren/Jev-Mem) 等上游开源项目。
