@@ -1,3 +1,5 @@
+![Jev Cookbook Logo](media/jev-logo.jpg)
+
 # 「开源版Jev」登上Hugging Face热榜第一
 
 编辑｜杨文

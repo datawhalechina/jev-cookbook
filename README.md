@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/jev-logo.jpg" alt="Jev Cookbook Logo" width="280" border-radius="16px">
+
 # Jev Cookbook
 
 ### ⚡ 适合中国宝宝的 Jev 入门教程
