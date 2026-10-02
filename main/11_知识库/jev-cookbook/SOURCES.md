@@ -25,6 +25,7 @@
 | `19-wechat-laya-architecture/` | 微信公众号「魔搭ModelScope社区」 | `文章快照 2026-09-23` | 21 |
 | `20-wechat-laya-oss-release/` | 微信公众号「PaperAgent」 | `文章快照 2026-09-23` | 11 |
 | `21-wechat-laya-hf-trending/` | 微信公众号「机器之心」 | `文章快照 2026-09-23` | 10 |
+| `23-clef-decision-models/` | [Cloudflare Blog「Introducing Clef」](https://blog.cloudflare.com/clef-decision-models/) | `文章快照 2026-10-02` | 4 |
 | `laya-model/` | [NandhaKishorM/laya](https://github.com/NandhaKishorM/laya) | `本地接口快照 2026-09-23；模型卡 2026-09-20` | 8 |
 
 ## 收录原则
@@ -59,6 +60,7 @@
 | 19 公众号 | 无（正文与 20 张图表收录）；页眉封面卡 1 张已丢弃 |
 | 20 公众号 | 无（正文与全部 10 张配图收录）|
 | 21 公众号 | 无（正文与 9 张配图收录，含 1 个演示 GIF）；文首装饰分隔条与文末大赛推广海报共 2 张已丢弃 |
+| 23 Clef | 无（译文与正文 4 图收录）；3 张作者头像、标签导航、分享按钮等页面组件已丢弃 |
 | Laya | 不收录约 2.2 GB 的模型权重与 tokenizer / encoder 文件；请按 `laya-model/README.md` 下载或指定本机 checkpoint |
 
 ## 许可
@@ -85,4 +87,5 @@
 | 19 公众号 | 魔搭 ModelScope 社区版权所有 |
 | 20 公众号 | PaperAgent 版权所有 |
 | 21 公众号 | 机器之心版权所有 |
+| 23 Clef | Cloudflare Blog 版权所有（© 2026 Cloudflare, Inc.）；译文为非官方社区翻译，仅供学习参考 |
 | Laya | ModelScope 模型卡标注 Apache-2.0；上游代码许可请按仓库 LICENSE 执行 |
