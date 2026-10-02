@@ -26,6 +26,7 @@
 | `20-wechat-laya-oss-release/` | 微信公众号「PaperAgent」 | `文章快照 2026-09-23` | 11 |
 | `21-wechat-laya-hf-trending/` | 微信公众号「机器之心」 | `文章快照 2026-09-23` | 10 |
 | `23-clef-decision-models/` | [Cloudflare Blog「Introducing Clef」](https://blog.cloudflare.com/clef-decision-models/) | `文章快照 2026-10-02` | 4 |
+| `24-polydao-jev-engineering/` | [X @polydao 长文「How to Cut Your Agent Bill by 90%…」](https://x.com/polydao/status/2104783226833186920) | `文章快照 2026-10-02` | 10 |
 | `laya-model/` | [NandhaKishorM/laya](https://github.com/NandhaKishorM/laya) | `本地接口快照 2026-09-23；模型卡 2026-09-20` | 8 |
 
 ## 收录原则
@@ -61,6 +62,7 @@
 | 20 公众号 | 无（正文与全部 10 张配图收录）|
 | 21 公众号 | 无（正文与 9 张配图收录，含 1 个演示 GIF）；文首装饰分隔条与文末大赛推广海报共 2 张已丢弃 |
 | 23 Clef | 无（译文与正文 4 图收录）；3 张作者头像、标签导航、分享按钮等页面组件已丢弃 |
+| 24 polydao | 无（译文与正文 9 图收录）；X 页面框架、互动数据与推广卡片已丢弃 |
 | Laya | 不收录约 2.2 GB 的模型权重与 tokenizer / encoder 文件；请按 `laya-model/README.md` 下载或指定本机 checkpoint |
 
 ## 许可
@@ -88,4 +90,5 @@
 | 20 公众号 | PaperAgent 版权所有 |
 | 21 公众号 | 机器之心版权所有 |
 | 23 Clef | Cloudflare Blog 版权所有（© 2026 Cloudflare, Inc.）；译文为非官方社区翻译，仅供学习参考 |
+| 24 polydao | © @polydao（Mr. Buzzoni），X 平台发布；译文为非官方社区翻译，仅供学习参考 |
 | Laya | ModelScope 模型卡标注 Apache-2.0；上游代码许可请按仓库 LICENSE 执行 |

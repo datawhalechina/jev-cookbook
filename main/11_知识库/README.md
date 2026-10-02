@@ -4,7 +4,7 @@
 
 ## 快照范围
 
-本章含从上游 jev-cookbook 导出的 21 个资料板块和 Laya 示例，另收录 1 篇外部译文（23 Clef 决策模型，Cloudflare Blog）。目录重排和收录范围见[来源清单](jev-cookbook/SOURCES.md)，该清单记录了 2026-09-23 打包时各上游 commit、文件数量、未收录内容和许可。快照日期不代表资料仍是上游最新版本。
+本章含从上游 jev-cookbook 导出的 21 个资料板块和 Laya 示例，另收录 2 篇外部译文（23 Clef 决策模型，Cloudflare Blog；24 Jev 工程实战，@polydao）。目录重排和收录范围见[来源清单](jev-cookbook/SOURCES.md)，该清单记录了 2026-09-23 打包时各上游 commit、文件数量、未收录内容和许可。快照日期不代表资料仍是上游最新版本。
 
 ```mermaid
 flowchart LR
@@ -45,6 +45,7 @@ license: "代码、数据或文章的再使用条件"
 | [Fast Jev Compaction](jev-cookbook/04-fast-jev-compaction/) | Claude Code 上下文压缩示例 | 上游版本与许可见 SOURCES |
 | [Eve 与研究报告](jev-cookbook/08-eve-decision-models/) | 决策模型横向讨论 | 区分二手分析与原始实验 |
 | [Clef 发布文译文](jev-cookbook/23-clef-decision-models/article.md) | Cloudflare 决策模型 Clef 的完整评测数字（Jev Decision Index、延迟表）与 RL 微调服务介绍 | 厂商自报数据；对照 [JevBench](jev-cookbook/15-jevbench/) 的独立复测再引用 |
+| [Jev 工程实战译文](jev-cookbook/24-polydao-jev-engineering/article.md) | 把智能体里的小决策迁到 Jev 的完整方法：四桶分拣、问题写法、置信度路由、Kimi K3 兜底与成本账 | 个人从业者实战总结；数字为作者自报口径，无样本细节处按案例看待 |
 | Laya 资料 | [架构](jev-cookbook/19-wechat-laya-architecture/article.md)、[开源发布](jev-cookbook/20-wechat-laya-oss-release/article.md)、[榜单报道](jev-cookbook/21-wechat-laya-hf-trending/article.md)、[本地接口](jev-cookbook/laya-model/README.md) | 参数、排行榜和下载信息都要回到当前模型卡复核 |
 | 其他板块 | trader、技能、SDK、飞书研究与公众号文章 | 私有文档或受版权保护的内容不能因被收录就自由再分发 |
 
