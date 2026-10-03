@@ -1420,10 +1420,105 @@ def lab_html(page):
 <script type="application/json" id="lab-config">{payload}</script>"""
 
 
-def related_html(page):
+LESSON_BUDGET = 90_000  # 每页内嵌课程的 JSON 预算（字符）
+
+_NOISE_OUT = ("Note: you may need to restart", "mavis-trash", "[IPKernelApp]",
+              "DEPRECATION", "warn")
+
+
+def _clean_outputs(outputs):
+    txt = []
+    for o in outputs or []:
+        t = ""
+        if o.get("output_type") == "stream":
+            t = o.get("text", "")
+        elif o.get("output_type") in ("execute_result", "display_data"):
+            t = (o.get("data", {}) or {}).get("text/plain", "")
+        elif o.get("output_type") == "error":
+            t = ""
+        if isinstance(t, list):
+            t = "".join(t)
+        for line in t.split("\n"):
+            if any(n in line for n in _NOISE_OUT):
+                continue
+            txt.append(line)
+    out = "\n".join(txt).strip("\n")
+    if len(out) > 1500:
+        out = out[:1500] + "\n…（输出已截断）"
+    return out
+
+
+def lesson_extract(nb_path):
+    """把章节 notebook 提取为内嵌课程数据（md 渲染 + code 与净化后的输出）。"""
+    nb = json.loads(read(nb_path))
+    cells, code_idx, size = [], 0, 0
+    for c in nb.get("cells", []):
+        if c.get("cell_type") == "markdown":
+            src_ = c.get("source", "")
+            if isinstance(src_, list):
+                src_ = "".join(src_)
+            html_ = render_markdown(src_, Renderer("@lesson"))
+            item = {"k": "md", "h": html_}
+        elif c.get("cell_type") == "code":
+            code_src = c.get("source", "")
+            if isinstance(code_src, list):
+                code_src = "".join(code_src)
+            code_idx += 1
+            item = {"k": "code", "n": code_idx, "c": code_src,
+                    "o": _clean_outputs(c.get("outputs"))}
+        else:
+            continue
+        blob = json.dumps(item, ensure_ascii=False)
+        if size + len(blob) > LESSON_BUDGET:
+            cells.append({"k": "md", "h": "<p><em>（内容较长，此处只嵌入前半部分；"
+                            "完整笔记本见下方链接。）</em></p>"})
+            break
+        cells.append(item)
+        size += len(blob)
+    return cells
+
+
+def lesson_html(page):
+    items = RELATED.get(page) or []
+    nb_entry = next((it for it in items if it[0] == "notebook"), None)
+    if not nb_entry:
+        return ""
+    _, nb_path, label = nb_entry
+    full = os.path.join(ROOT, nb_path)
+    if not os.path.exists(full):
+        return ""
+    cells = lesson_extract(full)
+    data = json.dumps({"cells": cells, "gh": GH_BASE + nb_path, "label": label},
+                      ensure_ascii=False).replace("</", "<\\/")
+    return f"""
+<section class="lesson" id="lesson">
+  <div class="lesson-head">
+    <div class="lesson-title">📓 内嵌教程 · {esc(label)}</div>
+    <div class="lesson-sub">像运行 notebook 一样逐步学习：点「下一步」逐格展开——代码格会先出现再"运行"出结果。内容来自教程仓库配套笔记本。</div>
+    <div class="lesson-progress"><div class="lesson-progress-fill" id="lesson-fill"></div></div>
+    <div class="lesson-meta"><span id="lesson-pos">0 / {len(cells)}</span>
+      <span class="lesson-btns">
+        <button type="button" id="lesson-next">▶ 下一步</button>
+        <button type="button" id="lesson-all">全部展开</button>
+        <button type="button" id="lesson-reset">↺ 重新开始</button>
+      </span>
+    </div>
+  </div>
+  <div class="lesson-cells" id="lesson-cells"></div>
+  <div class="lesson-foot">📖 想看带真实 API Key 的完整运行与源文件：
+    <a href="{GH_BASE}{esc(nb_path)}" target="_blank" rel="noopener">{esc(label)}（GitHub）↗</a></div>
+</section>
+<script type="application/json" id="lesson-data">{data}</script>"""
+
+
+def related_html(page, skip_notebook=False):
     items = RELATED.get(page)
     if not items:
         return ""
+    if skip_notebook:
+        items = [it for it in items if it[0] != "notebook"]
+        if not items:
+            return ""
     rows = []
     for badge, path, label in items:
         icon = {"notebook": "📓 笔记本", "article": "📰 拓展文章", "chapter": "📘 教程章节"}[badge]
@@ -1548,6 +1643,7 @@ def render_shell(page, title, body, toc, base):
 <script src="{base}assets/lz-string.js"></script>
 <script src="{base}assets/app.js"></script>
 <script src="{base}assets/lab.js"></script>
+<script src="{base}assets/lesson.js"></script>
 </body>
 </html>"""
 
@@ -1617,7 +1713,7 @@ def main():
     os.makedirs(DIST)
     if os.path.isdir(os.path.join(ASSETS, "images")):
         shutil.copytree(os.path.join(ASSETS, "images"), os.path.join(DIST, "assets", "images"))
-    for fname in ("style.css", "app.js", "lab.js", "lz-string.js"):
+    for fname in ("style.css", "app.js", "lab.js", "lesson.js", "lz-string.js"):
         shutil.copy2(os.path.join(ASSETS, fname), os.path.join(DIST, "assets", fname))
 
     entries = build_search_index(pages)
@@ -1629,7 +1725,10 @@ def main():
         title, body, toc = render_page(p, pages, anchor_maps, from_root=False)
         if p in LABS:
             body += lab_html(p)
-        rel = related_html(p)
+        lesson = lesson_html(p)
+        if lesson:
+            body += lesson
+        rel = related_html(p, skip_notebook=bool(lesson))
         if rel:
             body += rel
         base = "../" * (p.count("/") + 1)

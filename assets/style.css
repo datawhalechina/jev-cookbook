@@ -401,3 +401,50 @@ html.dark .related-badge.chapter { background: #2e2450; color: #c4b5fd; }
   white-space: pre; max-height: 260px; overflow-y: auto; }
 .lab-copy-py { float: right; cursor: pointer; border: 1px solid #92400e; background: transparent;
   color: inherit; border-radius: 6px; font-size: 11px; padding: 2px 10px; }
+
+/* ---------- 内嵌教程（lesson） ---------- */
+.lesson { margin: 32px 0 0; border: 1px solid var(--border-strong); border-radius: 14px; overflow: hidden; background: var(--bg); }
+.lesson-head { padding: 14px 18px 12px; background: var(--bg-soft); border-bottom: 1px solid var(--border); }
+.lesson-title { font-weight: 800; font-size: 15.5px; color: var(--text); margin-bottom: 4px; }
+.lesson-sub { font-size: 12.5px; color: var(--text-soft); line-height: 1.6; margin-bottom: 10px; }
+.lesson-progress { height: 6px; border-radius: 999px; background: var(--bg-code); overflow: hidden; }
+.lesson-progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, #f59e0b, #f97316); border-radius: 999px; transition: width .35s ease; }
+.lesson-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+#lesson-pos { font-size: 12px; color: var(--text-faint); font-variant-numeric: tabular-nums; }
+.lesson-btns { display: flex; gap: 8px; }
+.lesson-btns button { cursor: pointer; border-radius: 8px; font-size: 12.5px; padding: 5px 14px; font-family: var(--sans); font-weight: 600; }
+#lesson-next { background: #ea580c; color: #fff; border: 0; }
+#lesson-next:hover:not(:disabled) { filter: brightness(1.08); }
+#lesson-next:disabled { opacity: .55; cursor: default; }
+#lesson-all, #lesson-reset { background: var(--bg); color: var(--text-soft); border: 1px solid var(--border); }
+#lesson-all:hover, #lesson-reset:hover { color: var(--primary); border-color: var(--primary); }
+.lesson-cells { padding: 16px 18px; }
+.lc { margin-bottom: 14px; }
+.lc-anim { animation: lcIn .35s ease; }
+@keyframes lcIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.lc-md { font-size: 14.5px; line-height: 1.75; }
+.lc-md > :first-child { margin-top: 0; }
+.lc-md > :last-child { margin-bottom: 0; }
+.lc-code { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg-code); }
+.lc-head { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-soft) 60%, transparent); font-size: 11.5px; color: var(--text-faint);
+  font-family: var(--mono); }
+.lc-in { font-weight: 700; color: var(--text-soft); }
+.lc-out-label { font-weight: 700; color: #b45309; }
+html.dark .lc-out-label { color: #fbbf24; }
+.lc-run { margin-left: auto; font-size: 10.5px; font-weight: 700; color: #15803d; background: #dcfce7; border-radius: 999px; padding: 1px 10px; font-family: var(--sans); }
+.lc-run.muted { color: var(--text-faint); background: var(--bg); }
+.lc-run.running { color: #92400e; background: #fde68a; }
+.lc-run.done { color: #15803d; background: #dcfce7; }
+html.dark .lc-run { background: #14321f; color: #7ee2a8; }
+html.dark .lc-run.running { background: #42350e; color: #fcd34d; }
+html.dark .lc-run.done { background: #14321f; color: #7ee2a8; }
+.lc-src, .lc-out { margin: 0; padding: 12px 14px; overflow-x: auto; font-family: var(--mono); font-size: 12.5px; line-height: 1.6; white-space: pre; color: var(--code-text); }
+.lc-src { border-bottom: 0; }
+.lc-src-done { opacity: .92; }
+.lc-outwrap { border-top: 1px dashed var(--border-strong); }
+.lc-out { color: var(--text-soft); }
+.lc-out-anim { animation: lcOut .4s ease; }
+@keyframes lcOut { from { opacity: 0; background: color-mix(in srgb, #f59e0b 12%, transparent); } to { opacity: 1; } }
+.lesson-foot { padding: 10px 18px; border-top: 1px solid var(--border); background: var(--bg-soft); font-size: 12.5px; color: var(--text-soft); }
+.lesson-foot a { color: var(--primary); }
