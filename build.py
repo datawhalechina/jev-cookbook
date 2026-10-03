@@ -102,6 +102,182 @@ JS_SDK += [("sdk/javascript/api/functions/" + f, "函数：" + f + "()") for f i
 JS_SDK += [("sdk/javascript/api/type-aliases/" + t, "类型：" + t) for t in JS_ALIASES]
 JS_SDK += [("sdk/javascript/api/variables/" + v, "变量：" + v) for v in JS_VARS]
 
+GH_BASE = "https://github.com/datawhalechina/jev-cookbook/blob/main/"
+
+# 每页注入的交互实验室预置（state + questions，均取自官方文档示例的中文化版本）
+LABS = {
+    "introduction/quickstart": {
+        "state": "你好，我上周四下的订单（#98423）被重复扣了两次款，请尽快帮我处理。",
+        "questions": {
+            "billing": {"type": "noul", "instructions": "这条消息是否与账单或扣款问题有关？"},
+            "tone": {"type": "choice", "instructions": "用户的语气如何？",
+                     "criteria": {"calm": "平静、就事论事", "angry": "不满、着急"}},
+            "urgency": {"type": "score", "instructions": "这条消息的紧急程度",
+                        "criteria": ["可以等几天再处理", "本周内应处理", "需要立刻处理"]},
+        },
+    },
+    "concepts/system-one": {
+        "state": "客户消息：我的卡被重复扣款了，订单号 A-104，我要退款。",
+        "questions": {
+            "refund_requested": {"type": "noul", "instructions": "用户明确要求退款"},
+            "route": {"type": "choice", "instructions": "这条工单应当路由到哪个团队",
+                      "criteria": {"billing": "账单、扣款、退款", "technical": "产品故障、报错",
+                                   "account": "账号、登录、资料"}},
+        },
+    },
+    "concepts/state": {
+        "state": "{\"message\": \"我的卡被重复扣款了。\", \"order_id\": \"A-104\", \"plan\": \"pro\"}",
+        "questions": {
+            "about_billing": {"type": "noul", "instructions": "这条消息是否关于账单问题？"},
+            "mention_order": {"type": "noul", "instructions": "消息中是否提供了订单号"},
+        },
+    },
+    "primitives": {
+        "state": "我买的跑鞋尺码不对，能帮我换一双 10 码的吗？",
+        "questions": {
+            "department": {"type": "choice", "instructions": "哪个团队应当处理这条请求？",
+                           "criteria": {"returns": "换货、错发或损坏", "shipping": "物流状态、延误、丢件",
+                                        "billing": "扣款、发票、支付问题"}},
+        },
+    },
+    "primitives/choice": {
+        "state": "我买的跑鞋尺码不对，能帮我换一双 10 码的吗？另外发货也太慢了。",
+        "questions": {
+            "department": {"type": "choice", "instructions": "哪个团队应当处理这条请求？",
+                           "criteria": {"returns": "换货、错发或损坏", "shipping": "物流状态、延误、丢件",
+                                        "billing": "扣款、发票、支付问题"}},
+        },
+    },
+    "primitives/score": {
+        "state": "导出报告的功能坏了。用 Chrome 可以绕过，但只用 Safari 的用户没法使用导出。",
+        "questions": {
+            "bug_severity": {"type": "score", "instructions": "所报告问题的严重程度",
+                             "criteria": ["外观问题；不影响功能", "功能受损或降级；存在变通方案",
+                                          "阻塞性问题；没有任何变通方案"]},
+        },
+    },
+    "primitives/noul": {
+        "state": "我上周被重复扣款两次，要求全额退款并且补偿我的时间。",
+        "questions": {
+            "refund_requested": {"type": "noul", "instructions": "用户明确要求退款或补偿"},
+        },
+    },
+    "confidence": {
+        "state": "帮我查一下储蓄卡余额",
+        "questions": {
+            "intent": {"type": "choice", "instructions": "用户想执行什么操作？",
+                       "criteria": {"check_balance": "查询账户余额", "approve_transfer": "批准待确认的转账",
+                                    "other": "其他事情"}},
+        },
+    },
+    "patterns/fan-out": {
+        "state": "你好，我上周四的订单（#98423）被重复扣了两次款，网站更新后账号也登录不上，挺让人生气的。",
+        "questions": {
+            "category": {"type": "choice", "instructions": "判断这条支持工单的大类",
+                         "criteria": {"bug_report": "报告产品损坏或错误", "billing": "扣款、发票、退款",
+                                      "account": "登录、权限、资料"}},
+            "refund_requested": {"type": "noul", "instructions": "用户明确要求退款或补偿"},
+            "frustration": {"type": "score", "instructions": "用户表现出的挫败程度",
+                            "criteria": ["平静、就事论事", "有些沮丧但礼貌", "非常愤怒"]},
+        },
+    },
+    "patterns/confidence-routing": {
+        "state": "请批准那笔待确认的转账",
+        "questions": {
+            "intent": {"type": "choice", "instructions": "用户想执行什么操作？",
+                       "criteria": {"check_balance": "查询账户余额", "approve_transfer": "批准待确认的转账",
+                                    "other": "其他事情"}},
+        },
+    },
+    "patterns/composite-scoring": {
+        "state": "资深后端工程师，某被广泛使用的 Python ORM 的核心贡献者；设计过跨区域支付平台的分片架构，偏好亲自写架构方案。",
+        "questions": {
+            "python_depth": {"type": "score", "instructions": "候选人的 Python 功底有多深？",
+                             "criteria": ["未提及", "仅提到", "项目中使用过", "主力语言、多项目",
+                                          "深厚功底：架构、性能、类库"]},
+            "system_design": {"type": "score", "instructions": "候选人设计大规模系统的经验",
+                              "criteria": ["未提及", "参与讨论", "设计过局部组件", "主导过重要系统架构",
+                                           "跨领域设计过大规模系统"]},
+        },
+    },
+    "patterns/intent-routing": {
+        "state": "这是第三次坏了，客服一直互相推，我要全额退款，让经理给我回电话。",
+        "questions": {
+            "intent": {"type": "choice", "instructions": "这条客户消息的主要意图",
+                       "criteria": {"order_status": "询问订单状态", "product_question": "购前咨询",
+                                    "return_exchange": "退货换货", "complaint": "不满、要求解决"}},
+            "complexity": {"type": "score", "instructions": "解决该请求的复杂程度",
+                           "criteria": ["简单查询或标准流程", "需要判断或多步流程", "特殊情况或需升级"]},
+        },
+    },
+}
+
+# 页面 → 深入学习素材（badge: chapter/notebook/article）
+_CH02 = "main/02_核心概念/"
+_COOK_NB = {
+    "consistency_noul_cookbook": "01_自一致性Noul", "consistency_choice_cookbook": "02_自一致性Choice",
+    "parallel_questions": "03_并行提问", "rerank_typesafe": "04_重排序",
+    "semantic_find": "05_逐行语义搜索", "autoformat": "06_结构恢复",
+    "function_calling": "07_函数调用", "skill_suggestion": "08_技能推荐",
+    "entity_alignment": "09_实体对齐", "classifying_rag_passages": "10_RAG段落分类",
+    "citation_check": "11_引用核查", "llm_guardrails": "12_LLM防护栏",
+    "sde_cascade": "13_SDE级联", "date_extraction_cookbook": "14_日期抽取",
+    "pre_parsed_value_extraction_cookbook": "15_预解析值抽取",
+    "hierarchical_classification": "16_层级分类",
+    "autoresearch_feature_discovery": "17_自动研究特征发现",
+    "classification_using_confidence": "18_基于置信度的分类",
+}
+
+def _related_map():
+    R = {
+        "introduction": [("chapter", "main/01_认识Jev/README.md", "第 1 章 · 认识 Jev（导读）"),
+                          ("notebook", "main/01_认识Jev/01_认识Jev.ipynb", "第 1 章 · 配套笔记本")],
+        "concepts/system-one": [("notebook", _CH02 + "01_SystemOne.ipynb", "第 2 章 · System One 实验笔记本")],
+        "concepts/state": [("notebook", _CH02 + "02_状态.ipynb", "第 2 章 · 状态实验笔记本")],
+        "confidence": [("notebook", _CH02 + "04_置信度.ipynb", "第 2 章 · 置信度实验笔记本")],
+        "concepts/how-to-build-with-system-one": [("notebook", _CH02 + "05_应用构建.ipynb", "第 2 章 · 应用构建笔记本")],
+    }
+    for page, nb in (("primitives", "03_原语"), ("primitives/choice", "03_原语"),
+                     ("primitives/score", "03_原语"), ("primitives/noul", "03_原语"),
+                     ("primitives/advanced", "03_原语")):
+        R[page] = [("notebook", _CH02 + nb + ".ipynb", "第 2 章 · 原语实验笔记本")]
+    for page in ("patterns", "patterns/fan-out", "patterns/confidence-routing",
+                 "patterns/composite-scoring", "patterns/intent-routing"):
+        R[page] = [("notebook", "main/03_架构模式/01_架构模式.ipynb", "第 3 章 · 架构模式实验笔记本（四种模式全套可运行实验）")]
+    for slug, nb in _COOK_NB.items():
+        items = [("notebook", "main/04_实战指南/" + nb + ".ipynb", "第 4 章 · " + nb + " 实战笔记本")]
+        if slug == "rerank_typesafe":
+            items.append(("article", "main/11_知识库/jev-cookbook/18-wechat-rerank-experiment/article.md",
+                          "拓展文章 · Jev 能替代 Rerank 模型吗（Milvus 实测）"))
+        R["cookbooks/" + slug] = items
+    R["demos/smart-home"] = [
+        ("notebook", "main/05_智能家居实验/01_智能家居实验.ipynb", "第 5 章 · 智能家居实验笔记本"),
+        ("chapter", "main/07_实战应用/README.md", "第 7 章 · 实战应用（start.py 一键启动真实管线）")]
+    R["models"] = [
+        ("notebook", "main/06_模型评测/01_模型评测.ipynb", "第 6 章 · 模型评测笔记本"),
+        ("chapter", "main/10_本地模型/README.md", "第 10 章 · 本地模型（Laya）")]
+    R["model-jaggedness/jev-1.13"] = [("notebook", "main/06_模型评测/01_模型评测.ipynb", "第 6 章 · 模型评测笔记本")]
+    R["agent-skill"] = [("chapter", "main/09_Agent集成/README.md", "第 9 章 · Agent 集成（Pi / DSH 实验）")]
+    R["sdk/python"] = [("chapter", "main/09_Agent集成/README.md", "第 9 章 · Agent 集成")]
+    R["introduction/coding-agents"] = [("chapter", "main/09_Agent集成/README.md", "第 9 章 · Agent 集成")]
+    R["introduction/machine-learning-primer"] = [("chapter", "main/08_前沿研究/README.md", "第 8 章 · 前沿研究（Jev-Mem 走读）")]
+    return R
+
+RELATED = _related_map()
+
+# 拓展阅读：从第 11 章知识库挂载进站点的文章 (nav_slug, 源目录 slug, 标题, 说明)
+MATERIALS = [
+    ("clef", "23-clef-decision-models", "Clef：开源决策模型与 RL 微调平台",
+     "Cloudflare 官方发布文 · Jev Decision Index 完整评测表"),
+    ("polydao", "24-polydao-jev-engineering", "Jev 工程实战：账单砍掉 90%",
+     "从业者手册 · 四桶分拣 / 置信度路由 / Kimi K3 兜底"),
+    ("rerank-lab", "18-wechat-rerank-experiment", "Jev 能替代 Rerank 模型吗",
+     "Milvus + SciFact 80 条实测对照"),
+    ("laya-arch", "19-wechat-laya-architecture", "Laya 决策模型架构解析", "魔搭 ModelScope 社区"),
+    ("laya-oss", "20-wechat-laya-oss-release", "Laya 开源发布", "PaperAgent"),
+    ("laya-trend", "21-wechat-laya-hf-trending", "Laya 登上 HuggingFace 榜单", "机器之心报道"),
+]
+
 NAV = [
     ("开始", [
         ("introduction", "简介"),
@@ -145,9 +321,13 @@ NAV = [
         ("legal", "法律条款"),
     ]),
     ("客户端 SDK", [("sdk", "SDK 概览")] + PY_SDK + JS_SDK),
+    ("拓展阅读", [("materials/" + m[0], m[2]) for m in MATERIALS]),
 ]
 
 FLAT_NAV = [p for _g, items in NAV for p, _l in items]
+
+# ---------------------------------------------------------------- 交互实验室与拓展素材
+
 NAV_LABELS = dict(NAVItems := ((p, l) for _g, its in NAV for p, l in its))  # noqa
 
 ICONS = {
@@ -1207,6 +1387,89 @@ def render_page(page, pages, anchor_maps, from_root=False):
         toc.append((lv, re.sub(r"<[^>]+>", "", text).strip(), hid))
     return title, body, toc
 
+# ---------------------------------------------------------------- 实验室 / 素材区块
+
+def lab_html(page):
+    cfg = LABS[page]
+    payload = json.dumps(cfg, ensure_ascii=False).replace("</", "<\\/")
+    return f"""
+<section class="lab">
+  <div class="lab-title">🔬 交互实验室</div>
+  <div class="lab-hint">改一改 state 或问题再运行，观察概率与置信度如何变化。默认运行<b>本地演示</b>（离线可用、
+  非真实模型输出，仅演示答案形状）；填入 API Key 可尝试直连真实 API（官方暂未开放跨域时会给出一键复制的本地调用代码）；也可一键到官方 Playground 在线试跑。
+  配套讲解见本页上方内容与「深入学习」素材。</div>
+  <div class="lab-grid">
+    <div class="lab-left">
+      <label>state · 要判断的内容（可以是普通文本，或 JSON 字符串）</label>
+      <textarea id="lab-state" spellcheck="false"></textarea>
+      <div id="lab-questions"></div>
+    </div>
+    <div class="lab-right">
+      <div class="lab-actions">
+        <button id="lab-run" type="button">▶ 运行</button>
+        <button id="lab-playground" type="button">在 Playground 打开 ↗</button>
+      </div>
+      <div class="lab-key-row">
+        <input id="lab-key" placeholder="TYPESAFE_API_KEY（可选：调用真实 API）" autocomplete="off" spellcheck="false" />
+        <div class="lab-key-note">Key 仅保存在本浏览器（localStorage），不会上传到本站。留空 = 本地演示。</div>
+      </div>
+      <div class="lab-results" id="lab-results"></div>
+    </div>
+  </div>
+</section>
+<script type="application/json" id="lab-config">{payload}</script>"""
+
+
+def related_html(page):
+    items = RELATED.get(page)
+    if not items:
+        return ""
+    rows = []
+    for badge, path, label in items:
+        icon = {"notebook": "📓 笔记本", "article": "📰 拓展文章", "chapter": "📘 教程章节"}[badge]
+        rows.append(f'<div class="related-item"><span class="related-badge {badge}">{icon}</span>'
+                    f'<a href="{GH_BASE}{esc(path)}" target="_blank" rel="noopener">{esc(label)}</a></div>')
+    return (f'<div class="related"><div class="related-title">深入学习 · 教程与素材</div>'
+            f'<div class="related-list">{"".join(rows)}</div>'
+            f'<div class="related-note">链接跳转到 GitHub 仓库（datawhalechina/jev-cookbook）对应文件；'
+            f'notebook 在 GitHub 上可直接阅读渲染结果。</div></div>')
+
+
+KB_ROOT = os.path.join(ROOT, "main", "11_知识库", "jev-cookbook")
+
+def render_material(nav_slug, src_slug, title, desc):
+    """把知识库文章渲染成站点页面（含 media 资源）。"""
+    src_dir = os.path.join(KB_ROOT, src_slug)
+    md_path = os.path.join(src_dir, "article.md")
+    if not os.path.exists(md_path):
+        print(f"警告: 素材缺失 {md_path}")
+        return
+    page = "materials/" + nav_slug
+    text = read(md_path)
+    R = Renderer(page)
+    text, fences = extract_fences(text)
+    R.fences = fences
+    body = R.render_md(text)
+    body = _CODE_TOKEN_RE.sub(lambda m: R.fence_html(int(m.group(1))), body)
+    body = rewrite_links(body, page, list_pages() + [page], {}, from_root=False)
+    head = (f'<p class="page-desc">{esc(desc)} · 收录自第 11 章知识库，'
+            f'<a href="{GH_BASE}main/11_知识库/jev-cookbook/{src_slug}/article.md" '
+            f'target="_blank" rel="noopener">查看来源与登记信息 ↗</a></p>')
+    body = head + body
+    toc = []
+    for m in TOC_SCAN_RE.finditer(body):
+        lv, hid, t = int(m.group(1)), m.group(2), m.group(3)
+        toc.append((lv, re.sub(r"<[^>]+>", "", t).strip(), hid))
+    base = "../" * (page.count("/") + 1)
+    write(os.path.join(DIST, page, "index.html"), render_shell(page, title, body, toc, base))
+    media_src = os.path.join(src_dir, "media")
+    if os.path.isdir(media_src):
+        dist_media = os.path.join(DIST, page, "media")
+        if os.path.isdir(dist_media):
+            shutil.rmtree(dist_media)
+        shutil.copytree(media_src, dist_media)
+
+
 # ---------------------------------------------------------------- 外壳
 
 def render_shell(page, title, body, toc, base):
@@ -1282,7 +1545,9 @@ def render_shell(page, title, body, toc, base):
 {toc_html}
 </div>
 <script src="{base}assets/search-index.js"></script>
+<script src="{base}assets/lz-string.js"></script>
 <script src="{base}assets/app.js"></script>
+<script src="{base}assets/lab.js"></script>
 </body>
 </html>"""
 
@@ -1352,8 +1617,8 @@ def main():
     os.makedirs(DIST)
     if os.path.isdir(os.path.join(ASSETS, "images")):
         shutil.copytree(os.path.join(ASSETS, "images"), os.path.join(DIST, "assets", "images"))
-    shutil.copy2(os.path.join(ASSETS, "style.css"), os.path.join(DIST, "assets", "style.css"))
-    shutil.copy2(os.path.join(ASSETS, "app.js"), os.path.join(DIST, "assets", "app.js"))
+    for fname in ("style.css", "app.js", "lab.js", "lz-string.js"):
+        shutil.copy2(os.path.join(ASSETS, fname), os.path.join(DIST, "assets", fname))
 
     entries = build_search_index(pages)
     write(os.path.join(DIST, "assets", "search-index.js"),
@@ -1362,10 +1627,20 @@ def main():
     total = len(pages)
     for i, p in enumerate(pages, 1):
         title, body, toc = render_page(p, pages, anchor_maps, from_root=False)
+        if p in LABS:
+            body += lab_html(p)
+        rel = related_html(p)
+        if rel:
+            body += rel
         base = "../" * (p.count("/") + 1)
         write(os.path.join(DIST, p, "index.html"),
               render_shell(p, title, body, toc, base))
         print(f"[{i}/{total}] {p}")
+
+    # 拓展阅读（第 11 章知识库文章挂载）
+    for nav_slug, src_slug, m_title, m_desc in MATERIALS:
+        render_material(nav_slug, src_slug, m_title, m_desc)
+        print(f"[素材] materials/{nav_slug}")
 
     title, body, toc = render_page(ROOT_PAGE, pages, anchor_maps, from_root=True)
     write(os.path.join(DIST, "index.html"), render_shell("@root", title, body, toc, ""))

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Laya 决策模型架构解析 · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a><a class="nav-item" href="../../introduction/coding-agents/">Jev 与编码智能体</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/">实战指南概览</a><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div><div class="nav-group open" data-group="9"><button class="nav-group-title" type="button">拓展阅读<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../materials/clef/">Clef：开源决策模型与 RL 微调平台</a><a class="nav-item" href="../../materials/polydao/">Jev 工程实战：账单砍掉 90%</a><a class="nav-item" href="../../materials/rerank-lab/">Jev 能替代 Rerank 模型吗</a><a class="nav-item current" href="../../materials/laya-arch/">Laya 决策模型架构解析</a><a class="nav-item" href="../../materials/laya-oss/">Laya 开源发布</a><a class="nav-item" href="../../materials/laya-trend/">Laya 登上 HuggingFace 榜单</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<p class="page-desc">魔搭 ModelScope 社区 · 收录自第 11 章知识库，<a href="https://github.com/datawhalechina/jev-cookbook/blob/main/main/11_知识库/jev-cookbook/19-wechat-laya-architecture/article.md" target="_blank" rel="noopener">查看来源与登记信息 ↗</a></p><h1 id="laya-开源比jev快4倍421m-参数33-毫秒完成-system-1-决策">Laya 开源：比Jev快4倍！421M 参数，33 毫秒完成 System 1 决策</h1>
+<p>Convai Innovations 开源了非自回归 System 1 决策模型 Laya。开源不到 2 天，Laya 已升至 HuggingFace 热门模型榜第三名，GitHub 获得 2.1k Stars。 Laya 是一款面向分类与决策任务的非自回归模型，主要用于从文本中快速识别类别、风险等级和处理优先级。它不需要像大语言模型一样逐字生成回答，而是直接输出判断结果及对应概率，适用于邮件分流、网络钓鱼检测、内容审核和客服路由等场景。 Laya 源自 Nandakishor M 在 2025 年公开的强化学习决策研究。此后，TypeSafe AI 发布了采用相似非自回归思路的闭源模型 Jev，Nandakishor 则进一步重构原有方案，将其扩展为一个完全开放、面向通用横向场景的 System 1 决策模型：RL Agent。 Laya 包含 421M 参数，基于双向编码器构建，并使用 RLCD 训练概率输出。在 GPU 上，其推理延迟为 33～38 毫秒；按 Jev 公布的 150 毫秒延迟计算，速度约快 4 倍。 模型采用 Apache 2.0 协议开源，可在本地部署，并通过校准概率为自动化决策提供更可靠的置信度依据。</p>
+<p><img src="media/image-01.png" alt="" loading="lazy" /></p>
+<p><strong>开源地址：</strong></p>
+<ul><li><p>模型链接：https://modelscope.cn/models/convaiinnovations/laya</p></li><li><p>代码仓库：https://github.com/NandhaKishorM/laya</p></li></ul>
+<p>下面是它的完整工作原理、架构设计、采用严格适当评分规则的 RLCD 数学原理，以及非自回归决策模型为何代表未来。</p>
+<h2 id="01--真正的问题为什么大语言模型很不擅长做决策">01 · 真正的问题：为什么大语言模型很不擅长做决策</h2>
+<p>每一套现代 AI 流水线都有一个巨大的瓶颈：生成式大语言模型正被用于处理简单的反射式决策。 当客服工单到达、邮件进入收件箱，或者用户向 API 提交提示词时，通常只需要回答几个简单问题：</p>
+<ul><li><p>这应该交给哪个部门？</p></li><li><p>这封邮件是不是网络钓鱼攻击？</p></li><li><p>这个提示词是否试图越狱系统？</p></li><li><p>按 0～3 级衡量，这个问题有多紧急？</p></li></ul>
+<p>为此调用一个 8B 或 70B 的生成式大语言模型完全是大材小用。整个过程需要等待 500～2,000 毫秒，让 Token 逐个流式生成；需要支付实际推理成本；之后还得编写正则表达式或JSON 解析器，从自由格式文本中提取一个干净的标签。最糟糕的是，大语言模型喜欢产生幻觉和虚假的置信度。当一个大语言模型输出 &quot;confidence: 0.95&quot; 时，它只是在预测一串听起来很自信的 Token，背后没有任何数学校准。 真正需要的是一种像人脑 System 1 那样工作的模型：能够即时做出反射式决策，给出诚实、经过校准的概率，并且在标准硬件上只需 30～40 毫秒。</p>
+<h2 id="02--三种决策原语">02 · 三种决策原语</h2>
+<p>遵循 System 1 理念，RL Agent 接收一个状态（原始文本、邮件、工单或 JSON 文档）以及一个或多个带类型的问题，然后通过一次并行前向传播完成全部评估。 它使用三种原语：</p>
+<ul><li><p>choice ：从一组以字典形式定义的标准中选择一个选项，返回选中的标签、每个候选选项的概率以及置信度分数。非常适合部门路由、意图识别和主题分类。</p></li><li><p>score ：按照 0、1、2、3 之类的有序量表为状态评分，返回期望分值、各等级的概率和置信度。非常适合评估客户不满程度、紧急度和提示词危害严重性。</p></li><li><p>noul ：直接回答一个布尔问题，返回经过校准的 P(true) ，取值范围为 0.0～1.0。非常适合检测网络钓鱼、垃圾邮件、越狱或客户流失风险。</p></li></ul>
+<p>因为输出空间严格限定为概率和数字，所以模型从不生成文本，不会产生幻觉，也不可能输出格式损坏的JSON。</p>
+<h2 id="03--模型架构421-亿参数">03 · 模型架构：4.21 亿参数</h2>
+<p>在 2025 年 3 月的工作中，Nandakishor M 使用了冻结的序列嵌入，并搭配一个独立的 PPO价值网络。它可以进行逐轮销售预测，但并非端到端，也无法在运行时处理动态出现的新问题。 RL Agent 采用了一个包含 4.21 亿参数、由两个紧密耦合组件组成的端到端架构：</p>
+<p><img src="media/image-02.png" alt="" loading="lazy" /></p>
+<h3 id="modernbert-large-主干网络">ModernBERT-large 主干网络</h3>
+<p>RL Agent 使用 ModernBERT-large（3.95 亿参数）作为基础编码器。ModernBERT 包含 28层，隐藏维度为 1024，配备 16 个注意力头和维度为 2624 的 GeGLU 中间层，并通过旋转位置嵌入（RoPE）支持 8,192 个 Token。由于它是完全双向的，每个 Token 都能同时关注状态和选项中的所有部分。</p>
+<h3 id="mask-选项提取机制">[MASK] 选项提取机制</h3>
+<p>对于每个问题，build_sequence 函数会按如下方式封装提示词：</p>
+<p><img src="media/image-03.png" alt="" loading="lazy" /></p>
+<p>每个选项都有一个 [MASK] Token。数据经过 ModernBERT 和两层决策头 Transformer 后，通过 torch.gather 专门抽取这些标记位置上的隐藏状态。 选项评分器 MLP 将每个 1024 维标记状态投影成一个标量 Logit。对属于该问题的所有选项执行Softmax，即可得到候选概率分布：</p>
+<p><img src="media/image-04.png" alt="" loading="lazy" /></p>
+<p>其中，T 是根据问题类型和选项数量分别拟合的温度参数。</p>
+<h3 id="行动与升级处理决策头">“行动”与“升级处理”决策头</h3>
+<p>在真实的自动化系统中，需要判断何时可以信任模型，何时应该交给人工。Laya 增加了一个“行动/升级处理”决策头：它接收池化后的 [CLS] Token（1024 维），并与以下 4 个分布特征拼接：</p>
+<ul><li><p>最高概率：max(p)</p></li><li><p>前两名差值：p_top1 - p_top2</p></li><li><p>归一化熵：H(p) / log(K)</p></li><li><p>选项预算比：K / 255</p></li></ul>
+<p>这个 1028 维向量经过一个两层 MLP，输出 [P(act), P(escalate)] 。</p>
+<h3 id="多个问题只需一次前向传播">多个问题只需一次前向传播</h3>
+<p>以一封邮件和针对它提出的 5 个问题为例，这 5 个序列会被整理成一个批次。ModernBERT在 GPU 上通过一次前向传播即可处理全部问题，耗时约 35 毫秒。</p>
+<h2 id="04--使用-rlcd-训练校准背后的数学原理">04 · 使用 RLCD 训练：校准背后的数学原理</h2>
+<p>如何用强化学习训练这种模型，让它给出的概率真正经过校准？</p>
+<h3 id="普通分类与朴素强化学习的陷阱">普通分类与朴素强化学习的陷阱</h3>
+<p>如果使用交叉熵训练分类器：</p>
+<p><img src="media/image-05.png" alt="" loading="lazy" /></p>
+<p>那么只有当获胜类别的 Logit 趋近于无穷大时，损失才能被最小化。模型会因此变得过度自信。 如果尝试使用二元奖励的标准强化学习（预测正确奖励 +1 ，错误奖励 0 ），期望奖励为：</p>
+<p><img src="media/image-06.png" alt="" loading="lazy" /></p>
+<p>策略梯度会迫使最高概率趋向 1.0，其余所有概率趋向 0.0。换句话说，朴素强化学习通过破坏校准来最大化准确率，让模型成为一台“自信地犯错”的机器。</p>
+<h3 id="严格适当评分规则">严格适当评分规则</h3>
+<p>RLCD（面向校准决策的强化学习）的基础，是将严格适当评分规则作为奖励。 在决策理论中，当模型报告分布 q 、真实结果为 y 时，评分规则 S(q, y) 会给出一个分数。当且仅当 q 等于真实分布 p 时，期望得分能唯一达到最大值，这个评分规则才是严格适当的：</p>
+<p><img src="media/image-07.png" alt="" loading="lazy" /></p>
+<p>这保证了只有当模型报告诚实概率时，它才能获得最高奖励。 复合奖励结合了三种适当评分：</p>
+<p><img src="media/image-08.png" alt="" loading="lazy" /></p>
+<h3 id="1-对数评分slog-">1. 对数评分（Slog ）</h3>
+<p><img src="media/image-09.png" alt="" loading="lazy" /></p>
+<p>如果模型赋予真实结果的概率很低，这一规则会施加重罚。为了保持数值稳定性，下限被截断为 -9.21。</p>
+<h3 id="2-球面评分ssph-">2. 球面评分（Ssph ）</h3>
+<p><img src="media/image-10.png" alt="" loading="lazy" /></p>
+<p>这是一个取值范围为 [0, 1] 的有界分数。它会奖励模型将概率质量分配给正确类别，同时避免纯对数损失带来的极端梯度尖峰。</p>
+<h3 id="3-排序概率评分srps-">3. 排序概率评分（Srps ）</h3>
+<p>它用于有序的 score 问题，例如 0、1、2、3 级量表。如果真实紧急度为 3 级，那么猜成 2 级显然比猜成 0 级好得多。RPS 衡量的是两个累积分布之间的平方距离：</p>
+<p><img src="media/image-11.png" alt="" loading="lazy" /></p>
+<p>在奖励中减去 RPS，可以教会模型理解量表上的距离。</p>
+<h3 id="策略梯度更新采用组基线的-reinforce">策略梯度更新（采用组基线的 REINFORCE）</h3>
+<p>训练使用纯策略梯度，监督式交叉熵损失为零：</p>
+<p>高斯探索： 对于每个问题，训练过程采样 G = 8 组带噪候选 Logit：</p>
+<p><img src="media/image-12.png" alt="" loading="lazy" /></p>
+<p>噪声向量会被投影，使其在所有选项上的和为零，即 epsilon - mean(epsilon)，因为给所有Logit 加上同一个常数会在 Softmax 中相互抵消。探索标准差 sigma 从 1.0 逐渐衰减到0.3。 带噪分布：</p>
+<p><img src="media/image-13.png" alt="" loading="lazy" /></p>
+<p>奖励评估：</p>
+<p><img src="media/image-14.png" alt="" loading="lazy" /></p>
+<p>组均值优势（GRPO 风格）： 相对于 8 个样本的组均值计算优势：</p>
+<p><img src="media/image-15.png" alt="" loading="lazy" /></p>
+<p>策略损失： 使用高斯对数概率：</p>
+<p><img src="media/image-16.png" alt="" loading="lazy" /></p>
+<p>成本敏感的行动头： 行动头从 {act, escalate} 中采样动作，并根据以下成本矩阵获得奖励：</p>
+<ul><li><p>自动行动且结果正确：+1.0</p></li><li><p>自动行动但结果错误：-3.0</p></li><li><p>升级给人工处理：-0.5</p></li></ul>
+<p>只有在下式成立时，自动执行操作才是有利的：</p>
+<p><img src="media/image-17.png" alt="" loading="lazy" /></p>
+<p>因此，该策略会自动学会：只有当置信度高于 62.5% 时才采取行动。</p>
+<h2 id="05--使用-tdlambda-建模多轮轨迹">05 · 使用 TD(lambda) 建模多轮轨迹</h2>
+<p>在 2025 年 3 月的论文中，研究使用 PPO 预测销售转化在多轮对话中的变化。当时发现的一个重大问题是数据泄漏：如果在第 1 轮就输入完整对话的嵌入，模型便会看到来自未来的信息。 在 RL Agent 中，这个问题得到了解决：</p>
+<ul><li><p>对话按轮次被切分成逐步增长的前缀（第 1 轮、第 2 轮、第 3 轮……），模型只能接收截至当前轮次的上下文。</p></li><li><p>训练使用以蒙特卡洛回报为目标的时序差分学习，即 TD(lambda = 1.0)：</p></li></ul>
+<p><img src="media/image-18.png" alt="" loading="lazy" /></p>
+<p>当 lambda = 1.0 时，早期轮次会直接针对对话的真实终局结果进行训练，而不是从模型自己的猜测中自举。这样，模型便能学习哪些早期对话模式真正会带来转化或流失。</p>
+<h2 id="06--通过归一化熵计算置信度">06 · 通过归一化熵计算置信度</h2>
+<p>对于每个问题，模型都会返回一个 0.0～1.0 的置信度分数，并使用归一化香农熵进行计算：</p>
+<p><img src="media/image-19.png" alt="" loading="lazy" /></p>
+<p>其中，K 是选项数量：</p>
+<ul><li><p>如果模型完全无法确定，所有选项的概率都是 1/K 。此时熵等于 log(K) ，置信度正好为 0.00 。</p></li><li><p>如果模型完全确定，某一个选项的概率为 1.0 ，此时熵为 0，置信度为 1.00 。</p></li></ul>
+<h2 id="07--数据集流水线不走任何合成捷径">07 · 数据集流水线：不走任何合成捷径</h2>
+<p>许多团队会让大语言模型生成合成训练问题和标签，以此构建此类模型。这是一个错误。使用合成标签训练校准模型，只会让训练出的模型针对大语言模型自身的错误和幻觉进行校准。 训练流水线使用 100% 由人类标注的真实公开数据集，覆盖以下领域：</p>
+<ul><li><p>客服分流与意图： 真实客服对话、银行业务意图和工单路由队列。</p></li><li><p>推断与事实核查： 前提—假设对、事实验证和矛盾检查。</p></li><li><p>内容安全： 针对有毒言论、骚扰和严重辱骂的人类共识标签。</p></li><li><p>安全与护栏： 真实的越狱提示词和提示词注入攻击。</p></li><li><p>量表与质量： 对帮助性、复杂度和正确性进行多维度人工量表评分。</p></li><li><p>多轮轨迹： 具有已验证最终结果的 SaaS 销售与客服互动。</p></li></ul>
+<p>为了防止模型走捷径，该数据流水线会动态打乱选项顺序、改写问题表述、在原始文本与嵌套 JSON 状态之间交替切换，并注入随机干扰问题。</p>
+<h2 id="08--真实场景基准测试laya-对比-typesafe-jev">08 · 真实场景基准测试：Laya 对比 TypeSafe Jev</h2>
+<p>团队在微调后的检查点上进行了广泛评估，共测试 25,424 个问题，其中包括 23,024 个任务内问题，以及来自训练期间从未见过的任务家族的 2,400 个零样本问题。 随后，评估结果与 TypeSafe Jev 发布时公开的数据进行了直接对比。</p>
+<p><img src="media/image-20.png" alt="" loading="lazy" /></p>
+<h3 id="正面对比">正面对比</h3>
+<div class="table-wrap"><table><thead><tr><th>指标/维度</th><th>TypeSafe Jev（公开数据）</th><th>Laya（微调检查点）</th><th>分析/优势</th></tr></thead><tbody><tr><td>P50 延迟（1 个问题）</td><td>平均约 400 ms（70～500 ms，最佳 150 ms）</td><td>38.4 ms（p95：42.1 ms）</td><td>Laya 平均快约 10.4 倍；相比 Jev 最佳情况快 4 倍</td></tr><tr><td>批处理延迟（10 个问题）</td><td>串行约 1,500 ms / 约 400 ms</td><td>156.0 ms（p95：158.4 ms）</td><td>Laya 评估 10 个问题的时间，相当于 Jev 回答 1 个问题</td></tr><tr><td>批处理延迟（50 个问题）</td><td>数秒 / 受到速率限制</td><td>721.4 ms</td><td>高吞吐并行小批处理</td></tr><tr><td>基准准确率</td><td>67.8%（覆盖 4 个生产工作流）</td><td>任务内宏平均准确率 83.8%</td><td>Laya 总体准确率高 16.0 个百分点</td></tr><tr><td>意图识别与客户路由</td><td>约 95%～98% 一致率</td><td>准确率 99.1%（ECE：0.009）</td><td>路由任务的校准误差近乎为零</td></tr><tr><td>审核与内容安全</td><td>约 92%～95% 一致率</td><td>准确率 96.7%（ECE：0.061）</td><td>安全边界区分清晰</td></tr><tr><td>推断与事实验证</td><td>未单独报告</td><td>准确率 88.3%（ECE：0.054）</td><td>完整双向注意力能够捕捉矛盾</td></tr><tr><td>指令遵循任务</td><td>专有内部数据集</td><td>任务内 87.8% / 零样本 86.3%</td><td>已证明可泛化至未见任务</td></tr><tr><td>邮件分流与网络钓鱼</td><td>厂商定制工作流</td><td>准确率 73.2%（ECE：0.017）</td><td>定制邮件清洗与网络钓鱼过滤器</td></tr><tr><td>选择性自动化（覆盖率 50%）</td><td>宣称可升级给人工处理</td><td>准确率 92.2%（ECE：0.041）</td><td>安全的自动化门控（置信度 &gt;= 0.85）</td></tr><tr><td>模型权重与代码</td><td>闭源 / 专有 API</td><td>100% 开源，Apache 2.0</td><td>完整的数据主权与透明度</td></tr><tr><td>推理成本</td><td>每百万输入 Token 持续收费 0.042 美元</td><td>自托管为 0.00 美元</td><td>可运行于普通 GPU、Mac MPS 或 CPU</td></tr><tr><td>多轮轨迹建模</td><td>静态状态快照</td><td>TD(lambda = 1.0) 前缀建模</td><td>真正的时间信用分配</td></tr><tr><td>部署模式</td><td>仅限云端，数据需外发</td><td>隔离网络 / 本地 / 端侧</td><td>数据零外流，符合 HIPAA/GDPR 要求</td></tr></tbody></table></div>
+<h3 id="详细任务内表现评估-23024-个问题">详细任务内表现（评估 23,024 个问题）</h3>
+<div class="table-wrap"><table><thead><tr><th>任务家族</th><th>问题数（N）</th><th>准确率</th><th>ECE（校准）</th><th>NLL</th></tr></thead><tbody><tr><td>意图识别与路由</td><td>1,475</td><td>99.1%</td><td>0.009</td><td>0.181</td></tr><tr><td>审核与安全</td><td>2,708</td><td>96.7%</td><td>0.061</td><td>0.153</td></tr><tr><td>主题分类</td><td>749</td><td>93.9%</td><td>0.029</td><td>0.196</td></tr><tr><td>情绪与语气</td><td>1,825</td><td>90.6%</td><td>0.018</td><td>0.238</td></tr><tr><td>推断与事实核查</td><td>3,022</td><td>88.3%</td><td>0.054</td><td>0.340</td></tr><tr><td>指令遵循任务</td><td>600</td><td>87.8%</td><td>0.046</td><td>0.302</td></tr><tr><td>鲁棒性检查</td><td>744</td><td>85.1%</td><td>0.108</td><td>1.058</td></tr><tr><td>阅读理解</td><td>770</td><td>84.7%</td><td>0.083</td><td>0.409</td></tr><tr><td>邮件分流与网络钓鱼</td><td>2,691</td><td>73.2%</td><td>0.017</td><td>0.595</td></tr><tr><td>搜索相关性</td><td>733</td><td>62.8%</td><td>0.066</td><td>0.728</td></tr><tr><td>回复质量评分</td><td>3,146</td><td>58.1%</td><td>0.023</td><td>1.009</td></tr><tr><td>任务内总体宏平均</td><td>23,024</td><td>83.8%</td><td>0.060</td><td>0.468</td></tr></tbody></table></div>
+<h3 id="零样本泛化2400-个从未用于训练的问题">零样本泛化（2,400 个从未用于训练的问题）</h3>
+<div class="table-wrap"><table><thead><tr><th>任务家族（零样本）</th><th>问题数（N）</th><th>准确率</th><th>ECE</th><th>NLL</th></tr></thead><tbody><tr><td>指令遵循任务</td><td>600</td><td>86.3%</td><td>0.045</td><td>0.319</td></tr><tr><td>审核与安全</td><td>600</td><td>79.7%</td><td>0.171</td><td>1.415</td></tr><tr><td>情绪与语气</td><td>600</td><td>58.3%</td><td>0.318</td><td>1.976</td></tr><tr><td>情感与评分</td><td>600</td><td>36.2%</td><td>0.291</td><td>1.798</td></tr><tr><td>零样本总体宏平均</td><td>2,400</td><td>65.1%</td><td>0.207</td><td>1.377</td></tr></tbody></table></div>
+<h3 id="选择性自动化的实际表现">选择性自动化的实际表现</h3>
+<p>由于模型的置信度分数通过归一化熵进行校准，开发者可以直接在代码中使用这些分数来控制是否执行操作：</p>
+<ul><li><p>接受全部答案：准确率 83.8%。</p></li><li><p>只接受置信度最高的前 80% 预测：准确率 89.4%。</p></li><li><p>只接受置信度最高的前 50% 预测：准确率 92.2%。</p></li></ul>
+<p>这意味着，如果将自动路由阈值设为置信度 &gt;= 0.85 ，模型可以用 92% 以上的精确率自动处理大约一半的客服工单、安全告警或邮件分流任务，并将真正棘手的情况升级给人工处理。</p>
+<h2 id="09--如何在-python-中运行">09 · 如何在 Python 中运行</h2>
+<p>只需一行命令，即可通过 PyPI 包直接运行 Laya：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>pip install laya</code></pre></div>
+<h3 id="从魔搭下载模型">从魔搭下载模型</h3>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>modelscope download --model convaiinnovations/laya --local_dir convaiinnovations/laya</code></pre></div>
+<h3 id="快速开始代码">快速开始代码</h3>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>import laya
+## 从 ModelScope 下载并加载微调模型
+agent = laya.load(&quot;convaiinnovations/laya&quot;)
+## 定义输入状态（原始文本或 JSON 字典）
+state = {
+    &quot;from&quot;: &quot;user@company.com&quot;,
+    &quot;subject&quot;: &quot;Charged twice on March invoice&quot;,
+    &quot;body&quot;: &quot;Hi, we were billed twice for invoice 4411. Please refund the duplicate today or we will cancel our plan.&quot;
+}
+## 定义带类型的问题
+questions = {
+    &quot;department&quot;: {
+        &quot;type&quot;: &quot;choice&quot;,
+        &quot;instructions&quot;: &quot;Which department should handle this email?&quot;,
+        &quot;criteria&quot;: {
+            &quot;billing&quot;: &quot;invoices, payments, refunds&quot;,
+&quot;technical&quot;: &quot;bugs, outages, system errors&quot;,
+            &quot;sales&quot;: &quot;pricing, new contracts&quot;,
+            &quot;other&quot;: &quot;everything else&quot;
+        }
+    },
+    &quot;urgency&quot;: {
+        &quot;type&quot;: &quot;score&quot;,
+        &quot;instructions&quot;: &quot;How urgent is this request?&quot;,
+        &quot;criteria&quot;: [&quot;not urgent&quot;, &quot;soon&quot;, &quot;critical deadline or blocking issue&quot;]
+    },
+    &quot;churn_risk&quot;: {
+        &quot;type&quot;: &quot;noul&quot;,
+        &quot;instructions&quot;: &quot;Does the user threaten to cancel or leave?&quot;
+    },
+    &quot;is_phishing&quot;: {
+        &quot;type&quot;: &quot;noul&quot;,
+        &quot;instructions&quot;: &quot;Is this email a phishing or scam attempt?&quot;
+    }
+}
+## 在一次前向传播中运行所有问题（GPU 上约 35 ms）
+result = agent.predict(state, questions)
+answers = result[&quot;answers&quot;]
+print(&quot;Department :&quot;, answers[&quot;department&quot;][&quot;choice&quot;])
+## -&gt; billing (confidence: 0.94)
+print(&quot;Urgency    :&quot;, answers[&quot;urgency&quot;][&quot;score&quot;])
+## -&gt; 1.84 / 2.0
+print(&quot;Churn Risk :&quot;, answers[&quot;churn_risk&quot;][&quot;noul&quot;])
+## -&gt; 0.892 (89.2% probability)
+print(&quot;Phishing   :&quot;, answers[&quot;is_phishing&quot;][&quot;noul&quot;])
+## -&gt; 0.008 (0.8% probability)</code></pre></div>
+<h3 id="自动化门控逻辑">自动化门控逻辑</h3>
+<p>由于这些概率已经过数学校准，路由逻辑可以写得非常简单：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>dept = answers[&quot;department&quot;][&quot;choice&quot;]
+conf = answers[&quot;department&quot;][&quot;confidence&quot;]
+if conf &gt;= 0.85:
+    route_automatically(dept)
+else:
+    send_to_human_triage(dept, reason=f&quot;Low confidence ({conf:.2f})&quot;)</code></pre></div>
+<p>点击阅读原文，即可跳转模型链接~</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>
+👇点击关注ModelScope公众号获取更多技术信息~</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code></code></pre></div>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../materials/rerank-lab/"><span>上一篇</span><strong>Jev 能替代 Rerank 模型吗</strong></a><a class="pager-next" href="../../materials/laya-oss/"><span>下一篇</span><strong>Laya 开源发布</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#01--真正的问题为什么大语言模型很不擅长做决策">01 · 真正的问题：为什么大语言模型很不擅长做决策</a><a class="toc-item toc-l2" href="#02--三种决策原语">02 · 三种决策原语</a><a class="toc-item toc-l2" href="#03--模型架构421-亿参数">03 · 模型架构：4.21 亿参数</a><a class="toc-item toc-l3" href="#modernbert-large-主干网络">ModernBERT-large 主干网络</a><a class="toc-item toc-l3" href="#mask-选项提取机制">[MASK] 选项提取机制</a><a class="toc-item toc-l3" href="#行动与升级处理决策头">“行动”与“升级处理”决策头</a><a class="toc-item toc-l3" href="#多个问题只需一次前向传播">多个问题只需一次前向传播</a><a class="toc-item toc-l2" href="#04--使用-rlcd-训练校准背后的数学原理">04 · 使用 RLCD 训练：校准背后的数学原理</a><a class="toc-item toc-l3" href="#普通分类与朴素强化学习的陷阱">普通分类与朴素强化学习的陷阱</a><a class="toc-item toc-l3" href="#严格适当评分规则">严格适当评分规则</a><a class="toc-item toc-l3" href="#1-对数评分slog-">1. 对数评分（Slog ）</a><a class="toc-item toc-l3" href="#2-球面评分ssph-">2. 球面评分（Ssph ）</a><a class="toc-item toc-l3" href="#3-排序概率评分srps-">3. 排序概率评分（Srps ）</a><a class="toc-item toc-l3" href="#策略梯度更新采用组基线的-reinforce">策略梯度更新（采用组基线的 REINFORCE）</a><a class="toc-item toc-l2" href="#05--使用-tdlambda-建模多轮轨迹">05 · 使用 TD(lambda) 建模多轮轨迹</a><a class="toc-item toc-l2" href="#06--通过归一化熵计算置信度">06 · 通过归一化熵计算置信度</a><a class="toc-item toc-l2" href="#07--数据集流水线不走任何合成捷径">07 · 数据集流水线：不走任何合成捷径</a><a class="toc-item toc-l2" href="#08--真实场景基准测试laya-对比-typesafe-jev">08 · 真实场景基准测试：Laya 对比 TypeSafe Jev</a><a class="toc-item toc-l3" href="#正面对比">正面对比</a><a class="toc-item toc-l3" href="#详细任务内表现评估-23024-个问题">详细任务内表现（评估 23,024 个问题）</a><a class="toc-item toc-l3" href="#零样本泛化2400-个从未用于训练的问题">零样本泛化（2,400 个从未用于训练的问题）</a><a class="toc-item toc-l3" href="#选择性自动化的实际表现">选择性自动化的实际表现</a><a class="toc-item toc-l2" href="#09--如何在-python-中运行">09 · 如何在 Python 中运行</a><a class="toc-item toc-l3" href="#从魔搭下载模型">从魔搭下载模型</a><a class="toc-item toc-l3" href="#快速开始代码">快速开始代码</a><a class="toc-item toc-l3" href="#自动化门控逻辑">自动化门控逻辑</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/lz-string.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/lab.js"></script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jev 工程实战：账单砍掉 90% · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a><a class="nav-item" href="../../introduction/coding-agents/">Jev 与编码智能体</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/">实战指南概览</a><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div><div class="nav-group open" data-group="9"><button class="nav-group-title" type="button">拓展阅读<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../materials/clef/">Clef：开源决策模型与 RL 微调平台</a><a class="nav-item current" href="../../materials/polydao/">Jev 工程实战：账单砍掉 90%</a><a class="nav-item" href="../../materials/rerank-lab/">Jev 能替代 Rerank 模型吗</a><a class="nav-item" href="../../materials/laya-arch/">Laya 决策模型架构解析</a><a class="nav-item" href="../../materials/laya-oss/">Laya 开源发布</a><a class="nav-item" href="../../materials/laya-trend/">Laya 登上 HuggingFace 榜单</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<p class="page-desc">从业者手册 · 四桶分拣 / 置信度路由 / Kimi K3 兜底 · 收录自第 11 章知识库，<a href="https://github.com/datawhalechina/jev-cookbook/blob/main/main/11_知识库/jev-cookbook/24-polydao-jev-engineering/article.md" target="_blank" rel="noopener">查看来源与登记信息 ↗</a></p><h1 id="用-jev-工程与-kimi-k3-把智能体账单砍掉-90">用 Jev 工程与 Kimi K3 把智能体账单砍掉 90%</h1>
+<blockquote><p>原文：<a href="https://x.com/polydao/status/2104783226833186920" target="_blank" rel="noopener" target="_blank" rel="noopener">How to Cut Your Agent Bill by 90% With Jev Engineering and Kimi K3</a> · X 长文 · @polydao（Mr. Buzzoni）· 2026-09-29</p>
+<p>译文为社区学习用途的非官方中文翻译，版权归原作者所有。</p></blockquote>
+<p><img src="media/cover.png" alt="封面" loading="lazy" /></p>
+<p><em>如何找出藏在智能体里的那些决策，写出 System One 模型答得好的问题，按校准过的置信度做路由，再把难啃的案子交给 Kimi K3。API、代码、薄弱点，还有这笔账怎么算，全都在这里。</em></p>
+<hr />
+<p>随便打开一份智能体运行记录，数一数模型没在创造任何东西的时刻。下一步该用哪个工具。这个来源相不相关。</p>
+<p>测试过了没有。这条命令安不安全。任务完成了没有。在大多数循环里，这类小判断的数量远超真正的工作，而每一个都在按前沿模型的完整生成来计费。</p>
+<p>9 月 15 日，TypeSafe AI 结束隐身，带来了一个专为这类调用打造的模型。Jev 从不写一个字。</p>
+<p><img src="media/image-01.png" alt="图1" loading="lazy" /></p>
+<p>你发给它状态和类型化的问题，它返回带概率的答案，通常 100 毫秒上下，价格是每百万输入 token $0.042，输出免费。</p>
+<p>在 TypeSafe 自家的 workflow 评测里，它比用来对标的那些 LLM 快 193.6 倍、便宜 444.6 倍——连公司自己都说，这组数字是预期里的上限。</p>
+<p>Jev 工程就是把它用好的那门手艺：找出藏在流程里的决策、写出模型答得了的问题、按它的置信度做路由，并清楚它会在哪里失灵。这篇是完整的实战手册，Kimi K3 则负责接下 Jev 拿不准的案子。</p>
+<hr />
+<h2 id="1-一个不会写作的模型为什么有用">1/ 一个不会写作的模型为什么有用</h2>
+<p>Diogo Almeida 是 InstructGPT 的共同作者——正是那项把 GPT-3 变成 ChatGPT 的 RLHF 工作。他支持 Jev 的论证，恰恰从对自己这套技术的批评开始：为了讨好人类评审而训练出来的模型，学会的是“看起来对”，它们声称的置信度也就不再有任何含义。如果一个模型 95% 的时候能把任务做对，却说不出错的是哪 5%，这个任务就没法自动化。</p>
+<p>Jev 用 TypeSafe 称为 RLCD 的方法训练——面向校准决策的强化学习。目标是诚实的概率：在你的数据上，标了 90% 的答案就该在大约 90% 的时候是对的。</p>
+<blockquote><p><em>单个答案仍然可能错——这恰恰是置信度数字重要的原因。它告诉你的代码，哪些答案可以直接执行，哪些该送到别处去。</em></p></blockquote>
+<p>一个真实运行说明了这个思路。Hassan（@nutlope）筛了 100 封邮件，一半正常、一半欺诈。Jev 用 1.42 秒分完全部 100 封。置信度低于 95% 的 31 个答案送去 Kimi K3 完整读一遍。整条流水线 16 秒跑完，100 封对 96 封，成本约 $0.07，其中 Jev 的那份账单只有三分之一美分。</p>
+<p><img src="media/image-02.png" alt="图2" loading="lazy" /></p>
+<hr />
+<h2 id="2-第一步把智能体的每一步分拣归类">2/ 第一步：把智能体的每一步分拣归类</h2>
+<p>拿一份真实的运行记录过一遍，把每一步放进下面四个桶之一。</p>
+<div class="table-wrap"><table><thead><tr><th>如果这一步……</th><th>它属于</th><th>例子</th></tr></thead><tbody><tr><td>必须创造文本、代码或计划</td><td>一个 LLM</td><td>草稿、修复、摘要、给人读的理由</td></tr><tr><td>遵循一条精确规则</td><td>代码</td><td>重试上限、预算、白名单、日期运算、计数</td></tr><tr><td>从你能提前列出的答案里做选择</td><td>Jev</td><td>路由、排序、留还是丢、安全与否、完成与否</td></tr><tr><td>无法撤销</td><td>你自己</td><td>发送、付款、发布、删除、改权限</td></tr></tbody></table></div>
+<p>第三个桶总是比人们预想的大，而它正是 Jev 工程能搬动的那一块。其余一切原样留在原地。</p>
+<hr />
+<h2 id="3-三种原语与-api">3/ 三种原语与 API</h2>
+<p>三种问题类型，正好覆盖第三个桶。</p>
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>问什么</th><th>返回什么</th><th>规则</th></tr></thead><tbody><tr><td>Choice</td><td>从你的选项里挑一个</td><td>choice、每个选项各自的概率、confidence</td><td>最多 255 个选项，概率之和为 1</td></tr><tr><td>Score</td><td>放到你的评分标尺上</td><td>score，可以落在档位之间，外加整个分布</td><td>2 到 10 个有序档位</td></tr><tr><td>Noul</td><td>是还是否</td><td>noul，回答“是”的概率</td><td>0.5 表示它判断不了，绝不会给“中等”</td></tr></tbody></table></div>
+<p><img src="media/image-03.png" alt="图3" loading="lazy" /></p>
+<p>动手搭建时会用到的硬信息：</p>
+<ul><li><p><strong>端点：</strong> POST https://api.typesafe.ai/v1/systemone，请求体带 state、model 和 questions。Python SDK：pip install typesafe-sdk，然后 client.system_one(...)</p></li><li><p><strong>模型：</strong> 阈值调好之后锁定 jev-1.13.0。jev-latest 指向的版本会变。</p></li><li><p><strong>体量：</strong> state 字段加上所有问题共享约 64K token，而 state 字段加上最长的那单个问题必须装进约 32K（大致是 150,000 字符的英文）。</p></li><li><p><strong>输入：</strong> 只收文本。字符串、JSON 对象或数组，不支持图片。</p></li><li><p><strong>速率限制：</strong> jev-1.13 上是每秒 1,200 次请求、250,000 个 token，TypeSafe 说等产能到位，这些数字还会上调。</p></li><li><p><strong>速度与价格：</strong> 端到端 70 到 500 毫秒，每百万输入 token $0.042，输出免费。10,000 次决策、每次 1,000 token，一共 $0.42。</p></li></ul>
+<hr />
+<h2 id="4-把所有问题塞进一次调用">4/ 把所有问题塞进一次调用</h2>
+<p>同一个请求里的问题，对着同一份状态并行求值。</p>
+<p>TypeSafe 管这叫 speculative fan-out（推测式扇出），它是你能掌控的最大一根成本杠杆。在他们的一次测试里，对着一份 53,777 字符的文档问 13 个问题，合成一次调用比拆成十三次便宜 12.2 倍、快 10 倍——主要因为状态只发了一次。</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>from typesafe_sdk import Choice, Noul, Score, TypeSafeClient
+
+client = TypeSafeClient(model=&quot;jev-1.13.0&quot;)
+
+r = client.system_one(
+    state={&quot;ticket&quot;: ticket_text, &quot;customer&quot;: {&quot;plan&quot;: &quot;pro&quot;, &quot;refunds_90d&quot;: 0}},
+    questions={
+        &quot;department&quot;: Choice(
+            instructions=&quot;Which team should own the problem described in `ticket`?&quot;,
+            criteria={
+                &quot;billing&quot;: &quot;Charges, invoices, plan changes&quot;,
+                &quot;bug&quot;: &quot;Something in the product does not work as documented&quot;,
+                &quot;howto&quot;: &quot;The customer asks how to do something that already works&quot;,
+                &quot;other&quot;: &quot;None of the above fits&quot;,
+            }),
+        &quot;frustration&quot;: Score(
+            instructions=&quot;How frustrated is the customer, judged from `ticket` only?&quot;,
+            criteria=[
+                &quot;Neutral or positive, no complaint about the experience&quot;,
+                &quot;Annoyed but polite, describes wasted time&quot;,
+                &quot;Angry, mentions cancelling, a public review or a chargeback&quot;,
+            ]),
+        &quot;refund_requested&quot;: Noul(
+            instructions=&quot;Does `ticket` ask for money back, a refund or a chargeback?&quot;),
+    },
+)
+
+dept = r.answers[&quot;department&quot;]            # .choice  .probabilities  .confidence
+mood = r.answers[&quot;frustration&quot;].score     # can land between levels, e.g. 1.3
+refund = r.answers[&quot;refund_requested&quot;].noul</code></pre></div>
+<p>有两条边界要注意。同一次调用里的问题读不到彼此的答案，所以如果某个决策依赖新证据，先把证据取回来，再问一次。另外，只有问题共享同一份状态时，扇出才划算；互不相关的问题该拆进不同的调用</p>
+<p><img src="media/image-04.png" alt="图4" loading="lazy" /></p>
+<hr />
+<h2 id="5-写问题才是真功夫">5/ 写问题才是真功夫</h2>
+<p>大多数糟糕的 Jev 答案，追根溯源都是一个糟糕的问题。下面这些规则来自 TypeSafe 的文档，也来自已经拿它上过生产的人。</p>
+<ul><li><p><strong>问题的 ID 根本不会发给模型。</strong> 给字段起名 is_fraud，对 Jev 毫无信息量。语义必须写进 instructions 和 criteria 里。</p></li><li><p><strong>一个问题只问一个判断。</strong> “这紧急吗、客户付没付过钱”是两个问题。拆开问，在代码里合并答案。</p></li><li><p><strong>描述情境，不要描述程度。</strong> “提到了取消订阅或拒付”是可以核对的；“非常沮丧”是一种情绪，拿光秃秃的数字当档位也一样。</p></li><li><p><strong>每个档位都要写成能独立成立的句子。</strong> 各档位是独立判定的，所以“比上一档更糟”对模型来说毫无意义。</p></li><li><p><strong>每条 Noul 都要写成数值越高越代表“是”。</strong> 一条“true 代表不安全”的 Noul，就是一个等着爆发的 bug。</p></li><li><p><strong>永远留一个出口。</strong> 每个 Choice 都要有 other 或 none，因为模型总得选点什么，而出口能给不确定性一个去处。</p></li><li><p><strong>指明确切的字段。</strong> 像 <code>order.charges</code> 这样带反引号的路径，能告诉 Jev 问题问的是状态的哪一部分。</p></li><li><p><strong>把证据发过去，并且先在代码里过滤。</strong> 无关状态堆得越多，准确率掉得越狠。七个来源各自带着主张，胜过一句“研究看起来差不多做完了”；搜索结果裁到只剩相关行，胜过整页塞进去。</p></li><li><p><strong>把抽取变成选择。</strong> 你的 schema 里没有的值，Jev 变不出来。如果你要从发票里抠出供应商名字，就把已知供应商的列表给它，让它挑一个。</p></li></ul>
+<p><img src="media/image-05.png" alt="图5" loading="lazy" /></p>
+<hr />
+<h2 id="6-知道它会在哪里失灵">6/ 知道它会在哪里失灵</h2>
+<p>TypeSafe 为 jev-1.13 公开了一个“jaggedness”（能力参差）页面。上面每一条，都有对应的脚手架修法。</p>
+<div class="table-wrap"><table><thead><tr><th>薄弱点</th><th>会发生什么</th><th>脚手架怎么接</th></tr></thead><tbody><tr><td>按字面理解问题</td><td>措辞松散的问题会得到字面答案</td><td>把问题当代码对待：版本化、测试、评审</td></tr><tr><td>不是计算器</td><td>计数错误随规模变大</td><td>计数、求和、比较都放在代码里，把结果传进去</td></tr><tr><td>日期就是文本</td><td>“3 月 3 日之后”不是一次有序比较</td><td>日期逻辑在代码里算</td></tr><tr><td>上下文腐烂</td><td>无关状态拉低准确率</td><td>把状态裁到问题所需</td></tr><tr><td>无条件信任状态</td><td>状态里的对抗性文本能带偏答案</td><td>确定性检查和权限控制留在代码里</td></tr><tr><td>文本进，数字出</td><td>它解释不了自己，也读不了截图</td><td>需要文字或视觉的活儿交给 LLM</td></tr><tr><td>多跳推理</td><td>推理链一长就退化</td><td>把链条拆成多次调用，中间更新状态</td></tr></tbody></table></div>
+<p>对所有这些，最后一道防线都是同一句话：类型安全意味着 Jev 不会返回 schema 之外的值，但它仍可能返回一个“错误的合法值”。置信度阈值加上第二个模型，就是你抓住它们的办法。</p>
+<hr />
+<h2 id="7-级联jev-打头阵难案交给-kimi-k3">7/ 级联：Jev 打头阵，难案交给 Kimi K3</h2>
+<p>组装到一起，每个决策就都会穿过四层，在第一层“有把握”的地方停下来。</p>
+<div class="table-wrap"><table><thead><tr><th>层</th><th>负责什么</th><th>速度</th><th>成本</th></tr></thead><tbody><tr><td>代码</td><td>精确规则</td><td>即时</td><td>免费</td></tr><tr><td>Jev</td><td>置信度过阈值的封闭选项判断</td><td>~100 ms</td><td>每百万输入 token $0.042</td></tr><tr><td>Kimi K3</td><td>低于阈值的答案，以及任何需要书面理由的请求</td><td>秒级</td><td>每百万 token 输入 $3 / 输出 $15</td></tr><tr><td>你自己</td><td>不可逆操作，以及两个模型都拿不准的案子</td><td>取决于你什么时候看</td><td>你的时间</td></tr></tbody></table></div>
+<p>Kimi K3 坐第二把交椅，是出于很实际的理由。升级上来的案子往往需要整条线程和历史记录，而 K3 的 1M token 上下文不论多长都是一个价。它能读 Jev 读不了的截图和扫描版 PDF。它的权重是开放的，所以同一份代码可以打 Moonshot 的 API、Together（Hassan 的方案），也可以打你自己的部署。</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>import json, os
+from openai import OpenAI
+from typesafe_sdk import Choice, TypeSafeClient
+
+CRITERIA = {
+    &quot;customer&quot;: &quot;A current customer asking about an order, a bill or their account&quot;,
+    &quot;lead&quot;: &quot;Someone asking about prices, a demo or working together&quot;,
+    &quot;vendor&quot;: &quot;Someone selling a product or service to us&quot;,
+    &quot;fraud&quot;: &quot;Urgent payment request, changed bank details, spoofed sender or a login link&quot;,
+    &quot;other&quot;: &quot;None of the above fits&quot;,
+}
+THRESHOLD = 0.95   # Hassan&#x27;s setting for fraud, tune it per decision
+
+jev = TypeSafeClient(model=&quot;jev-1.13.0&quot;)
+kimi = OpenAI(api_key=os.environ[&quot;KIMI_API_KEY&quot;],
+              base_url=os.environ.get(&quot;KIMI_BASE_URL&quot;, &quot;https://api.moonshot.ai/v1&quot;))
+
+def ask_kimi(email, jev_guess):
+    reply = kimi.chat.completions.create(
+        model=&quot;kimi-k3&quot;,
+        response_format={&quot;type&quot;: &quot;json_object&quot;},
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;:
+            f&quot;Classify this email as one of {list(CRITERIA)}. &quot;
+            f&quot;A fast classifier guessed &#x27;{jev_guess}&#x27; with low confidence. &quot;
+            &#x27;Answer as JSON: {&quot;category&quot;: &quot;...&quot;, &quot;reason&quot;: &quot;...&quot;, &quot;sure&quot;: true}\n\n&#x27; + email}],
+    )
+    return json.loads(reply.choices[0].message.content)
+
+def route(email):
+    r = jev.system_one(
+        state={&quot;email&quot;: email},
+        questions={&quot;category&quot;: Choice(
+            instructions=&quot;What does the sender of `email` want?&quot;, criteria=CRITERIA)},
+    )
+    a = r.answers[&quot;category&quot;]
+    if a.confidence &gt;= THRESHOLD and a.choice != &quot;other&quot;:
+        return {&quot;category&quot;: a.choice, &quot;by&quot;: &quot;jev&quot;, &quot;confidence&quot;: a.confidence}
+    k = ask_kimi(email, a.choice)
+    if k.get(&quot;sure&quot;):
+        return {&quot;category&quot;: k[&quot;category&quot;], &quot;by&quot;: &quot;kimi-k3&quot;, &quot;reason&quot;: k[&quot;reason&quot;]}
+    return {&quot;category&quot;: &quot;review&quot;, &quot;by&quot;: &quot;you&quot;, &quot;jev&quot;: a.choice, &quot;kimi&quot;: k[&quot;category&quot;]}</code></pre></div>
+<p>other 永远不会自己走完路由。K3 会拿到 Jev 的猜测作为上下文。而当两个模型都拿不准时，两个答案会并排摆到你面前——没有比这更快的审核方式了。</p>
+<hr />
+<h2 id="8-接进你已有的脚手架">8/ 接进你已有的脚手架</h2>
+<p>你不需要新框架。Jev 已经内置在三个最常见的框架里。</p>
+<p><strong>LangChain</strong>（langchain-typesafe）带了两个中间件。ModelRouterMiddleware 让 Jev 按你写好的 criteria，挑出能处理某个请求的最便宜模型。</p>
+<p>AutoModeMiddleware 会在每次工具调用执行前先做风险检查——就是那类编程脚手架一直闭源自用的危险动作分类器：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>from langchain.agents import create_agent
+from langchain_typesafe.experimental.middleware import AutoModeMiddleware
+
+agent = create_agent(YOUR_MODEL, middleware=[AutoModeMiddleware(tools=[&quot;bash&quot;])])</code></pre></div>
+<p><strong>Pydantic AI</strong>（pydantic-ai-slim[typesafe]）把你的输出类型直接变成问题：Agent(&quot;typesafe:jev-latest&quot;, output_type=Triage)。</p>
+<p>bool 变成一个是非题，Literal 变成一个 Choice，每个成员都带 docstring 的 IntEnum 变成一个 Score，X | None 则会加一个“以上都不是”的选项。它的 FallbackModel 模式把拿不准的答案兜底给一个 LLM——上面那套级联，两行代码就齐了。</p>
+<p><strong>Vercel AI SDK</strong> 通过 @ai-sdk/typesafe-ai provider 的 experimental_evaluate 暴露 Jev，也可以走 AI Gateway，名字是 typesafe-ai/jev，价格一样。</p>
+<hr />
+<h2 id="9-大家已经在跑的东西">9/ 大家已经在跑的东西</h2>
+<div class="table-wrap"><table><thead><tr><th>项目</th><th>Jev 决定什么</th><th>结果</th></tr></thead><tbody><tr><td>Browser Use jev-ultrafast</td><td>下一步动作、操作哪个元素，每一步都从全新列表里选</td><td>7.1 秒找到苏黎世飞伦敦的航班，只花 $0.0039</td></tr><tr><td>欺诈筛查（Hassan）</td><td>正常还是欺诈，拿不准的 31 封交给 Kimi K3</td><td>96/100 正确，16 秒，约 $0.07</td></tr><tr><td>1kpapers.com</td><td>每篇论文属于 24 个主题中的哪一个</td><td>1,018 篇论文 $0.08，中位数 256 ms；换 LLM 总结这批要 $3.99</td></tr><tr><td>收件箱分诊（Riley Brown）</td><td>每封邮件需要什么</td><td>500 封邮件 3.5 美分</td></tr><tr><td>Computer use（awlevin）</td><td>桌面任务的每一步</td><td>每次决策 $0.0002，对比 Opus 5 的 $0.032；0.13 到 0.38 秒，对比 5.2 秒</td></tr><tr><td>即时压缩（tamara）</td><td>会话里哪些工具调用仍然有效</td><td>一个 Claude 会话约一秒内从近 1M token 砍到 86K（Alex Volkov 的测试）</td></tr><tr><td>jev-trader（Jarrod Watts）</td><td>每个区块做一次交易决策</td><td>模型延迟约 81 ms</td></tr></tbody></table></div>
+<p>模式在反复出现：选项菜单每一步都从实时状态重建，Jev 负责挑，剩下的交给代码或一个小模型。</p>
+<hr />
+<h2 id="10-jev-给-kimi-k3-集群掌舵">10/ Jev 给 Kimi K3 集群掌舵</h2>
+<p>同样的思路还能放大。活儿够大的时候，Kimi K3 的 Agent Swarm 用最多 300 个子智能体来完成构建，Jev 则接手轮与轮之间的那些调用：下一个轮到哪个角色跑、哪些返回值要保留、目标达没达成。</p>
+<p>每轮三次 Jev 调用只花美分的零头，所以循环可以在每轮结束都查一遍“完事了没”，然后自己叫停。当这个完成检查落在中间置信带，就由一次带着完整状态的 K3 调用来定夺。</p>
+<p><img src="media/image-06.png" alt="图6" loading="lazy" /></p>
+<hr />
+<h2 id="11-阈值与上线">11/ 阈值与上线</h2>
+<p><strong>阈值按动作设，不按模型设。</strong> TypeSafe 的文档拿 0.5 当人工审核的下限、0.9 当任何破坏性动作之前的门槛，并明确说这些只是示例而非默认值。归档一封 newsletter，可以在比标记欺诈低得多的置信度上就放行自动化。</p>
+<p><img src="media/image-07.png" alt="图7" loading="lazy" /></p>
+<p><strong>跑一周影子模式。</strong> 让 Jev 只打标，老路径继续拍板。然后按置信度分带对比：如果 0.9 以上的答案几乎每次都和你一致，这个带就最先转全自动。</p>
+<p><strong>锁版本，全量记日志。</strong> 模型 ID、完整概率分布、阈值、哪一层接的、接下来发生了什么。这些日志会变成你的评测集；版本锁定了，你的阈值到下个月也还是同一个含义。</p>
+<p><strong>把问题当代码对待。</strong> criteria 一改，生产行为就跟着变。给问题上版本管理，在标注集上测试，发现漂移就回滚。</p>
+<hr />
+<h2 id="12-算一笔账">12/ 算一笔账</h2>
+<p>每月 10,000 封邮件。假设：Jev 侧每封约 1,000 输入 token；一次完整模型调用 1,500 输入、300 输出；10% 走升级。</p>
+<div class="table-wrap"><table><thead><tr><th>方案</th><th>价格</th><th>月成本</th></tr></thead><tbody><tr><td>一个前沿模型读每一封邮件</td><td>每百万 token 输入 $10 / 输出 $50</td><td>$300</td></tr><tr><td>Kimi K3 读每一封邮件</td><td>每百万 token 输入 $3 / 输出 $15</td><td>$90</td></tr><tr><td>全部先过 Jev，它拿不准的 10% 交给 Kimi K3</td><td>Jev $0.42 + K3 $9.00</td><td>$9.42</td></tr></tbody></table></div>
+<p>TypeSafe 自家的级联估算，在大规模下也落在同一个量级：一百万张客服工单，约 $6,480，而不是 $30,400。</p>
+<hr />
+<h2 id="13-它能怎么赚钱">13/ 它能怎么赚钱</h2>
+<div class="table-wrap"><table><thead><tr><th>渠道</th><th>能收到什么钱</th><th>动手前你需要什么</th></tr></thead><tbody><tr><td>给小企业搭分诊系统</td><td>一笔搭建费加月度服务费，覆盖级联、审核队列和阈值检查</td><td>在你自己的收件箱上跑通一条级联，手里有一个月的日志</td></tr><tr><td>给财务团队做欺诈与发票筛查</td><td>按邮箱收费；拦下一次冒充供应商的付款，就够抵上好几年的费用</td><td>用他们的真实邮件跑出影子模式结果</td></tr><tr><td>智能体成本审计</td><td>收一笔固定费用，帮团队摸清它的智能体循环，并把决策类调用迁到 Jev</td><td>第 2 节的四桶分拣，先在你自己的智能体上做一遍</td></tr></tbody></table></div>
+<p>第三种最好卖。每个跑智能体的团队，都在用前沿模型的价格付决策的钱，而审计会告诉他们，具体哪些调用该搬走。</p>
+<hr />
+<h2 id="浓缩版">浓缩版</h2>
+<p>把智能体的每一步分进四类：创造、精确规则、从已知答案里挑、不可逆。第三个桶交给 Jev；相关的问题一次调用全问完；criteria 写成情境并留好出口；置信度路由按动作逐个设阈值。Jev 拿不准的送给 Kimi K3，不可逆的那几步留给自己。</p>
+<p>从你的智能体每天要做五十次的那个决策开始。</p>
+<hr />
+<p><strong>工具栈：</strong></p>
+<p>📁 Jev，来自 TypeSafe AI ↳ <a href="https://typesafe.ai/" target="_blank" rel="noopener">https://typesafe.ai</a></p>
+<p>📁 Jev API 文档 ↳ <a href="https://docs.typesafe.ai/api" target="_blank" rel="noopener">https://docs.typesafe.ai/api</a></p>
+<p>📁 Kimi K3 API ↳ <a href="https://platform.kimi.ai/" target="_blank" rel="noopener" target="_blank" rel="noopener">https://platform.kimi.ai</a></p>
+<p>📁 Hassan 的 Jev + Kimi K3 欺诈流水线 ↳ <a href="https://github.com/Nutlope/jev-fraud" target="_blank" rel="noopener" target="_blank" rel="noopener">https://github.com/Nutlope/jev-fraud</a></p>
+<p><img src="media/image-08.png" alt="图8" loading="lazy" /></p>
+<hr />
+<h2 id="如果这篇文章对你有用">如果这篇文章对你有用：</h2>
+<ul><li><p>收藏这篇文章。链接会变，新仓库每周都在冒出来，你会需要它当参考</p></li><li><p>想每周深挖 AI 架构、量化交易和智能体经济，关注我：<a href="https://x.com/@polydao" target="_blank" rel="noopener" target="_blank" rel="noopener">@polydao</a></p></li><li><ul><li><p>这里我分享我的原始提示词、自定义 skills，还有那些放上 X 还太早的 alpha。加入 TG 频道：<a href="https://t.me/+Wf8q84QkpyJhNjIy" target="_blank" rel="noopener" target="_blank" rel="noopener">Buzzoni Notes</a></p></li></ul></li></ul>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../materials/clef/"><span>上一篇</span><strong>Clef：开源决策模型与 RL 微调平台</strong></a><a class="pager-next" href="../../materials/rerank-lab/"><span>下一篇</span><strong>Jev 能替代 Rerank 模型吗</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#1-一个不会写作的模型为什么有用">1/ 一个不会写作的模型为什么有用</a><a class="toc-item toc-l2" href="#2-第一步把智能体的每一步分拣归类">2/ 第一步：把智能体的每一步分拣归类</a><a class="toc-item toc-l2" href="#3-三种原语与-api">3/ 三种原语与 API</a><a class="toc-item toc-l2" href="#4-把所有问题塞进一次调用">4/ 把所有问题塞进一次调用</a><a class="toc-item toc-l2" href="#5-写问题才是真功夫">5/ 写问题才是真功夫</a><a class="toc-item toc-l2" href="#6-知道它会在哪里失灵">6/ 知道它会在哪里失灵</a><a class="toc-item toc-l2" href="#7-级联jev-打头阵难案交给-kimi-k3">7/ 级联：Jev 打头阵，难案交给 Kimi K3</a><a class="toc-item toc-l2" href="#8-接进你已有的脚手架">8/ 接进你已有的脚手架</a><a class="toc-item toc-l2" href="#9-大家已经在跑的东西">9/ 大家已经在跑的东西</a><a class="toc-item toc-l2" href="#10-jev-给-kimi-k3-集群掌舵">10/ Jev 给 Kimi K3 集群掌舵</a><a class="toc-item toc-l2" href="#11-阈值与上线">11/ 阈值与上线</a><a class="toc-item toc-l2" href="#12-算一笔账">12/ 算一笔账</a><a class="toc-item toc-l2" href="#13-它能怎么赚钱">13/ 它能怎么赚钱</a><a class="toc-item toc-l2" href="#浓缩版">浓缩版</a><a class="toc-item toc-l2" href="#如果这篇文章对你有用">如果这篇文章对你有用：</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/lz-string.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/lab.js"></script>
+</body>
+</html>
