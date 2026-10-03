@@ -15,7 +15,7 @@ md("""# TypeSafe 置信度实验（Confidence Lab）
 针对官方文档 **[置信度（Confidence）](https://docs.typesafe.ai/confidence)** 章节的可运行实验笔记，
 用真实的 TypeSafe API（Jev 模型）验证 `confidence` 字段的本质与「三路分流」实战模式。
 全部实验使用**中文场景与中文提示词**。中文翻译版文档见
-[bald0wang.github.io/jev-cookbook/confidence](https://datawhalechina.github.io/jev-cookbook/confidence/)。
+[…/confidence](https://datawhalechina.github.io/jev-cookbook/confidence/)。
 
 ## 笔记本结构
 

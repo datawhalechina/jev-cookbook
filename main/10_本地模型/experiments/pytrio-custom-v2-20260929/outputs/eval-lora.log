@@ -1,0 +1,78 @@
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Model: Qwen/Qwen3.5-4B | weights: trio://run_rc3f5qm749kc/sampler_weights/pytrio-laya-v2-20260929-step-150
+  sampled 25/100
+  sampled 50/100
+  sampled 75/100
+  sampled 100/100
+  sampled 25/400
+  sampled 50/400
+  sampled 75/400
+  sampled 100/400
+  sampled 125/400
+  sampled 150/400
+  sampled 175/400
+  sampled 200/400
+  sampled 225/400
+  sampled 250/400
+  sampled 275/400
+  sampled 300/400
+  sampled 325/400
+  sampled 350/400
+  sampled 375/400
+  sampled 400/400
+Wrote typesafe-docs-zh/main/10_本地模型/experiments/pytrio-custom-v2-20260929/outputs/pytrio-lora-test.json
+{
+  "raw_test": {
+    "decisions": 2000,
+    "soft_cross_entropy": 0.2590253069204694,
+    "argmax_accuracy": 0.9065,
+    "soft_brier": 0.11259762034796784,
+    "ece10_hard_majority": 0.015753581630333326
+  },
+  "temperature": 1.0145635906422608,
+  "calibrated_test": {
+    "decisions": 2000,
+    "soft_cross_entropy": 0.2584248314590258,
+    "argmax_accuracy": 0.9065,
+    "soft_brier": 0.11251120022688987,
+    "ece10_hard_majority": 0.016279474592161357
+  },
+  "by_field": {
+    "needs_clarification": {
+      "decisions": 400,
+      "soft_cross_entropy": 0.051368960535313646,
+      "argmax_accuracy": 0.98,
+      "soft_brier": 0.021036722716437254,
+      "ece10_hard_majority": 0.01038475513373236
+    },
+    "needs_external_verification": {
+      "decisions": 400,
+      "soft_cross_entropy": 0.11067033187188662,
+      "argmax_accuracy": 0.955,
+      "soft_brier": 0.05426480232204972,
+      "ece10_hard_majority": 0.016831375983898455
+    },
+    "primary_domain": {
+      "decisions": 400,
+      "soft_cross_entropy": 0.46264650338187896,
+      "argmax_accuracy": 0.8475,
+      "soft_brier": 0.1764458982404241,
+      "ece10_hard_majority": 0.048586038214207115
+    },
+    "reasoning_depth": {
+      "decisions": 400,
+      "soft_cross_entropy": 0.3570843099205099,
+      "argmax_accuracy": 0.875,
+      "soft_brier": 0.17115345003229623,
+      "ece10_hard_majority": 0.03429797316031598
+    },
+    "response_strategy": {
+      "decisions": 400,
+      "soft_cross_entropy": 0.31335642889275794,
+      "argmax_accuracy": 0.875,
+      "soft_brier": 0.14008722842863194,
+      "ece10_hard_majority": 0.03621126225984526
+    }
+  }
+}
+Elapsed seconds: 45.1

@@ -15,7 +15,7 @@ md("""# TypeSafe 原语实验（Primitives Lab）
 针对官方文档 **[原语（Primitives）](https://docs.typesafe.ai/primitives)** 章节的可运行实验笔记，
 用真实的 TypeSafe API（Jev 模型）逐一验证 **Choice / Score / Noul** 三种问题类型与「进阶：结构化」。
 全部实验使用**中文场景与中文提示词**。中文翻译版文档见
-[bald0wang.github.io/jev-cookbook/primitives](https://datawhalechina.github.io/jev-cookbook/primitives/)。
+[…/primitives](https://datawhalechina.github.io/jev-cookbook/primitives/)。
 
 ## 笔记本结构
 

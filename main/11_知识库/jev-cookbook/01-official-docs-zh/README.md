@@ -14,7 +14,7 @@
 
 ## 在线阅读 / Read online
 
-- **中文站（本仓库自动部署）：https://bald0wang.github.io/jev-docs-zh/**
+- **中文站（本仓库自动部署）：https://datawhalechina.github.io/jev-cookbook/**
 - 原文（英文官方）：https://docs.typesafe.ai
 - 本仓库 `dist/` 目录内含构建好的静态站点，可用任意静态服务器直接托管：
 

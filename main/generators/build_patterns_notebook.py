@@ -15,7 +15,7 @@ md("""# TypeSafe 架构模式实验（Architectural Patterns Lab）
 针对官方文档 **[架构模式](https://docs.typesafe.ai/patterns)** 章节的可运行实验笔记，
 用真实的 TypeSafe API（Jev 模型）逐一验证四种架构模式。
 全部实验使用**中文场景与中文提示词**。中文翻译版文档见
-[bald0wang.github.io/jev-cookbook](https://datawhalechina.github.io/jev-cookbook/patterns/)。
+[datawhalechina.github.io/jev-cookbook](https://datawhalechina.github.io/jev-cookbook/patterns/)。
 
 ## 笔记本结构
 

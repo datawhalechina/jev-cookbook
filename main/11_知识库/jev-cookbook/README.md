@@ -68,7 +68,7 @@ Jev 是 TypeSafe AI 的旗舰模型，也是第一个 **System One 模型**：�
   `primitives/`（三种原语详解）、`cookbooks/`（20 篇实战配方）、
   `patterns/`（意图路由、置信度路由、扇出、复合打分）、`sdk/`、`model-jaggedness/`
 - `code/build.py` — 纯标准库的静态站点生成器，`python3 build.py` 一键构建
-- 在线版：https://bald0wang.github.io/jev-docs-zh/
+- 在线版：https://datawhalechina.github.io/jev-cookbook/
 
 **重点看**：`cookbooks/parallel_questions.md`（并行问题为什么比逐个调用快）、
 `cookbooks/classification_using_confidence.md`（用置信度分流）、

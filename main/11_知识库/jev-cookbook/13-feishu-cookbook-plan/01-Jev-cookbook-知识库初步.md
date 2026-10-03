@@ -101,7 +101,7 @@ Gpt 5.6sol
 
 https://github.com/Bald0Wang/jev-docs-zh
 
-https://bald0wang.github.io/jev-docs-zh/
+https://datawhalechina.github.io/jev-cookbook/
 
 案例相关项目:  
 https://github.com/TianyuCodings/NanoJev (四款游戏射击、迷宫、贪吃蛇、位置预测)
