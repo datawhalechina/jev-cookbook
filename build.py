@@ -595,21 +595,36 @@ def fix_img_tags(html_text):
 
 # ---------------------------------------------------------------- 行内渲染
 
-ALLOWED_TAGS = {"a", "abbr", "b", "br", "code", "del", "em", "i", "img", "kbd",
-                "mark", "q", "s", "small", "span", "strong", "sub", "sup", "u"}
+ALLOWED_TAGS = {"a", "abbr", "b", "blockquote", "br", "button", "code", "del",
+                "details", "div", "em", "h1", "h2", "h3", "h4", "h5", "h6", "hr",
+                "i", "img", "kbd", "li", "mark", "ol", "p", "pre", "q", "s",
+                "section", "small", "span", "strong", "sub", "summary", "sup",
+                "table", "tbody", "td", "th", "thead", "tr", "u", "ul"}
 TAG_RE = re.compile(r"</?([a-zA-Z][a-zA-Z0-9]*)((?:\"[^\"]*\"|'[^']*'|[^>])*?)>")
+# 已成形的 HTML 实体不再转义，避免组件内部已 esc 的内容被二次转义
+_ENTITY_RE = re.compile(r"&(?:[a-zA-Z][a-zA-Z0-9]{1,20};|#[0-9]{1,7};|#[xX][0-9a-fA-F]{1,6};)")
+
+def esc_keep_entities(t):
+    parts = _ENTITY_RE.split(t)
+    ents = _ENTITY_RE.findall(t)
+    out = []
+    for i, p in enumerate(parts):
+        out.append(esc(p))
+        if i < len(ents):
+            out.append(ents[i])
+    return "".join(out)
 
 def escape_preserving_tags(text):
     pos = 0
     out = []
     for m in TAG_RE.finditer(text):
-        out.append(esc(text[pos:m.start()]))
+        out.append(esc_keep_entities(text[pos:m.start()]))
         if m.group(1).lower() in ALLOWED_TAGS:
             out.append(m.group(0))
         else:
             out.append(esc(m.group(0)))
         pos = m.end()
-    out.append(esc(text[pos:]))
+    out.append(esc_keep_entities(text[pos:]))
     return "".join(out)
 
 def unesc_md(s):

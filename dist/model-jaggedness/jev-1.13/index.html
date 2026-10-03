@@ -92,7 +92,7 @@ count = sum(result.nouls[f&quot;item_{i}&quot;].noul &gt; YES for i in range(len
 <p><code>jev-1.13</code> 没有经过文本生成训练。虽然你可以通过串联 Choice 强行让它生成，但效果不佳且非常慢。对于数据提取，更好的做法是用正则表达式或生成式模型提取可能的选项，再让 <code>jev-1.13</code> 挑出正确的提取结果。</p>
 <p><strong>替代做法：</strong>当答案空间有界时，把提取变成在选项上做 <a href="../../primitives/choice/">Choice</a>，而不是直接索要取值。如果你确实需要生成文本……为此还有其他模型。</p>
 <div class="callout callout-info"><div class="callout-title"><span class="callout-icon">ℹ️</span>信息</div><div class="callout-body"><p><strong>提醒一下，请避免以下做法：</strong></p>
-<p>&lt;ul&gt;&lt;li&gt;&lt;p&gt;向模型询问代码可以精确计算的问题。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;在一个问题中隐藏多个判断。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;System Two 任务：更多层的间接引用&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;在 <code>state</code> 中提供超出问题所需的上下文。Jev 受&amp;quot;上下文腐化&amp;quot;（context rot）困扰，<code>state</code> 中的无关材料会让你损失准确率。&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p><ul><li><p>向模型询问代码可以精确计算的问题。</p></li><li><p>在一个问题中隐藏多个判断。</p></li><li><p>System Two 任务：更多层的间接引用</p></li><li><p>在 <code>state</code> 中提供超出问题所需的上下文。Jev 受&quot;上下文腐化&quot;（context rot）困扰，<code>state</code> 中的无关材料会让你损失准确率。</p></li></ul></div></div></p>
 <div class="callout callout-tip"><div class="callout-title"><span class="callout-icon">💡</span>提示</div><div class="callout-body"><p>发现了应该列入此清单的失败模式？我们很想听听。可以通过 <a href="https://discord.com/invite/WUujKYBp8s" target="_blank" rel="noopener" target="_blank" rel="noopener">Discord</a> 联系我们。</p></div></div>
   </article>
   <nav class="pager"><a class="pager-prev" href="../../models/"><span>上一篇</span><strong>模型</strong></a><a class="pager-next" href="../../agent-skill/"><span>下一篇</span><strong>Agent 技能</strong></a></nav>

@@ -59,7 +59,7 @@ async def main() -&gt; None:
 
 
 asyncio.run(main())</code></pre></div></div><div class="tab-pane" data-title="Sync"><div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Choice, Noul, Score, TypeSafeClient
-<p>client = TypeSafeClient() state = &amp;quot;I was charged twice. Please help ASAP.&amp;quot; questions = { &amp;quot;billing&amp;quot;: Noul(instructions=&amp;quot;Is this about billing?&amp;quot;), &amp;quot;tone&amp;quot;: Choice( instructions=&amp;quot;What is the tone?&amp;quot;, criteria={&amp;quot;calm&amp;quot;: None, &amp;quot;angry&amp;quot;: None} ), &amp;quot;urgency&amp;quot;: Score( instructions=&amp;quot;How urgent is this?&amp;quot;, criteria=[&amp;quot;low&amp;quot;, &amp;quot;medium&amp;quot;, &amp;quot;high&amp;quot;] ), } result = client.system_one(state, questions) print( result.nouls[&amp;quot;billing&amp;quot;].noul, result.choices[&amp;quot;tone&amp;quot;].choice, result.scores[&amp;quot;urgency&amp;quot;].score, )</code>&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p>client = TypeSafeClient() state = &quot;I was charged twice. Please help ASAP.&quot; questions = { &quot;billing&quot;: Noul(instructions=&quot;Is this about billing?&quot;), &quot;tone&quot;: Choice( instructions=&quot;What is the tone?&quot;, criteria={&quot;calm&quot;: None, &quot;angry&quot;: None} ), &quot;urgency&quot;: Score( instructions=&quot;How urgent is this?&quot;, criteria=[&quot;low&quot;, &quot;medium&quot;, &quot;high&quot;] ), } result = client.system_one(state, questions) print( result.nouls[&quot;billing&quot;].noul, result.choices[&quot;tone&quot;].choice, result.scores[&quot;urgency&quot;].score, )</code></pre></div></div></div></p>
 <h2 id="typed-system_one-responses">
   类型化的 <code>system_one</code> 响应
 </h2>
@@ -157,7 +157,7 @@ with TypeSafeClient(
 <div class="tabs"><div class="tab-pane" data-title="Client"><div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import RetryPolicy, TypeSafeClient
 
 client = TypeSafeClient(retry=RetryPolicy(max_retries=3, backoff_max=0.2, timeout=1.0))</code></pre></div></div><div class="tab-pane" data-title="Per-call"><div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import RetryPolicy
-<p>client.system_one( state, questions, retry=RetryPolicy(max_retries=3, backoff_max=0.2, timeout=1.0) )</code>&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p>client.system_one( state, questions, retry=RetryPolicy(max_retries=3, backoff_max=0.2, timeout=1.0) )</code></pre></div></div></div></p>
 <h2 id="error-handling">
   错误处理
 </h2>
