@@ -29,6 +29,7 @@
 | `24-polydao-jev-engineering/` | [X @polydao 长文「How to Cut Your Agent Bill by 90%…」](https://x.com/polydao/status/2104783226833186920) | `文章快照 2026-10-02` | 10 |
 | `25-vixhal-gero-rl/` | [X @TheVixhal 长文「Building an RL fine-tuning platform…」](https://x.com/TheVixhal/status/2106439792800198966) | `文章快照 2026-10-03` | 1 |
 | `26-akshay-jev-judge/` | [X @akshay_pachaar 长文「Build a Jev Judge」](https://x.com/akshay_pachaar/status/2102087107410002345) | `文章快照 2026-10-03` | 7 |
+| `27-avichawla-diy-jev/` | [X @_avichawla 长文「Build your own Jev (100% local)」](https://x.com/_avichawla/status/2101563610644496464) | `文章快照 2026-10-03` | 15 |
 | `laya-model/` | [NandhaKishorM/laya](https://github.com/NandhaKishorM/laya) | `本地接口快照 2026-09-23；模型卡 2026-09-20` | 8 |
 
 ## 收录原则
@@ -67,6 +68,7 @@
 | 24 polydao | 无（译文与正文 9 图收录）；X 页面框架、互动数据与推广卡片已丢弃 |
 | 25 vixhal | 无（纯文字长文，原文无配图，全文收录） |
 | 26 akshay | 无（译文与正文 6 图收录）；X 页面框架与推广元素已丢弃 |
+| 27 avichawla | 无（译文与正文 14 图收录）；X 页面框架与推广元素已丢弃 |
 | Laya | 不收录约 2.2 GB 的模型权重与 tokenizer / encoder 文件；请按 `laya-model/README.md` 下载或指定本机 checkpoint |
 
 ## 许可
@@ -97,4 +99,5 @@
 | 24 polydao | © @polydao（Mr. Buzzoni），X 平台发布；译文为非官方社区翻译，仅供学习参考 |
 | 25 vixhal | © @TheVixhal（vixhaℓ），X 平台发布；译文为非官方社区翻译，仅供学习参考 |
 | 26 akshay | © @akshay_pachaar（Akshay），X 平台发布；译文为非官方社区翻译，仅供学习参考 |
+| 27 avichawla | © @_avichawla（Avi Chawla），X 平台发布；译文为非官方社区翻译，仅供学习参考 |
 | Laya | ModelScope 模型卡标注 Apache-2.0；上游代码许可请按仓库 LICENSE 执行 |
