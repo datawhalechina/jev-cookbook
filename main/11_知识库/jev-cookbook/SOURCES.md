@@ -32,6 +32,7 @@
 | `27-avichawla-diy-jev/` | [X @_avichawla 长文「Build your own Jev (100% local)」](https://x.com/_avichawla/status/2101563610644496464) | `文章快照 2026-10-03` | 15 |
 | `28-pg-jev/` | [微信公众号「AI工程化」pg-jev 上手文](https://mp.weixin.qq.com/s/FG9c3NCcbVz-6fhWhTMiug) + [realZachi/pg-jev README](https://github.com/realZachi/pg-jev) | `文章快照 + README(master, 2026-10-03) 2026-10-04` | 3 |
 | `29-wechat-startlux-decision/` | [微信公众号「机器之心」StartLux 报道](https://mp.weixin.qq.com/s/finDwlosNkRSSstuKlwQbg) | `文章快照 2026-10-04` | 9 |
+| `30-wechat-jev-skeptic/` | [微信公众号「数字生命情酱」Jev 质疑实测](https://mp.weixin.qq.com/s/kvXWpHf68k-aKyonmyHIgA) | `文章快照 2026-10-05` | 26 |
 | `laya-model/` | [NandhaKishorM/laya](https://github.com/NandhaKishorM/laya) | `本地接口快照 2026-09-23；模型卡 2026-09-20` | 8 |
 
 ## 收录原则
@@ -73,6 +74,7 @@
 | 27 avichawla | 无（译文与正文 14 图收录）；X 页面框架与推广元素已丢弃 |
 | 28 pg-jev | 公众号文为中文原创全文收录（原文无配图）；README 仅取单文件与 1 张头图，代码与测试目录未收录 |
 | 29 机器之心 | 无（正文与 8 张配图全文收录）；文末投稿邮箱与转载声明按原文保留意图处理（已在译文头部注明） |
+| 30 情酱 | 无（正文与 25 张配图全文收录，含末尾数据口径声明） |
 | Laya | 不收录约 2.2 GB 的模型权重与 tokenizer / encoder 文件；请按 `laya-model/README.md` 下载或指定本机 checkpoint |
 
 ## 许可
@@ -106,4 +108,5 @@
 | 27 avichawla | © @_avichawla（Avi Chawla），X 平台发布；译文为非官方社区翻译，仅供学习参考 |
 | 28 pg-jev | 公众号文字归「AI工程化」所有；README 为 PostgreSQL License 开源项目，README 译文为非官方翻译 |
 | 29 机器之心 | 腾讯/机器之心版权所有；快照仅供学习，转载需联系原公众号授权 |
+| 30 情酱 | 公众号「数字生命情酱」版权所有；快照仅供学习，转载需联系原作者授权 |
 | Laya | ModelScope 模型卡标注 Apache-2.0；上游代码许可请按仓库 LICENSE 执行 |
