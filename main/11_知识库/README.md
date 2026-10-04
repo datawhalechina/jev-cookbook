@@ -4,7 +4,7 @@
 
 ## 快照范围
 
-本章含从上游 jev-cookbook 导出的 21 个资料板块和 Laya 示例，另收录 5 篇外部译文（23 Clef 决策模型，Cloudflare Blog；24 Jev 工程实战，@polydao；25 Gero-4B RL 训练平台，@TheVixhal；26 Jev 评审实战，@akshay_pachaar；27 本地自制 Jev，@_avichawla）。目录重排和收录范围见[来源清单](jev-cookbook/SOURCES.md)，该清单记录了 2026-09-23 打包时各上游 commit、文件数量、未收录内容和许可。快照日期不代表资料仍是上游最新版本。
+本章含从上游 jev-cookbook 导出的 21 个资料板块和 Laya 示例，另收录 6 篇外部文章（23 Clef 决策模型，Cloudflare Blog；24 Jev 工程实战，@polydao；25 Gero-4B RL 训练平台，@TheVixhal；26 Jev 评审实战，@akshay_pachaar；27 本地自制 Jev，@_avichawla；28 pg-jev 上手，「AI工程化」）。目录重排和收录范围见[来源清单](jev-cookbook/SOURCES.md)，该清单记录了 2026-09-23 打包时各上游 commit、文件数量、未收录内容和许可。快照日期不代表资料仍是上游最新版本。
 
 ```mermaid
 flowchart LR
@@ -49,6 +49,7 @@ license: "代码、数据或文章的再使用条件"
 | [Gero-4B 训练平台译文](jev-cookbook/25-vixhal-gero-rl/article.md) | 用 MLX 在 MacBook 上把 Qwen3-4B 训成 Jev 式决策模型的完整代码路径：奖励塑形、校准分组、结果复现 | 个人复现教程；结果为作者单机自报，未见第三方复测 |
 | [Jev 评审实战译文](jev-cookbook/26-akshay-jev-judge/article.md) | 用 Jev 替代 LLM-as-judge 评估智能体：依据性/行动核实等有界判断、与 Opik 集成的完整代码 | 实操教程；示例数据与结论为作者自报，规模与基线未附 |
 | [本地自制 Jev 译文](jev-cookbook/27-avichawla-diy-jev/article.md) | 不重训练、用 next-token 打分把开源 LLM 变成本地决策引擎：受约束选项、概率分布、SGLang 部署与延迟实测 | 教育博主教程；benchmark 为作者单机自报口径 |
+| [pg-jev 上手](jev-cookbook/28-pg-jev/article.md) · [项目 README 中译](jev-cookbook/28-pg-jev/README.md) | 把 Jev 包装成 SQL 函数的 PostgreSQL 扩展：自然语言 WHERE/排序/分类，含性能实测与四条部署注意 | 中文原创上手文 + README 非官方中译；实测数字为公众号作者自报口径 |
 | Laya 资料 | [架构](jev-cookbook/19-wechat-laya-architecture/article.md)、[开源发布](jev-cookbook/20-wechat-laya-oss-release/article.md)、[榜单报道](jev-cookbook/21-wechat-laya-hf-trending/article.md)、[本地接口](jev-cookbook/laya-model/README.md) | 参数、排行榜和下载信息都要回到当前模型卡复核 |
 | 其他板块 | trader、技能、SDK、飞书研究与公众号文章 | 私有文档或受版权保护的内容不能因被收录就自由再分发 |
 
