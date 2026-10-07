@@ -34,6 +34,7 @@
 | `29-wechat-startlux-decision/` | [微信公众号「机器之心」StartLux 报道](https://mp.weixin.qq.com/s/finDwlosNkRSSstuKlwQbg) | `文章快照 2026-10-04` | 9 |
 | `30-wechat-jev-skeptic/` | [微信公众号「数字生命情酱」Jev 质疑实测](https://mp.weixin.qq.com/s/kvXWpHf68k-aKyonmyHIgA) | `文章快照 2026-10-05` | 26 |
 | `31-avb-choice-invariance/` | [X @neural_avb 长文「Training choice-order invariance into JEV models」](https://x.com/neural_avb/status/2107173836273938662) | `文章快照 2026-10-05` | 6 |
+| `32-omarsar-jev-as-judge/` | [X @omarsar0 长文「Jev-as-a-Judge for Agent Evaluations」](https://x.com/omarsar0/status/2107472222398886011) | `文章快照 2026-10-07` | 5 |
 | `laya-model/` | [NandhaKishorM/laya](https://github.com/NandhaKishorM/laya) | `本地接口快照 2026-09-23；模型卡 2026-09-20` | 8 |
 
 ## 收录原则
