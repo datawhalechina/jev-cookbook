@@ -36,6 +36,7 @@
 | `31-avb-choice-invariance/` | [X @neural_avb 长文「Training choice-order invariance into JEV models」](https://x.com/neural_avb/status/2107173836273938662) | `文章快照 2026-10-05` | 6 |
 | `32-omarsar-jev-as-judge/` | [X @omarsar0 长文「Jev-as-a-Judge for Agent Evaluations」](https://x.com/omarsar0/status/2107472222398886011) | `文章快照 2026-10-07` | 5 |
 | `33-arena-jev-router-eval/` | [X @arena 推文串「We evaluated Jev Router on Agent Arena」](https://x.com/arena/status/2107961555363213482)（全 6 条含跟帖） | `文章快照 2026-10-08` | 5 |
+| `34-unsloth-train-decision-model/` | [Unsloth 官方文档「Train your own Decision Model with Unsloth」](https://unsloth.ai/docs/basics/train-your-own-decision-model-with-unsloth) | `文章快照 2026-10-08` | 7 |
 | `laya-model/` | [NandhaKishorM/laya](https://github.com/NandhaKishorM/laya) | `本地接口快照 2026-09-23；模型卡 2026-09-20` | 8 |
 
 ## 收录原则
