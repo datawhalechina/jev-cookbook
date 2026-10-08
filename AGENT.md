@@ -8,6 +8,7 @@
 
 - **Jev Cookbook 中文课程站**：首页介绍课程、十一章目录与学习路线；`course/01/` 至 `course/11/` 从 `main/` 各章 README 生成在线导读，Notebook 与工程通过仓库链接阅读和运行。
 - **配套中文参考文档**：`introduction/` 为 docs.typesafe.ai 社区翻译的入口，`content/` 经 `build.py` 生成静态页面，保留原文档 URL 路径。
+- **拓展阅读**：`materials/` 按主题挂载第十一章的全部知识库；首页和侧栏均有入口，子文档自动发现并进入搜索。板块元数据维护于 `site/reading.json`。
 - **章节实验与项目材料**：`main/` 按十一章组织 Notebook、生成器、工程与知识库。实时 API、归档回放和人工离线示例的验证范围，以各章说明为准。
 
 ## 目录与关键文件

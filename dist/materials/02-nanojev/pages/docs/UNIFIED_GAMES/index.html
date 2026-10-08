@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>One checkpoint for Maze, Snake, and ViZDoom · Jev Cookbook</title>
+<meta name="description" content="One checkpoint for Maze, Snake, and ViZDoom · Jev Cookbook 中文课程与参考文档" />
+<link rel="stylesheet" href="../../../../../assets/style.css" />
+<link rel="stylesheet" href="../../../../../assets/course.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23286852'/%3E%3Ctext x='21' y='46' font-size='44' font-family='sans-serif' fill='white'%3EJ%3C/text%3E%3C/svg%3E" />
+</head>
+<body class="reading-page">
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="../../../../../"><span class="brand-mark">J</span>Jev Cookbook</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" aria-label="搜索课程与文档" placeholder="搜索课程与文档…" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <a class="course-nav-link" href="../../../../../">课程首页</a>
+    <a class="course-nav-link" href="../../../../../introduction/">中文文档</a>
+    <a class="course-nav-link" href="../../../../../materials/">拓展阅读</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://github.com/datawhalechina/jev-cookbook" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><a class="nav-home" href="../../../../../">课程首页</a><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">课程目录<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../course/01/">01 · 认识 Jev</a><a class="nav-item" href="../../../../../course/02/">02 · 核心概念</a><a class="nav-item" href="../../../../../course/03/">03 · 架构模式</a><a class="nav-item" href="../../../../../course/04/">04 · 实战指南</a><a class="nav-item" href="../../../../../course/05/">05 · 智能家居实验</a><a class="nav-item" href="../../../../../course/06/">06 · 模型评测</a><a class="nav-item" href="../../../../../course/07/">07 · 实战应用</a><a class="nav-item" href="../../../../../course/08/">08 · 前沿研究</a><a class="nav-item" href="../../../../../course/09/">09 · Agent 集成</a><a class="nav-item" href="../../../../../course/10/">10 · 本地模型</a><a class="nav-item" href="../../../../../course/11/">11 · 知识库</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../introduction/">简介</a><a class="nav-item" href="../../../../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../../../../introduction/machine-learning-primer/">AI 入门</a><a class="nav-item" href="../../../../../introduction/coding-agents/">Jev 与编码智能体</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../concepts/system-one/">System One</a><a class="nav-item" href="../../../../../concepts/state/">状态（State）</a><a class="nav-item" href="../../../../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../../../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../primitives/">原语概览</a><a class="nav-item" href="../../../../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../../../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../../../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../../../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../patterns/">模式概览</a><a class="nav-item" href="../../../../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../../../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../../../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../../../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../cookbooks/">实战指南概览</a><a class="nav-item" href="../../../../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../../../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../../../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../../../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../../../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../../../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../../../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../../../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../../../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../../../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../../../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../../../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../../../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../../../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../../../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../../../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../../../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../../../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../demos/">示例概览</a><a class="nav-item" href="../../../../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../api/">HTTP API 参考</a><a class="nav-item" href="../../../../../models/">模型</a><a class="nav-item" href="../../../../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../../../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../../../../legal/">法律条款</a></div></div><div class="nav-group" data-group="9"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../sdk/">SDK 概览</a><a class="nav-item" href="../../../../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../../../../sdk/python/usage/">用法</a><a class="nav-item" href="../../../../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../../../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../../../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../../../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../../../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../../../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../../../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../../../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../../../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../../../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../../../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../../../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../../../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div><div class="nav-group open" data-group="10"><button class="nav-group-title" type="button">拓展阅读<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../materials/">全部知识库</a><a class="nav-item" href="../../../../../materials/sources/">来源、版本与许可</a><a class="nav-item" href="../../../../../materials/01-official-docs-zh/">TypeSafe 官方文档中文翻译</a><a class="nav-item" href="../../../../../materials/02-nanojev/">NanoJev：小型决策模型</a><a class="nav-item" href="../../../../../materials/03-jev-trader/">Jev Trader：交易决策工程</a><a class="nav-item" href="../../../../../materials/04-fast-jev-compaction/">Fast Jev Compaction：上下文压缩</a><a class="nav-item" href="../../../../../materials/05-awesome-jev/">Awesome Jev：生态资料导航</a><a class="nav-item" href="../../../../../materials/06-typesafe-skills/">TypeSafe Skills：代理技能</a><a class="nav-item" href="../../../../../materials/07-jev-ultrafast/">Jev Ultrafast：浏览器决策</a><a class="nav-item" href="../../../../../materials/08-eve-decision-models/">Eve：决策模型研究</a><a class="nav-item" href="../../../../../materials/09-typesafe-sdk-python/">TypeSafe Python SDK</a><a class="nav-item" href="../../../../../materials/10-feishu-research/">Jev 深度研究报告</a><a class="nav-item" href="../../../../../materials/11-typesafe-mario/">TypeSafe Mario：游戏决策案例</a><a class="nav-item" href="../../../../../materials/12-wechat-article/">聊聊 Jev 模型到底是什么</a><a class="nav-item" href="../../../../../materials/13-feishu-cookbook-plan/">Cookbook 规划与技术分析</a><a class="nav-item" href="../../../../../materials/14-feishu-lecture/">Jev 模型应用入门与实践</a><a class="nav-item" href="../../../../../materials/15-jevbench/">JevBench：独立评测基准</a><a class="nav-item" href="../../../../../materials/16-wechat-agent-engineering/">把 Agent 的判断题拆给 Jev</a><a class="nav-item" href="../../../../../materials/17-wechat-silicon-grail/">Jev：在硅基世界掷圣杯</a><a class="nav-item" href="../../../../../materials/rerank-lab/">Jev 能替代 Rerank 模型吗</a><a class="nav-item" href="../../../../../materials/laya-arch/">Laya 决策模型架构解析</a><a class="nav-item" href="../../../../../materials/laya-oss/">Laya 开源发布</a><a class="nav-item" href="../../../../../materials/laya-trend/">Laya 与 Hugging Face 社区</a><a class="nav-item" href="../../../../../materials/22-wechat-cookbook-intro/">Jev Cookbook 中文入门路线</a><a class="nav-item" href="../../../../../materials/clef/">Clef：开源决策模型与 RL 平台</a><a class="nav-item" href="../../../../../materials/polydao/">Jev 工程与置信度路由</a><a class="nav-item" href="../../../../../materials/25-vixhal-gero-rl/">Gero-4B：RL 微调平台</a><a class="nav-item" href="../../../../../materials/26-akshay-jev-judge/">Build a Jev Judge：评审实战</a><a class="nav-item" href="../../../../../materials/27-avichawla-diy-jev/">自己动手做一个本地 Jev</a><a class="nav-item" href="../../../../../materials/28-pg-jev/">pg-jev：在 SQL 中做语义判断</a><a class="nav-item" href="../../../../../materials/29-wechat-startlux-decision/">StartLux 开源决策模型</a><a class="nav-item" href="../../../../../materials/30-wechat-jev-skeptic/">Jev 演示的独立质疑与实测</a><a class="nav-item" href="../../../../../materials/31-avb-choice-invariance/">训练选项顺序不变性</a><a class="nav-item" href="../../../../../materials/32-omarsar-jev-as-judge/">Jev-as-a-Judge：智能体评估</a><a class="nav-item" href="../../../../../materials/33-arena-jev-router-eval/">Arena：Jev Router 独立评测</a><a class="nav-item" href="../../../../../materials/34-unsloth-train-decision-model/">用 Unsloth 训练决策模型</a><a class="nav-item" href="../../../../../materials/laya-model/">Laya：本地接口与微调方案</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content" id="main-content"><article class="doc">
+<p class="course-breadcrumb"><a href="../../../../../materials/">拓展阅读</a> / <a href="../../../../../materials/02-nanojev/">NanoJev：小型决策模型</a></p><p class="page-desc">知识库收录材料 · <a href="https://github.com/datawhalechina/jev-cookbook/blob/main/main/11_%E7%9F%A5%E8%AF%86%E5%BA%93/jev-cookbook/02-nanojev/docs/UNIFIED_GAMES.md" target="_blank" rel="noopener">原始文件 ↗</a> · <a href="../../../../../materials/sources/">来源、版本与许可</a></p><h1 id="one-checkpoint-for-maze-snake-and-vizdoom">One checkpoint for Maze, Snake, and ViZDoom</h1>
+<p>This pipeline trains one shared NanoJev checkpoint to answer dynamic action Choice questions and action-conditioned Boolean outcome questions across three games. It predicts probabilities directly; it does not generate action text. Each loss-control run contains one complete shared model for all three tasks. Training warm-starts from an existing NanoJev checkpoint.</p>
+<p>The cycle is:</p>
+<p><strong>Jev episodes → policy SFT → freeze the resulting behavior policy → complete episodes → observed-outcome training plus policy retention → Q-based control → collect fresh episodes under the new frozen controller.</strong></p>
+<div class="mermaid-frame"><pre class="mermaid-source" hidden>flowchart LR
+    A[&quot;Maze · Snake · ViZDoom&quot;] --&gt; B[&quot;Complete Jev-guided episodes&quot;]
+    B --&gt; C[&quot;One shared policy: 200 + 100 SFT updates&quot;]
+    C --&gt; D[&quot;Freeze policy and collect its own complete episodes&quot;]
+    D --&gt; E[&quot;Executed action + actual terminal success&quot;]
+    E --&gt; F[&quot;Paired proper reward / Brier / CE\n25% policy retention&quot;]
+    F --&gt; G[&quot;Independent success probability for every offered action&quot;]
+    G --&gt; H[&quot;Q-based controller: play and evaluate&quot;]
+    H --&gt; D</pre><div class="mermaid">flowchart LR
+    A[&quot;Maze · Snake · ViZDoom&quot;] --&gt; B[&quot;Complete Jev-guided episodes&quot;]
+    B --&gt; C[&quot;One shared policy: 200 + 100 SFT updates&quot;]
+    C --&gt; D[&quot;Freeze policy and collect its own complete episodes&quot;]
+    D --&gt; E[&quot;Executed action + actual terminal success&quot;]
+    E --&gt; F[&quot;Paired proper reward / Brier / CE\n25% policy retention&quot;]
+    F --&gt; G[&quot;Independent success probability for every offered action&quot;]
+    G --&gt; H[&quot;Q-based controller: play and evaluate&quot;]
+    H --&gt; D</div></div>
+<p>The post-training stage uses <strong>RLCD-inspired paired proper-reward learning</strong>. Its <code>paired_brier_pg</code> objective supplies a Monte Carlo gradient estimator for the expected Brier objective, with direct Brier and observed CE controls. This explicit objective is not a recovered TypeSafe training recipe. See the <a href="https://docs.typesafe.ai/introduction/machine-learning-primer" target="_blank" rel="noopener">official primer</a> and the repository&#x27;s <a href="../../../../../materials/02-nanojev/pages/docs/RLCD_EXPERIMENT/">objective specification</a>.</p>
+<h2 id="environment-contract">Environment contract</h2>
+<p>Each adapter implements <code>reset(seed) -&gt; (observation, info)</code>, <code>step(action_id) -&gt; (observation, reward, terminated, truncated, info)</code>, and <code>close()</code>. The JSON observation contains <code>task</code>, <code>state</code>, <code>candidates</code>, <code>remaining_steps</code>, and <code>step</code>. The policy receives only the text state and offered action descriptions. Evaluation information is not appended to that input. Terminal states offer no candidates; single-candidate decisions execute without fabricating a multi-class Choice training example.</p>
+<div class="table-wrap"><table><thead><tr><th>Task</th><th>What the model sees and controls</th><th>Success and time accounting</th></tr></thead><tbody><tr><td>Maze</td><td>A <strong>5×5 local window</strong>, current position and goal, recent physical events, and the <strong>complete observed edge graph</strong> in compact row masks. Only untried directions are offered, including directions that may collide.</td><td>Reach the goal before the physical-attempt deadline. When no untried direction remains locally, code can reposition along previously traversed open edges. Every reposition move consumes the same budget and is logged separately.</td></tr><tr><td>Snake</td><td>Full current body, heading, current food, remaining budget, and recent events. Every non-reverse direction is offered, including fatal moves. No food RNG or future food positions enter the input.</td><td>Collect the specified number of additional food items after reset before the attempt deadline. Collision is failure; merely surviving the deadline is not success.</td></tr><tr><td>Shooting</td><td>ViZDoom <code>basic</code> or <code>predict_position</code>, visible label bounding boxes, player health/ammo/pose, and at most four recent observed frames. Four actions: left, right, shoot, noop. Basic uses strafing; predict_position uses turning.</td><td>A positive <code>KILLCOUNT</code> delta defines success, independently of reward. Native timeout, death, scripted termination without a kill, and the declared task deadline are terminal failures.</td></tr></tbody></table></div>
+<p>The shooting adapter uses synchronous headless <code>PLAYER</code> mode. It holds each chosen action for up to <code>frame_skip</code> physical Doom ticks, stopping at the first goal/terminal tick. Internal one-tick advances preserve the kill counter before a scripted map exit can reset the native clock. <code>max_steps</code> counts model decisions; optional <code>max_ticks</code> further limits controlled physical ticks. The last action is shortened to the remaining deadline. Native rewards, kills, damage, ammo use, and actual ticks are recorded separately. The policy uses <strong>visible object labels</strong>; pixel encoding is a separate future extension. Full objects, sectors, and automap information are disabled.</p>
+<p>All configured deadlines are part of the tasks, so they produce <code>terminated=True</code>, <code>truncated=False</code>. The collector rejects external truncation as an outcome label rather than calling an unfinished episode a failure.</p>
+<p>The frozen curriculum in <a href="https://github.com/TianyuCodings/NanoJev/blob/HEAD/configs/unified_games_v1_cases.jsonl">the case file</a> contains 228 episodes: Maze 8×8, 16×16, and 50×50; Snake 8×8, 10×10, and 12×12; and both shooting scenarios. Maze uses a 5×5 local observation window. Every case records its exact topology, deadline, Snake target, and shooting frame skip. Results are reported separately for each environment variant. The completed Jev-guided collection has <strong>16,637 executed decisions</strong>: 14,503 have model action answers and 2,134 are forced singleton moves. The base collection contains 192 episodes and the extension 36. These counts are collection sizes, not a model-quality claim or a count of network API calls.</p>
+<h2 id="what-the-probability-target-means">What the probability target means</h2>
+<p>For the presented observation/history <code>h</code>, an executed action <code>a</code>, a frozen continuation policy <code>pi_old</code>, and the remaining task deadline, learn:</p>
+<div class="codeblock"><span class="cb-title">text</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-text">Q_pi_old(h, a) = P(task succeeds before its deadline | h, execute a,
+                  then follow pi_old)
+Y = actual final episode success, either false or true</code></pre></div>
+<p>The Choice policy produces one normalized distribution over the current candidate set. The Q interface asks a separate Boolean question for each candidate: several actions can each have high success probability, so these values are <strong>not normalized across actions</strong>. <code>q_greedy</code> ranks the independent true probabilities, then applies the declared exploration rule. The resulting action distribution is distinct from those Boolean predictions.</p>
+<p>Each retained transition gets an outcome question <strong>only for its executed action</strong>. The final episode outcome supplies <code>gold</code>, with <code>gold_label_kind=&#x27;observed_outcome&#x27;</code>. Unexecuted actions receive no imagined counterfactual labels. No one-step safety rule, action preference distribution, or bootstrapped estimate substitutes for that completed-episode observation. Outcome training retains every recorded decision transition, including forced singleton actions. Internal Maze reposition moves consume the physical budget and appear in movement logs; they are not separate model decision questions. Selecting a fixed number of states based on the final episode length would make inclusion depend on future termination and can bias the success target. Policy SFT may use a bounded per-episode subset because its targets are supplied state-conditional API distributions.</p>
+<p>The frozen policy identity covers the checkpoint, controller, exploration rate, sampling seed, and implementation hashes. Collection uses a fixed checkpoint throughout; training starts only after its episode manifest is finished. Changing any continuation rule changes the prediction task. A Q-based controller can choose the highest predicted <code>Q_pi_old</code>, but this does <strong>not</strong> make that prediction calibrated for continuing with the resulting <code>pi_new</code>. Freeze the new controller, collect new complete episodes, and train a new version.</p>
+<p>For each Boolean question, <code>paired_brier_pg</code> draws <code>M=32</code> independent predictive categories with replacement. These samples are <strong>not physical game actions</strong>:</p>
+<div class="codeblock"><span class="cb-title">text</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-text">R = (2/M) sum_i 1[A_i = Y]
+    - sum_{i != j} 1[A_i = A_j] / (M * (M - 1))
+E[R | Y] = 2 p[Y] - sum_k p[k]^2 = 1 - vector_Brier(p, Y)</code></pre></div>
+<p>The detached local credit and conditional baseline implement the score-function gradient specified in <code>calibrated_objectives.py</code>. There is no PPO clipping, group-standard-deviation normalization, or policy-entropy calibration claim. Direct Brier is the required control: it optimizes the same expected proper objective without predictive Monte Carlo sampling. Lower sampled surrogate loss is not itself a better reported probability score.</p>
+<h2 id="reproduce-the-pipeline">Reproduce the pipeline</h2>
+<p>Run commands from the repository root in a virtual environment. Install <code>requirements-toy.txt</code> for model training and <code>requirements-vizdoom.txt</code> for shooting. Live Jev collection also requires Node.js with <code>--env-file</code> support and a separately configured, ignored <code>.env</code>; no credential values belong in case files, checkpoints, or reports. <code>checkpoints/starting</code> below must contain the complete DecisionModel bundle, including weights, config, tokenizer, and backbone config.</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python -m pip install -r requirements-toy.txt -r requirements-vizdoom.txt
+python scripts/test_unified_grid_envs.py
+python scripts/test_unified_doom_env.py --real
+python -m unittest discover -s scripts -p test_unified_training.py -v
+
+python - &lt;&lt;&#x27;PY&#x27;
+import json
+from pathlib import Path
+rows = [json.loads(line) for line in
+        Path(&quot;configs/unified_games_v1_cases.jsonl&quot;).read_text().splitlines()]
+base = {&quot;maze8&quot;, &quot;snake8&quot;, &quot;doom_basic&quot;, &quot;doom_predict_position&quot;}
+root = Path(&quot;data/unified&quot;)
+root.mkdir(parents=True, exist_ok=True)
+for name, selected in (
+    (&quot;base_cases&quot;, [r for r in rows if r[&quot;variant&quot;] in base]),
+    (&quot;extension_cases&quot;, [r for r in rows if r[&quot;variant&quot;] not in base]),
+):
+    with (root / f&quot;{name}.jsonl&quot;).open(&quot;x&quot;) as handle:
+        for row in selected:
+            handle.write(json.dumps(row, sort_keys=True) + &quot;\n&quot;)
+PY
+
+python scripts/unified_game_pipeline.py rollout \
+  --cases data/unified/base_cases.jsonl --engine jev \
+  --controller greedy --epsilon 0.10 --seed 17 --env-batch 4 \
+  --env-file .env --journal-dir research/private_unified_jev \
+  --budget-usd 2 --output data/unified/jev_base.jsonl
+
+python scripts/unified_game_pipeline.py dataset \
+  --episodes data/unified/jev_base.jsonl --role policy \
+  --journal-dir research/private_unified_jev \
+  --max-states-per-episode 24 --output data/unified/policy_base
+
+python scripts/unified_game_pipeline.py rollout \
+  --cases data/unified/extension_cases.jsonl --engine jev \
+  --controller greedy --epsilon 0.10 --seed 17 --env-batch 4 \
+  --env-file .env --journal-dir research/private_unified_jev_extension \
+  --budget-usd 2 --output data/unified/jev_extension.jsonl
+python scripts/unified_game_pipeline.py dataset \
+  --episodes data/unified/jev_extension.jsonl --role policy \
+  --journal-dir research/private_unified_jev_extension \
+  --retention data/unified/policy_base --max-states-per-episode 24 \
+  --output data/unified/policy_full
+
+python scripts/train_unified_games.py --input data/unified/policy_base \
+  --stage sft --validate-only
+CUDA_VISIBLE_DEVICES=0 python scripts/train_unified_games.py \
+  --input data/unified/policy_base --init-checkpoint checkpoints/starting \
+  --output-dir runs/sft_base --stage sft --loss ce \
+  --steps 200 --eval-every 50 --batch-questions 12 \
+  --microbatch-questions 4 --max-length 8192 \
+  --backbone-lr 2e-5 --head-lr 2e-4 --gradient-checkpointing \
+  --precision bf16 --seed 17 --disable-native-triton
+CUDA_VISIBLE_DEVICES=0 python scripts/train_unified_games.py \
+  --input data/unified/policy_full --init-checkpoint runs/sft_base \
+  --output-dir runs/sft_unified --stage sft --loss ce \
+  --steps 100 --eval-every 100 --batch-questions 24 \
+  --microbatch-questions 8 --max-microbatch-tokens 32768 --max-length 8192 \
+  --backbone-lr 2e-5 --head-lr 2e-4 --gradient-checkpointing \
+  --precision bf16 --seed 17 --disable-native-triton
+
+CUDA_VISIBLE_DEVICES=0 python scripts/unified_game_pipeline.py rollout \
+  --cases configs/unified_games_v1_cases.jsonl --engine checkpoint \
+  --checkpoint runs/sft_unified --controller sample --epsilon 0.15 \
+  --seed 17 --env-batch 4 --max-length 8192 \
+  --output data/unified/frozen_sft_episodes.jsonl
+
+python scripts/unified_game_pipeline.py dataset \
+  --episodes data/unified/frozen_sft_episodes.jsonl --role outcome \
+  --retention data/unified/policy_full --max-states-per-episode 0 \
+  --output data/unified/outcomes_v1
+python scripts/train_unified_games.py --input data/unified/outcomes_v1 \
+  --stage critic --validate-only
+
+for loss in paired_brier_pg brier ce; do
+  CUDA_VISIBLE_DEVICES=0 python scripts/train_unified_games.py \
+    --input data/unified/outcomes_v1 --init-checkpoint runs/sft_unified \
+    --output-dir &quot;runs/critic_${loss}_v1&quot; --stage critic --loss &quot;$loss&quot; \
+    --reward-samples 32 --balance task --retention-fraction 0.25 \
+    --steps 200 --eval-every 200 --batch-questions 24 \
+    --microbatch-questions 8 --max-microbatch-tokens 32768 --max-length 8192 \
+    --backbone-lr 2e-5 --head-lr 2e-4 --gradient-checkpointing \
+    --precision bf16 --seed 17 --disable-native-triton
+done</code></pre></div>
+<p>These are the prototype schedules: 200 base SFT updates, 100 additional SFT updates on the full curriculum, and 200 updates for each outcome-loss control. Each stage loads the preceding selected <code>best.safetensors</code> with a fresh optimizer; the second SFT stage is not an uninterrupted optimizer continuation. Update counts do not imply measured performance. Use fresh output paths; completed collections and runs are not overwritten. The tracked case file fixes the 228-episode curriculum; the optional <code>cases</code> subcommand generates a new smaller base curriculum rather than reproducing that full frozen file. API collection must be rerun to obtain new live answers, which need not be byte-identical. Policy targets require matching successful API receipts for the same state/question; malformed or ineligible targets are not repaired silently.</p>
+<p>SFT gives equal population weight to the three tasks. Critic training also balances tasks and assigns 25% total loss weight to retained policy CE and 75% to observed-outcome loss. Every effective update contains the required task/role cells, with weights correcting integer batch allocations. The direct Brier and CE controls use the same starting weights, data, seed, update count, and retention schedule. <code>--max-states-per-episode 0</code> is mandatory for outcome datasets; the builder rejects a nonzero cap to avoid future-length selection bias. Token limits reject oversized inputs rather than silently removing observed graph memory; increase the limit and budget explicitly for larger maps.</p>
+<p>Run all three loss controls on the same frozen cases with the same Q-controller settings. This executes new trajectories on all 228 cases and also creates fresh continuation-policy data for the next iteration:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">for loss in paired_brier_pg brier ce; do
+  CUDA_VISIBLE_DEVICES=0 python scripts/unified_game_pipeline.py rollout \
+    --cases configs/unified_games_v1_cases.jsonl --engine checkpoint \
+    --checkpoint &quot;runs/critic_${loss}_v1&quot; \
+    --controller q_greedy --epsilon 0.15 --seed 17 \
+    --env-batch 16 --batch-questions 16 --max-length 8192 \
+    --output &quot;data/q_${loss}_v1_episodes.jsonl&quot;
+done</code></pre></div>
+<p>Here <code>q_greedy</code> means greedy ranking before the declared 15% uniform exploration mixture. For the earlier <code>sample</code> controller, the mixture is <code>0.85 * Choice_probability + 0.15 / candidate_count</code>. Both rules, including their randomness, belong to their frozen continuation-policy identities. Report test and OOD completion separately; collecting all splits does not permit their records to enter the training sampler.</p>
+<p>Evaluate the SFT checkpoint&#x27;s outcome predictions on the same frozen dataset before comparing it with the three trained critics:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">CUDA_VISIBLE_DEVICES=0 python scripts/evaluate_unified_checkpoint.py \
+  --input data/unified/outcomes_v1 --checkpoint runs/sft_unified \
+  --output-dir runs/eval_sft_outcomes --stage critic \
+  --microbatch-questions 8 --max-microbatch-tokens 32768 --max-length 8192 \
+  --precision bf16 --disable-native-triton</code></pre></div>
+<p>This command evaluates a supplied checkpoint without parameter updates or temperature fitting. Here <code>--stage critic</code> only chooses the metric weights. Use its outcome-only metrics for a before/after probability comparison. Compare game performance before and after outcome training under the same action-selection rule:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">CUDA_VISIBLE_DEVICES=0 python scripts/unified_game_pipeline.py rollout \
+  --cases configs/unified_games_v1_cases.jsonl --engine checkpoint \
+  --checkpoint runs/sft_unified --controller q_greedy --epsilon 0.15 \
+  --seed 17 --env-batch 16 --batch-questions 16 --max-length 8192 \
+  --output data/sft_q_baseline.jsonl</code></pre></div>
+<p>The first completed cycle selects the paired arm using development CE and prepares its next iteration dataset after the complete rollout:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python scripts/unified_game_pipeline.py dataset \
+  --episodes data/q_paired_brier_pg_v1_episodes.jsonl --role outcome \
+  --retention data/unified/policy_full --max-states-per-episode 0 \
+  --output data/unified/outcomes_v2
+python scripts/train_unified_games.py --input data/unified/outcomes_v2 \
+  --stage critic --validate-only</code></pre></div>
+<p>This completes one round of outcome training and controller replacement, with new data ready for another round. The second round&#x27;s parameter updates have not started. To continue, train from the selected paired checkpoint using <code>outcomes_v2</code>. Exploration belongs to the continuation policy identity. Do not merge old and new outcome-policy IDs as one calibrated target. Recollection and iteration choices must use training/development evidence; test and OOD outcomes remain evaluation only.</p>
+<p>Replay the recorded actions without model inference and generate a comparison from complete episode manifests:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">for loss in paired_brier_pg brier ce; do
+  python scripts/replay_unified_episodes.py \
+    --episodes &quot;data/q_${loss}_v1_episodes.jsonl&quot; \
+    --output &quot;data/q_${loss}_v1_replay.json&quot;
+done
+
+python scripts/summarize_unified_games.py \
+  --run &#x27;Jev=data/unified/jev_base.jsonl&#x27; \
+  --run &#x27;Jev=data/unified/jev_extension.jsonl&#x27; \
+  --run &#x27;SFT Q=data/sft_q_baseline.jsonl&#x27; \
+  --run &#x27;Paired Q=data/q_paired_brier_pg_v1_episodes.jsonl&#x27; \
+  --run &#x27;Brier Q=data/q_brier_v1_episodes.jsonl&#x27; \
+  --run &#x27;CE Q=data/q_ce_v1_episodes.jsonl&#x27; \
+  --training &#x27;SFT Q=runs/eval_sft_outcomes/summary.json&#x27; \
+  --training &#x27;Paired Q=runs/critic_paired_brier_pg_v1/summary.json&#x27; \
+  --training &#x27;Brier Q=runs/critic_brier_v1/summary.json&#x27; \
+  --training &#x27;CE Q=runs/critic_ce_v1/summary.json&#x27; \
+  --output-dir results/unified_comparison</code></pre></div>
+<p>Repeating a run name combines its disjoint case files. The reporter verifies completion, file hashes, identical case definitions, and checkpoint identities before comparing systems. It writes task/scenario success, episode counts, Wilson intervals, and probability metrics to JSON and Markdown.</p>
+<h2 id="splits-artifacts-and-interpretation">Splits, artifacts, and interpretation</h2>
+<p>Every dataset has <code>train</code>, <code>dev</code>, <code>calibration</code>, <code>test</code>, and <code>ood</code> JSONL files plus a manifest. Isolation follows the underlying environment group: Maze uses canonical map identity, Snake uses the initial simulator snapshot, and shooting uses scenario plus environment seed. Different latent environments may produce identical visible observations in a POMDP. Such aliases are allowed; the public observation hash is recorded separately from episode/decision identity. This does not permit the same environment group to cross splits. Under aliasing, the learned probability is conditional on the available observation and the collection distribution, not knowledge of a hidden full state.</p>
+<p>Episode manifests retain source and checkpoint hashes, the continuation ID, case membership, completion status, and task summaries. Training writes input hashes, target/token audits, optimizer settings, logs, <code>best.safetensors</code>, the tokenizer/backbone config, and held-out prediction files. Selection uses fixed task/role-weighted <strong>dev CE</strong>, including the initial checkpoint as a candidate; test is evaluated after selection. The calibration split does not imply that a temperature or another post-hoc calibrator has been fitted.</p>
+<p>Report policy-distribution matching separately from observed Boolean NLL and vector Brier, and both separately from live task completion. Binary vector Brier sums errors for both false and true. Keep failures and zero-success episodes, report task/role counts and class balance, and account for dependence between transitions from the same episode when estimating uncertainty. Report each map size and scenario separately, using completed episodes as the unit of game-success evaluation.</p><p class="reading-snapshot-note">快照未包含部分工程附件或配图；请通过上游链接或原始材料查看，收录范围见来源清单。</p>
+  </article>
+<nav class="pager"></nav>
+  <footer class="site-footer">第十一章知识库收录材料 · <a href="../../../../../materials/sources/">来源、版本与许可</a> · 第三方内容版权归各自作者；观点与数字请对照原始来源核验。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#environment-contract">Environment contract</a><a class="toc-item toc-l2" href="#what-the-probability-target-means">What the probability target means</a><a class="toc-item toc-l2" href="#reproduce-the-pipeline">Reproduce the pipeline</a><a class="toc-item toc-l2" href="#splits-artifacts-and-interpretation">Splits, artifacts, and interpretation</a></aside>
+</div>
+<script src="../../../../../assets/search-index.js"></script>
+<script src="../../../../../assets/lz-string.js"></script>
+<script src="../../../../../assets/app.js"></script>
+<script src="../../../../../assets/lab.js"></script>
+<script src="../../../../../assets/lesson.js"></script>
+</body>
+</html>

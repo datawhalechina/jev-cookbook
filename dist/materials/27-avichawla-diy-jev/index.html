@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>自己动手做一个本地 Jev · Jev Cookbook</title>
+<meta name="description" content="自己动手做一个本地 Jev · Jev Cookbook 中文课程与参考文档" />
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="stylesheet" href="../../assets/course.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23286852'/%3E%3Ctext x='21' y='46' font-size='44' font-family='sans-serif' fill='white'%3EJ%3C/text%3E%3C/svg%3E" />
+</head>
+<body class="reading-page">
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">J</span>Jev Cookbook</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" aria-label="搜索课程与文档" placeholder="搜索课程与文档…" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <a class="course-nav-link" href="../../">课程首页</a>
+    <a class="course-nav-link" href="../../introduction/">中文文档</a>
+    <a class="course-nav-link" href="../../materials/">拓展阅读</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://github.com/datawhalechina/jev-cookbook" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><a class="nav-home" href="../../">课程首页</a><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">课程目录<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../course/01/">01 · 认识 Jev</a><a class="nav-item" href="../../course/02/">02 · 核心概念</a><a class="nav-item" href="../../course/03/">03 · 架构模式</a><a class="nav-item" href="../../course/04/">04 · 实战指南</a><a class="nav-item" href="../../course/05/">05 · 智能家居实验</a><a class="nav-item" href="../../course/06/">06 · 模型评测</a><a class="nav-item" href="../../course/07/">07 · 实战应用</a><a class="nav-item" href="../../course/08/">08 · 前沿研究</a><a class="nav-item" href="../../course/09/">09 · Agent 集成</a><a class="nav-item" href="../../course/10/">10 · 本地模型</a><a class="nav-item" href="../../course/11/">11 · 知识库</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a><a class="nav-item" href="../../introduction/coding-agents/">Jev 与编码智能体</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/">实战指南概览</a><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="9"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div><div class="nav-group open" data-group="10"><button class="nav-group-title" type="button">拓展阅读<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../materials/">全部知识库</a><a class="nav-item" href="../../materials/sources/">来源、版本与许可</a><a class="nav-item" href="../../materials/01-official-docs-zh/">TypeSafe 官方文档中文翻译</a><a class="nav-item" href="../../materials/02-nanojev/">NanoJev：小型决策模型</a><a class="nav-item" href="../../materials/03-jev-trader/">Jev Trader：交易决策工程</a><a class="nav-item" href="../../materials/04-fast-jev-compaction/">Fast Jev Compaction：上下文压缩</a><a class="nav-item" href="../../materials/05-awesome-jev/">Awesome Jev：生态资料导航</a><a class="nav-item" href="../../materials/06-typesafe-skills/">TypeSafe Skills：代理技能</a><a class="nav-item" href="../../materials/07-jev-ultrafast/">Jev Ultrafast：浏览器决策</a><a class="nav-item" href="../../materials/08-eve-decision-models/">Eve：决策模型研究</a><a class="nav-item" href="../../materials/09-typesafe-sdk-python/">TypeSafe Python SDK</a><a class="nav-item" href="../../materials/10-feishu-research/">Jev 深度研究报告</a><a class="nav-item" href="../../materials/11-typesafe-mario/">TypeSafe Mario：游戏决策案例</a><a class="nav-item" href="../../materials/12-wechat-article/">聊聊 Jev 模型到底是什么</a><a class="nav-item" href="../../materials/13-feishu-cookbook-plan/">Cookbook 规划与技术分析</a><a class="nav-item" href="../../materials/14-feishu-lecture/">Jev 模型应用入门与实践</a><a class="nav-item" href="../../materials/15-jevbench/">JevBench：独立评测基准</a><a class="nav-item" href="../../materials/16-wechat-agent-engineering/">把 Agent 的判断题拆给 Jev</a><a class="nav-item" href="../../materials/17-wechat-silicon-grail/">Jev：在硅基世界掷圣杯</a><a class="nav-item" href="../../materials/rerank-lab/">Jev 能替代 Rerank 模型吗</a><a class="nav-item" href="../../materials/laya-arch/">Laya 决策模型架构解析</a><a class="nav-item" href="../../materials/laya-oss/">Laya 开源发布</a><a class="nav-item" href="../../materials/laya-trend/">Laya 与 Hugging Face 社区</a><a class="nav-item" href="../../materials/22-wechat-cookbook-intro/">Jev Cookbook 中文入门路线</a><a class="nav-item" href="../../materials/clef/">Clef：开源决策模型与 RL 平台</a><a class="nav-item" href="../../materials/polydao/">Jev 工程与置信度路由</a><a class="nav-item" href="../../materials/25-vixhal-gero-rl/">Gero-4B：RL 微调平台</a><a class="nav-item" href="../../materials/26-akshay-jev-judge/">Build a Jev Judge：评审实战</a><a class="nav-item current" href="../../materials/27-avichawla-diy-jev/">自己动手做一个本地 Jev</a><a class="nav-item" href="../../materials/28-pg-jev/">pg-jev：在 SQL 中做语义判断</a><a class="nav-item" href="../../materials/29-wechat-startlux-decision/">StartLux 开源决策模型</a><a class="nav-item" href="../../materials/30-wechat-jev-skeptic/">Jev 演示的独立质疑与实测</a><a class="nav-item" href="../../materials/31-avb-choice-invariance/">训练选项顺序不变性</a><a class="nav-item" href="../../materials/32-omarsar-jev-as-judge/">Jev-as-a-Judge：智能体评估</a><a class="nav-item" href="../../materials/33-arena-jev-router-eval/">Arena：Jev Router 独立评测</a><a class="nav-item" href="../../materials/34-unsloth-train-decision-model/">用 Unsloth 训练决策模型</a><a class="nav-item" href="../../materials/laya-model/">Laya：本地接口与微调方案</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content" id="main-content"><article class="doc">
+<p class="course-breadcrumb"><a href="../../materials/">拓展阅读</a> / <a href="../../materials/27-avichawla-diy-jev/">自己动手做一个本地 Jev</a></p><p class="page-desc">知识库收录材料 · <a href="https://github.com/datawhalechina/jev-cookbook/blob/main/main/11_%E7%9F%A5%E8%AF%86%E5%BA%93/jev-cookbook/27-avichawla-diy-jev/article.md" target="_blank" rel="noopener">原始文件 ↗</a> · <a href="../../materials/sources/">来源、版本与许可</a></p><h1 id="自己动手做一个-jev100-本地">自己动手做一个 Jev（100% 本地）</h1>
+<blockquote><p>原文：<a href="https://x.com/_avichawla/status/2101563610644496464" target="_blank" rel="noopener">Build your own Jev (100% local)</a> · X 长文 · @_avichawla（Avi Chawla）· 2026-09-20</p>
+<p>译文为社区学习用途的非官方中文翻译，版权归原作者所有。</p></blockquote>
+<p>本文提供了把开源 LLM 变成一个快速、本地化决策引擎所需的全部知识，而且无需重新训练。内容涵盖下一 token 打分、带概率分布的固定选项、SGLang，以及在同一个模型上与标准文本生成所做的实测基准对比。</p>
+<hr />
+<p>许多 LLM 调用并不需要新写的文本。应用程序已经知道可能的答案，只需要模型从中选一个。</p>
+<p>假设一张客服工单上写着：&quot;I was charged twice for the same subscription.&quot;（同一份订阅被扣了两次费。）</p>
+<p>应用程序需要把它派发给三个团队之一：billing（账单）、technical support（技术支持）或 account access（账号访问）。</p>
+<p>普通的 LLM 调用会让模型写出一个答案。它可能返回一句话、一个标签或一个 JSON 对象。应用程序等待这段文本，解析它，再提取出被选中的团队。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-01.png" loading="lazy" alt="图1" loading="lazy" /></p>
+<p>如果每一个合法答案都已知，这些步骤完全没有必要。</p>
+<p>事实上，更好也更高效的做法，是把同一个请求当作一个决策来处理（这正是 Jev 的做法）。应用程序把工单/查询和三个允许的答案交给 Jev，模型随后一次性返回每个答案的分数（具体怎么做到，我们很快就会讲到）：</p>
+<div class="codeblock"><span class="cb-title">plaintext</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-plaintext">billing             0.91
+technical support   0.06
+account access      0.03</code></pre></div>
+<p>这里 billing 以最高概率被选中，而且应用代码能清楚看到它是以多大的优势胜出的。</p>
+<p>这正是 Jev 所具备、而我们将要在本地复现的行为。</p>
+<p>我们将提供输入查询和允许的答案。在一次打分请求中，模型就会返回一个决策和一份概率分布，而不生成任何句子或 JSON 对象。</p>
+<p>虽然 Jev 是闭源的，但这一推理模式在多个开源语言模型中已经可用。</p>
+<p>更具体地说，我们将用 SGLang（通过 /v1/score）实现它，用 Qwen 和 DeepSeek 模型进行测试，并与结构化输出和普通文本生成做对比。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-02.png" loading="lazy" alt="图2" loading="lazy" /></p>
+<p>先说清楚预期：本文复现的是推理路径，而不是完整的 Jev 系统。Jev 还包含打分端点所不提供的训练与校准工作。</p>
+<hr />
+<h2 id="固定答案打分与结构化输出不同">固定答案打分与结构化输出不同</h2>
+<p>Jev 的机制很容易与结构化输出混淆，因为两种方法都会限制应用程序收到的内容，但它们在推理服务器内部所做的工作并不相同。</p>
+<p>对于上面讨论的同一张客服工单，结构化输出可能会让模型给出如下输出：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{&quot;team&quot;: &quot;billing&quot;}</code></pre></div>
+<p>指定的 schema 可以防止出现非法对象，但它自己并不负责选出团队。</p>
+<p>不过，这一点仍有改进空间，因为在底层，模型仍然要一个 token 一个 token 地生成左花括号、字段名、值和右花括号。生成结束后，应用程序才能读取 team 字段。下面的视频展示了这一过程：</p>
+<p>采用打分（Jev 的做法）时，应用程序可以把这三个团队作为合法结果的完整列表提供出来。服务器为每个结果读取一个模型分数，并返回本文前面展示过的那份分布。它不会生成 JSON 对象。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-03.png" loading="lazy" alt="图3" loading="lazy" /></p>
+<p>我们可以把三个值都返回，而不是只返回 billing，这样应用代码就能区别对待下面两种结果：</p>
+<div class="codeblock"><span class="cb-title">plaintext</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-plaintext">Result 1                          Result 2
+billing       0.91                billing       0.46
+technical     0.06                technical     0.44
+account       0.03                account       0.10</code></pre></div>
+<p>例如，在上面这组结果里，两者都会选中 billing。</p>
+<p>但第一个结果偏好非常明确，而第二个几乎打成平手。应用程序可以自动路由第一张工单，而把第二张按需送去人工复核。</p>
+<p>另外，模型只会给出这些分数，如何下游使用则由应用代码制定规则。</p>
+<p>例如，可以要求排名第一的答案超过 0.80，并且至少领先第二名 0.20。这些阈值写在代码里，可以被测试，也可以被修改。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-04.png" loading="lazy" alt="图4" loading="lazy" /></p>
+<p>0.91 这个值的含义是：在这三个选择所分配的概率质量中，billing 拿到了 91%。它并不能证明模型在 91% 的情况下都是正确的。要度量这一点，我们需要带标注的样本。这就是我稍后会讨论的校准（calibration）问题。</p>
+<p>不过眼下请记住：结构化输出生成的是一个合法对象；固定答案打分返回的是应用程序已知的那些答案上的分布。</p>
+<hr />
+<h2 id="llm-如何生成第一个输出-token">LLM 如何生成第一个输出 token</h2>
+<p>在讨论如何把一个因果 LLM 变成 Jev 式模型之前，最好先理解 LLM 常规的生成步骤。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-05.png" loading="lazy" alt="图5" loading="lazy" /></p>
+<ul><li><p>分词器（tokenizer）首先把提示词转换成 token ID。</p></li><li><p>模型处理这个序列，并为下一个位置产出一个向量。</p></li><li><p>这个向量中，模型词表里的每个 token 都对应一个数字。例如，Qwen 的词表包含几万个 token，因此这个向量包含几万个数字。</p></li></ul>
+<p>这些原始数字就是 logits。logit 越大，表示模型越倾向于选择该 token 作为接下来的延续。这些值还不是概率。</p>
+<p>在正常生成过程中，服务器会对此向量应用模型的解码规则（temperature 等），选出一个 token，并把它追加到提示词后面。</p>
+<p>随后模型再为下一个位置产出一个新的、词表大小的向量。生成/解码不断重复这个过程，直到遇到停止 token 或输出上限。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-06.png" loading="lazy" alt="图6" loading="lazy" /></p>
+<p>但当我们想做一个有边界的决策时，只需要关心第一个向量。</p>
+<p>回想上面讨论的客服路由示例。应用程序接受三个答案：</p>
+<div class="codeblock"><span class="cb-title">plaintext</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-plaintext">billing
+technical support
+account access</code></pre></div>
+<p>在提示词中，我们可以给每个答案分配一个短标签：</p>
+<div class="codeblock"><span class="cb-title">plaintext</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-plaintext">A = billing
+B = technical support
+C = account access</code></pre></div>
+<p>提示词以要求返回一个标签收尾。</p>
+<div class="codeblock"><span class="cb-title">plaintext</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-plaintext">Route the support ticket into exactly one category.
+
+Ticket:
+I was charged twice for the same subscription.
+
+Allowed labels:
+A = billing
+B = technical support
+C = account access
+
+Return only the label.
+
+Label:</code></pre></div>
+<p>&quot;Label:&quot; 是提示词的最后一段文本。</p>
+<p>因此，下一个位置正是模型在正常情况下会生成 A、B 或 C 的地方。</p>
+<p>处理完这个提示词后，模型会照常为该位置产出一个词表大小的向量。这个向量将包含 token A 的 logit、B 和 C 的 logit，以及词表中其余每个 token 的 logit。</p>
+<p>打分路径接下来可以执行四个操作：</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-07.png" loading="lazy" alt="图7" loading="lazy" /></p>
+<ol><li><p>找到 A、B、C 的 token ID。</p></li><li><p>读取词表向量中这些位置上的三个 logits。</p></li><li><p>忽略其余所有 logits。</p></li><li><p>对选出的三个值应用 softmax。</p></li></ol>
+<p>如果选出的 logits 是 8.2、5.5 和 4.8，那么受限 softmax 会得到约 0.91、0.06 和 0.03。我们可以把这些位置映射回 billing、technical support 和 account access。</p>
+<p>归一化只限于已声明的选项。我们问的不是 A 在整个词表上是否拥有 91% 的概率。</p>
+<p>我们问的是：在应用程序排除了其他一切回答之后，模型如何把它的偏好分配到 A、B、C 之间。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-08.png" loading="lazy" alt="图8" loading="lazy" /></p>
+<p>这正是 SGLang 已经在 /v1/score 中实现的操作。</p>
+<p>它把提示词送进模型，读取指定的 token 位置，并返回它们的分数。这样我们就不用修改 Qwen 的实现、自己去提取最后的张量了。</p>
+<p>顺便说一句，答案之所以使用 A、B、C，而不是直接给 &quot;billing&quot;、&quot;technical support&quot;、&quot;account access&quot; 这些词打分，是因为一个可见的词未必是单个 token。</p>
+<p>例如：</p>
+<ul><li><p>&quot;billing&quot; 在一个分词器下可能是单个 token，在另一个分词器下可能是多个 token。</p></li><li><p>&quot;technical support&quot; 则必然跨越多个位置。</p></li></ul>
+<p>比较这些短语需要序列打分。模型必须先给第一个 token 打分、追加它，再给下一个 token 打分，然后把整条短语的值合并起来。长度也会成为比较的一部分。</p>
+<p>而单 token 标签避开了这个问题。每个选项都由同一个输出位置上的一个词表条目表示，而语义含义仍然出现在提示词中：</p>
+<div class="codeblock"><span class="cb-title">plaintext</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-plaintext">A = billing questions and payment problems
+B = product errors and technical failures
+C = login, password, and account access problems</code></pre></div>
+<p>模型在处理提示词时会读到这些描述。标签只是我们事后检查其 logit 的那个 token。</p>
+<p>我们仍然要验证每个标签确实是单个 token。</p>
+<p>例如，分词器常常把前导空格编入 token。因此字符串 &quot;A&quot; 和 &quot; A&quot; 可能拥有不同的 token ID。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-09.png" loading="lazy" alt="图9" loading="lazy" /></p>
+<p>聊天模板也可能在答案位置之前紧挨着放置空白字符或控制 token。</p>
+<p>为了避免这些问题，要用模型的聊天模板渲染完整提示词，确定答案位置处期望出现的精确延续文本，再把这个延续文本发送给 /tokenize。如果它产生的不是单个 token，就拒绝该标签。</p>
+<p>这层标签映射只存在于打分客户端内部。应用程序发送的是 billing、technical_support 这类语义选项，从不发送 token ID，也永远不会收到 A、B 或 C。这就是&quot;公共 API 与模型标签保持独立&quot;的含义。</p>
+<p>最后，当列出的选项并不完备时，答案列表还需要一条兜底出口。</p>
+<p>例如，一个安全事件到达一个只提供 billing、technical support 和 account access 的路由时，受限 softmax 仍会把全部概率质量分配给这三个错误选项。</p>
+<p>为避免这种情况，当所有具名选项都可能不正确时，请添加 OTHER 或 ESCALATE。</p>
+<hr />
+<h2 id="用-sglang-实现本地打分端点">用 SGLang 实现本地打分端点</h2>
+<p>本地示例只需要一个推理服务器。SGLang 把 Qwen 加载进 GPU 显存，并暴露其原生 HTTP 端点。我们的 Python 脚本直接向这台服务器发送请求。</p>
+<p>完整流程如下：</p>
+<ol><li><p>用一个 Qwen 模型启动 SGLang。</p></li><li><p>把决策写成带字母标签的提示词。</p></li><li><p>让 SGLang 对这些标签做分词。</p></li><li><p>向 /v1/score 发送一次请求。</p></li><li><p>把返回的概率映射回各个选项。</p></li></ol>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-10.png" loading="lazy" alt="图10" loading="lazy" /></p>
+<h3 id="第-1-步用-sglang-启动-qwen">第 1 步：用 SGLang 启动 Qwen</h3>
+<p>创建一个 Python 环境，并安装本文用到的两个包：</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python3 -m venv .venv
+source .venv/bin/activate
+pip install &quot;sglang[all]==0.5.10.post1&quot; &quot;requests==2.34.2&quot;</code></pre></div>
+<p>然后启动模型服务器：</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python -m sglang.launch_server \
+  --model-path Qwen/Qwen2.5-0.5B-Instruct \
+  --host 127.0.0.1 \
+  --port 30000</code></pre></div>
+<p>首次启动会从 Hugging Face 下载模型，之后的启动会复用本地缓存。加载完成后，Qwen 常驻内存，SGLang 监听 30000 端口。</p>
+<p>这个 SGLang 进程就是推理服务。在运行下面的客户端时，请让它保持运行。</p>
+<h3 id="第-2-步定义选项并构建提示词">第 2 步：定义选项并构建提示词</h3>
+<p>创建 decide.py，代码如下：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import json
+import requests
+
+BASE_URL = &quot;http://127.0.0.1:30000&quot;
+MODEL = &quot;Qwen/Qwen2.5-0.5B-Instruct&quot;
+
+choices = {
+    &quot;A&quot;: &quot;billing and payments&quot;,
+    &quot;B&quot;: &quot;technical support&quot;,
+    &quot;C&quot;: &quot;account access&quot;,
+}
+
+ticket = &quot;I was charged twice for the same subscription.&quot;
+choice_lines = &quot;\n&quot;.join(
+    f&quot;{label} = {meaning}&quot; for label, meaning in choices.items()
+)
+
+prompt = f&quot;&quot;&quot;Ticket:
+{ticket}
+
+Question:
+Which category matches the ticket?
+
+Allowed labels:
+{choice_lines}
+
+Return only the label.
+Label:
+&quot;&quot;&quot;
+
+print(prompt)</code></pre></div>
+<p>这个字典记录了每个答案的两种表示。</p>
+<ul><li><p>A 是我们打分的 token。</p></li><li><p>而 &quot;billing&quot; 是返回给应用程序的含义。</p></li><li><p>在分词、打分和结果映射的整个过程中，两者的顺序必须保持不变。</p></li></ul>
+<p>这就是此处生成的确切提示词：</p>
+<div class="codeblock"><span class="cb-title">plaintext</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-plaintext">Ticket:
+I was charged twice for the same subscription.
+
+Question:
+Which category matches the ticket?
+
+Allowed labels:
+A = billing and payments
+B = technical support
+C = account access
+
+Return only the label.
+Label:</code></pre></div>
+<p>提示词在 &quot;Label:&quot; 处结束。</p>
+<p>我们要的是模型给下一个本该出现的 token 的分数。我们并不要求 SGLang 生成那个 token。</p>
+<h3 id="第-3-步解析标签的-token-id">第 3 步：解析标签的 token ID</h3>
+<p>在提示词代码之后加上这段代码：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">label_token_ids = []
+
+for label in choices:
+    response = requests.post(
+        f&quot;{BASE_URL}/tokenize&quot;,
+        json={
+            &quot;model&quot;: MODEL,
+            &quot;prompt&quot;: label,
+            &quot;add_special_tokens&quot;: False,
+        },
+        timeout=30,
+    )
+    response.raise_for_status()
+    token_ids = response.json()[&quot;tokens&quot;]
+
+    if len(token_ids) != 1:
+        raise ValueError(
+            f&quot;{label!r} is not a single token: {token_ids}&quot;
+        )
+
+    print(f&quot;{label!r} -&gt; {token_ids}&quot;)
+    label_token_ids.append(token_ids[0])</code></pre></div>
+<p>SGLang 的 /tokenize 端点返回 Qwen 分词器产出的整数 ID。任何会被拆成多个 token 的标签都会被拒绝。打分请求需要每个答案对应一个词表位置。</p>
+<p>对于 Qwen/Qwen2.5-0.5B-Instruct，这会打印：</p>
+<div class="codeblock"><span class="cb-title">plaintext</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-plaintext">&#x27;A&#x27; -&gt; [32]
+&#x27;B&#x27; -&gt; [33]
+&#x27;C&#x27; -&gt; [34]</code></pre></div>
+<p>每个列表都只包含一个整数。因此我们确知每个标签只占一个 token。后面的打分请求将读取词表的 32、33、34 号位置。</p>
+<p>这项检查也让我们避免想当然地认为各模型的分词结果一致。在 Qwen 下可用的标签，换一个分词器就可能被拆开。</p>
+<h3 id="第-4-步向-sglang-请求三个概率">第 4 步：向 SGLang 请求三个概率</h3>
+<p>接着添加打分请求：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">response = requests.post(
+    f&quot;{BASE_URL}/v1/score&quot;,
+    json={
+        &quot;model&quot;: MODEL,
+        &quot;query&quot;: prompt,
+        &quot;items&quot;: [&quot;&quot;],
+        &quot;label_token_ids&quot;: label_token_ids,
+        &quot;apply_softmax&quot;: True,
+    },
+    timeout=120,
+)
+response.raise_for_status()
+score_response = response.json()
+
+print(json.dumps(score_response, indent=2))
+scores = score_response[&quot;scores&quot;][0]</code></pre></div>
+<ul><li><p>query 包含完整提示词。</p></li><li><p>空的 &quot;items&quot; 表示我们对紧随其后的那个位置打分。</p></li><li><p>&quot;label_token_ids&quot; 告诉 SGLang 从 Qwen 那个词表大小的输出中读取哪三个条目。</p></li><li><p>&quot;apply_softmax&quot; 把这些条目归一化成概率。</p></li></ul>
+<p>由于 items 只有一个条目，响应中也只有一个分数列表。我们用同一个 Qwen checkpoint 跑了这条一模一样的提示词，得到：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;scores&quot;: [
+    [
+      0.67776233,
+      0.310878605,
+      0.011359035
+    ]
+  ]
+}</code></pre></div>
+<p>这三个位置分别对应 A、B、C。softmax 之前，选中的 logits 分别是 25.277620、24.498226 和 21.188837。在不同的硬件与精度设置下，可能出现细微的数值差异。</p>
+<p>官方端点参考文档说明，每个返回的列表都遵循 label_token_ids 的顺序。因此第一个分数属于 A，第二个属于 B，第三个属于 C。</p>
+<h3 id="第-5-步把模型标签转换回决策">第 5 步：把模型标签转换回决策</h3>
+<p>最后加上映射代码，完成这个脚本：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">probabilities = {
+    choices[label]: float(score)
+    for label, score in zip(choices, scores, strict=True)
+}
+
+decision = max(probabilities, key=probabilities.get)
+
+print(
+    json.dumps(
+        {
+            &quot;decision&quot;: decision,
+            &quot;probabilities&quot;: probabilities,
+        },
+        indent=2,
+    )
+)
+</code></pre></div>
+<p>现在，在第二个终端中运行这个脚本：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">// Output after running python decide.py
+
+{
+  &quot;decision&quot;: &quot;billing and payments&quot;,
+  &quot;probabilities&quot;: {
+    &quot;billing and payments&quot;: 0.6777623295783997,
+    &quot;technical support&quot;: 0.31087860465049744,
+    &quot;account access&quot;: 0.011359035037457943
+  }
+}</code></pre></div>
+<p>这些计算由 SGLang 在 /v1/score 背后完成。一个 SGLang 进程对标签分词、运行一次 Qwen、返回选中的概率。</p>
+<p>在这个例子中，billing 获胜，但概率只有 0.678。如果策略要求 0.70，这张工单就会被送去复核，而不是自动路由。该阈值应当来自在带标注样本上进行的评估。</p>
+<hr />
+<h2 id="打分延迟与自回归生成的实测对比">打分延迟与自回归生成的实测对比</h2>
+<p>上面的单请求示例展示了机制本身。我还构建了一个小应用，用来测试这个机制在大量决策下的表现。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-11.png" loading="lazy" alt="图11" loading="lazy" /></p>
+<p>部署好的 demo 支持多个开源模型，例如 Qwen 3 4B、Qwen 2.5 0.5B 与 1.5B、SmolLM2 1.7B、TinyLlama 1.1B，以及 DeepSeek-R1-Distill-Qwen 1.5B。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-12.png" loading="lazy" alt="图12" loading="lazy" /></p>
+<p>Jev 式赛道调用决策方法：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">result = engine.decide(request)
+
+answer = result[&quot;answers&quot;][&quot;decision&quot;]
+
+choice = answer[&quot;choice&quot;]
+
+probabilities = answer[&quot;probabilities&quot;]</code></pre></div>
+<p>在 decide() 方法内部，SGLang 通过 /v1/score 接收提示词。请求中包含 A、B、C 的 token ID。</p>
+<p>SGLang 跑一遍提示词，读出这三个下一 token 分数，将其归一化，然后停止。响应中不包含任何生成的 token。</p>
+<p>标准赛道在同一个引擎上调用生成方法：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">result = engine.generate_response(
+    case[&quot;state&quot;],
+    case[&quot;question&quot;],
+    list(case[&quot;criteria&quot;].items()),
+    max_tokens=32,
+)</code></pre></div>
+<p>该方法把同样的状态、问题和选项发送给 /v1/chat/completions。</p>
+<p>Qwen 生成一个答案和简短解释，最多 32 个 token。应用程序会在前 100 个字符中搜索允许的选项名称。当解析出的选项与存储的标签一致时，该案例被标记为正确。</p>
+<p>下面的视频通过一些示例，对比了我们 100% 本地的 Jev 与 100% 本地的 LLM 生成器：</p>
+<p>出于上文已经讨论过的原因，速度差距一目了然。</p>
+<p>与此同时，我还基于固定的本地数据集构建了一个 100 个案例的仿真。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-13.png" loading="lazy" alt="图13" loading="lazy" /></p>
+<p>目前的数据集覆盖客服路由、候选人筛选和费用审核。它们自带的期望标签让界面能同时展示速度和正确性。</p>
+<p>远端 SGLang 路径在一个 barrier 之后启动两个 worker：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">starting_line = threading.Barrier(2)
+
+def worker(lane, runner):
+    starting_line.wait()
+    for case in cases:
+        updates.put(runner(case))
+
+workers = [
+    threading.Thread(target=worker, args=(&quot;jev&quot;, run_jev)),
+    threading.Thread(target=worker, args=(&quot;llm&quot;, run_llm)),
+]
+
+for worker_thread in workers:
+    worker_thread.start()</code></pre></div>
+<p>barrier 会同时放行两个 worker。每条赛道按顺序处理自己的案例。Jev 式 worker 一旦上一个请求结束，就立刻发出下一个打分请求；标准 worker 对生成请求也是如此。</p>
+<p><img src="../../assets/reading/27-avichawla-diy-jev/media/image-14.png" loading="lazy" alt="图14" loading="lazy" /></p>
+<p>因此两条赛道始终保持同时活跃，但我们并不会一次性发出全部 200 个请求。SGLang 同时接收来自两条赛道的并发任务，并通过 continuous batching 进行调度。两类请求共享同一块 GPU、同样的显存带宽和同一个调度器。</p>
+<p>下面的视频并排对比了 Jev 与一个 LLM：</p>
+<p>两条赛道同时启动，并在同一台 SGLang 服务器上使用了 Qwen/Qwen3-4B-Instruct-2507。</p>
+<hr />
+<h2 id="如何选择合适的方法">如何选择合适的方法</h2>
+<p>打分并不能取代生成，因此 Jev 的方法只在应用程序于推理之前就定义好输出空间时才适用。</p>
+<p>理想情况下，兼容的工作负载应该有一组有限且有意义的标签。每个标签都应映射到一个不同的下游动作。</p>
+<p>而且调用方需要的仅仅是一个标签及其概率分布，而不是新的文本。</p>
+<p>结构化输出则不同：它定义的是响应的语法，解码器仍要逐个 token 地生成字段名和值。</p>
+<p>当这些值无法事先枚举时，请使用结构化生成；因为只有候选值已知时，打分才能真正省去解码。</p>
+<p>下面这张图比较了常规 LLM 解码、结构化输出解码和 Jev 式打分：</p>
+<p>一个不错的做法是：根据所需的输出选择推理路径。</p>
+<ul><li><p>当输出内容在推理之前未知时，选择生成。</p></li><li><p>当输出集合已知、且做出选择就足够时，选择打分。这种情况下，第一个下一 token 向量已经包含了排序。返回这个排序，就省掉了调用方并不需要的自回归循环。</p></li></ul>
+<p>再次强调：本文项目复现的是 Jev 式推理机制，但并未复现 Jev 的权重、RLCD 流程或评测体系。</p>
+<p>这些背后的过程，我打算很快写给大家。</p>
+<p>敬请期待！</p>
+<hr />
+<p>就到这里！</p>
+<p>如果你喜欢这篇教程：</p>
+<p>找我 →  @_avichawla</p>
+<p>我每天都在分享 DS、ML、LLM 和 RAG 方面的教程与洞见。</p>
+  </article>
+<nav class="pager"><a class="pager-prev" href="../../materials/26-akshay-jev-judge/"><span>上一篇</span><strong>Build a Jev Judge：评审实战</strong></a><a class="pager-next" href="../../materials/28-pg-jev/"><span>下一篇</span><strong>pg-jev：在 SQL 中做语义判断</strong></a></nav>
+  <footer class="site-footer">第十一章知识库收录材料 · <a href="../../materials/sources/">来源、版本与许可</a> · 第三方内容版权归各自作者；观点与数字请对照原始来源核验。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#固定答案打分与结构化输出不同">固定答案打分与结构化输出不同</a><a class="toc-item toc-l2" href="#llm-如何生成第一个输出-token">LLM 如何生成第一个输出 token</a><a class="toc-item toc-l2" href="#用-sglang-实现本地打分端点">用 SGLang 实现本地打分端点</a><a class="toc-item toc-l3" href="#第-1-步用-sglang-启动-qwen">第 1 步：用 SGLang 启动 Qwen</a><a class="toc-item toc-l3" href="#第-2-步定义选项并构建提示词">第 2 步：定义选项并构建提示词</a><a class="toc-item toc-l3" href="#第-3-步解析标签的-token-id">第 3 步：解析标签的 token ID</a><a class="toc-item toc-l3" href="#第-4-步向-sglang-请求三个概率">第 4 步：向 SGLang 请求三个概率</a><a class="toc-item toc-l3" href="#第-5-步把模型标签转换回决策">第 5 步：把模型标签转换回决策</a><a class="toc-item toc-l2" href="#打分延迟与自回归生成的实测对比">打分延迟与自回归生成的实测对比</a><a class="toc-item toc-l2" href="#如何选择合适的方法">如何选择合适的方法</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/lz-string.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/lab.js"></script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>从查询到可运行学生：执行手册 · Jev Cookbook</title>
+<meta name="description" content="从查询到可运行学生：执行手册 · Jev Cookbook 中文课程与参考文档" />
+<link rel="stylesheet" href="../../../../../assets/style.css" />
+<link rel="stylesheet" href="../../../../../assets/course.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23286852'/%3E%3Ctext x='21' y='46' font-size='44' font-family='sans-serif' fill='white'%3EJ%3C/text%3E%3C/svg%3E" />
+</head>
+<body class="reading-page">
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="../../../../../"><span class="brand-mark">J</span>Jev Cookbook</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" aria-label="搜索课程与文档" placeholder="搜索课程与文档…" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <a class="course-nav-link" href="../../../../../">课程首页</a>
+    <a class="course-nav-link" href="../../../../../introduction/">中文文档</a>
+    <a class="course-nav-link" href="../../../../../materials/">拓展阅读</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://github.com/datawhalechina/jev-cookbook" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><a class="nav-home" href="../../../../../">课程首页</a><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">课程目录<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../course/01/">01 · 认识 Jev</a><a class="nav-item" href="../../../../../course/02/">02 · 核心概念</a><a class="nav-item" href="../../../../../course/03/">03 · 架构模式</a><a class="nav-item" href="../../../../../course/04/">04 · 实战指南</a><a class="nav-item" href="../../../../../course/05/">05 · 智能家居实验</a><a class="nav-item" href="../../../../../course/06/">06 · 模型评测</a><a class="nav-item" href="../../../../../course/07/">07 · 实战应用</a><a class="nav-item" href="../../../../../course/08/">08 · 前沿研究</a><a class="nav-item" href="../../../../../course/09/">09 · Agent 集成</a><a class="nav-item" href="../../../../../course/10/">10 · 本地模型</a><a class="nav-item" href="../../../../../course/11/">11 · 知识库</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../introduction/">简介</a><a class="nav-item" href="../../../../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../../../../introduction/machine-learning-primer/">AI 入门</a><a class="nav-item" href="../../../../../introduction/coding-agents/">Jev 与编码智能体</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../concepts/system-one/">System One</a><a class="nav-item" href="../../../../../concepts/state/">状态（State）</a><a class="nav-item" href="../../../../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../../../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../primitives/">原语概览</a><a class="nav-item" href="../../../../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../../../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../../../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../../../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../patterns/">模式概览</a><a class="nav-item" href="../../../../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../../../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../../../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../../../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../cookbooks/">实战指南概览</a><a class="nav-item" href="../../../../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../../../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../../../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../../../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../../../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../../../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../../../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../../../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../../../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../../../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../../../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../../../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../../../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../../../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../../../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../../../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../../../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../../../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../demos/">示例概览</a><a class="nav-item" href="../../../../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../api/">HTTP API 参考</a><a class="nav-item" href="../../../../../models/">模型</a><a class="nav-item" href="../../../../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../../../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../../../../legal/">法律条款</a></div></div><div class="nav-group" data-group="9"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../sdk/">SDK 概览</a><a class="nav-item" href="../../../../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../../../../sdk/python/usage/">用法</a><a class="nav-item" href="../../../../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../../../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../../../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../../../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../../../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../../../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../../../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../../../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../../../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../../../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../../../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../../../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../../../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div><div class="nav-group open" data-group="10"><button class="nav-group-title" type="button">拓展阅读<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../materials/">全部知识库</a><a class="nav-item" href="../../../../../materials/sources/">来源、版本与许可</a><a class="nav-item" href="../../../../../materials/01-official-docs-zh/">TypeSafe 官方文档中文翻译</a><a class="nav-item" href="../../../../../materials/02-nanojev/">NanoJev：小型决策模型</a><a class="nav-item" href="../../../../../materials/03-jev-trader/">Jev Trader：交易决策工程</a><a class="nav-item" href="../../../../../materials/04-fast-jev-compaction/">Fast Jev Compaction：上下文压缩</a><a class="nav-item" href="../../../../../materials/05-awesome-jev/">Awesome Jev：生态资料导航</a><a class="nav-item" href="../../../../../materials/06-typesafe-skills/">TypeSafe Skills：代理技能</a><a class="nav-item" href="../../../../../materials/07-jev-ultrafast/">Jev Ultrafast：浏览器决策</a><a class="nav-item" href="../../../../../materials/08-eve-decision-models/">Eve：决策模型研究</a><a class="nav-item" href="../../../../../materials/09-typesafe-sdk-python/">TypeSafe Python SDK</a><a class="nav-item" href="../../../../../materials/10-feishu-research/">Jev 深度研究报告</a><a class="nav-item" href="../../../../../materials/11-typesafe-mario/">TypeSafe Mario：游戏决策案例</a><a class="nav-item" href="../../../../../materials/12-wechat-article/">聊聊 Jev 模型到底是什么</a><a class="nav-item" href="../../../../../materials/13-feishu-cookbook-plan/">Cookbook 规划与技术分析</a><a class="nav-item" href="../../../../../materials/14-feishu-lecture/">Jev 模型应用入门与实践</a><a class="nav-item" href="../../../../../materials/15-jevbench/">JevBench：独立评测基准</a><a class="nav-item" href="../../../../../materials/16-wechat-agent-engineering/">把 Agent 的判断题拆给 Jev</a><a class="nav-item" href="../../../../../materials/17-wechat-silicon-grail/">Jev：在硅基世界掷圣杯</a><a class="nav-item" href="../../../../../materials/rerank-lab/">Jev 能替代 Rerank 模型吗</a><a class="nav-item" href="../../../../../materials/laya-arch/">Laya 决策模型架构解析</a><a class="nav-item" href="../../../../../materials/laya-oss/">Laya 开源发布</a><a class="nav-item" href="../../../../../materials/laya-trend/">Laya 与 Hugging Face 社区</a><a class="nav-item" href="../../../../../materials/22-wechat-cookbook-intro/">Jev Cookbook 中文入门路线</a><a class="nav-item" href="../../../../../materials/clef/">Clef：开源决策模型与 RL 平台</a><a class="nav-item" href="../../../../../materials/polydao/">Jev 工程与置信度路由</a><a class="nav-item" href="../../../../../materials/25-vixhal-gero-rl/">Gero-4B：RL 微调平台</a><a class="nav-item" href="../../../../../materials/26-akshay-jev-judge/">Build a Jev Judge：评审实战</a><a class="nav-item" href="../../../../../materials/27-avichawla-diy-jev/">自己动手做一个本地 Jev</a><a class="nav-item" href="../../../../../materials/28-pg-jev/">pg-jev：在 SQL 中做语义判断</a><a class="nav-item" href="../../../../../materials/29-wechat-startlux-decision/">StartLux 开源决策模型</a><a class="nav-item" href="../../../../../materials/30-wechat-jev-skeptic/">Jev 演示的独立质疑与实测</a><a class="nav-item" href="../../../../../materials/31-avb-choice-invariance/">训练选项顺序不变性</a><a class="nav-item" href="../../../../../materials/32-omarsar-jev-as-judge/">Jev-as-a-Judge：智能体评估</a><a class="nav-item" href="../../../../../materials/33-arena-jev-router-eval/">Arena：Jev Router 独立评测</a><a class="nav-item" href="../../../../../materials/34-unsloth-train-decision-model/">用 Unsloth 训练决策模型</a><a class="nav-item" href="../../../../../materials/laya-model/">Laya：本地接口与微调方案</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content" id="main-content"><article class="doc">
+<p class="course-breadcrumb"><a href="../../../../../materials/">拓展阅读</a> / <a href="../../../../../materials/02-nanojev/">NanoJev：小型决策模型</a></p><p class="page-desc">知识库收录材料 · <a href="https://github.com/datawhalechina/jev-cookbook/blob/main/main/11_%E7%9F%A5%E8%AF%86%E5%BA%93/jev-cookbook/02-nanojev/research/pipeline_runbook_zh.md" target="_blank" rel="noopener">原始文件 ↗</a> · <a href="../../../../../materials/sources/">来源、版本与许可</a></p><h1 id="从查询到可运行学生执行手册">从查询到可运行学生：执行手册</h1>
+<p>这里给出当前代码的完整依赖顺序。研究结论分别看 <a href="../../../../../materials/02-nanojev/pages/research/pipeline_v2_report_zh/">V2 结果</a> 和 <a href="../../../../../materials/02-nanojev/pages/research/navigation_v3_report_zh/">V3 结果</a>；算法选择及未采用方案见 <a href="../../../../../materials/02-nanojev/pages/research/implementation_plan_zh/">实施计划</a>。已有实验目录是冻结产物，重新实验请换输出目录，不能覆盖旧结果。</p>
+<h2 id="1-先定义题目再找教师">1. 先定义题目，再找教师</h2>
+<p>训练样本是 <code>(state, question, candidate_set, target_distribution)</code>。问题是明确的输入；不能省去 question 后假设模型知道应该判断什么。例如：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;states&quot;: [{
+    &quot;id&quot;: &quot;home_example&quot;,
+    &quot;state&quot;: &quot;客厅温度29度，目标24度，窗户关闭，有人在家。可控制空调、窗户和灯。&quot;,
+    &quot;questions&quot;: {
+      &quot;action&quot;: {
+        &quot;type&quot;: &quot;choice&quot;,
+        &quot;instructions&quot;: &quot;请选择最直接降低室内温度的操作。&quot;,
+        &quot;criteria&quot;: {
+          &quot;cool&quot;: &quot;开启空调制冷&quot;,
+          &quot;light&quot;: &quot;打开照明&quot;,
+          &quot;wait&quot;: &quot;维持当前状态&quot;
+        }
+      },
+      &quot;occupied&quot;: {&quot;type&quot;: &quot;boolean&quot;, &quot;instructions&quot;: &quot;现在有人在家吗？&quot;},
+      &quot;heat&quot;: {
+        &quot;type&quot;: &quot;score&quot;,
+        &quot;instructions&quot;: &quot;按当前温度与目标温度的差值分档。&quot;,
+        &quot;criteria&quot;: [&quot;低于或等于目标&quot;, &quot;超过目标但不超过3度&quot;, &quot;超过目标3度以上&quot;]
+      }
+    }
+  }]
+}</code></pre></div>
+<p>这是接口示例，不附造出的模型答案。三个问题不依赖彼此输出，因此可和其他状态的问题一起前向。如果下一题确实需要上一题结果，应由外部程序启动下一轮；并行不消除任务本身的依赖。</p>
+<p>当前查询来自自写生成器，不是让 Jev 凭空生成输入分布：支持/退款规则、智能家居、候选目录查找、可解析概率事件、井字棋和网格导航。生成器先建立事实或环境，再写 question 和合法候选。规则真值、条件事件分布和专家动作策略是三种不同 target，分别标记。改写、坐标变换和同一地图的不同起点继承整个源组的 split。</p>
+<h2 id="2-数据构建与两种监督来源">2. 数据构建与两种监督来源</h2>
+<p>以下命令在项目根目录执行。生成器只需要 Python；付费标注另需锁定的 Node 依赖以及本机 <code>.env</code> 中的 <code>AI_GATEWAY_API_KEY</code>。</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python3 scripts/build_toy_decisions.py --output-dir research/private_toy --seed 17
+python3 scripts/build_workflow_decisions.py --output-dir research/private_workflows_v2 --seed 20260917
+python3 scripts/build_game_decisions.py --output-dir research/private_games_v2 --seed 17
+python3 - &lt;&lt;&#x27;PY&#x27;
+from pathlib import Path
+for name in (&#x27;private_toy&#x27;, &#x27;private_workflows_v2&#x27;):
+    d = Path(&#x27;research&#x27;) / name
+    parts = [d / f&#x27;{s}.jsonl&#x27; for s in (&#x27;train&#x27;, &#x27;dev&#x27;, &#x27;calibration&#x27;, &#x27;test&#x27;, &#x27;ood&#x27;)]
+    (d / &#x27;all.jsonl&#x27;).write_text(&#x27;&#x27;.join(p.read_text() for p in parts))
+PY</code></pre></div>
+<p><strong>无需 API 的完整 V2 程序监督路径：</strong> 为汇总器建立一个明确为空的教师文件，保留全部程序真值。此路径不需要 Jev 标签。</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python3 -c &#x27;from pathlib import Path; Path(&quot;research/empty_teacher.jsonl&quot;).write_text(&quot;&quot;)&#x27;
+python3 scripts/assemble_pipeline_dataset.py \
+  --workflows research/private_workflows_v2/all.jsonl \
+  --games-raw research/private_games_v2/all.jsonl \
+  --games-labels research/empty_teacher.jsonl \
+  --toy research/private_toy/all.jsonl \
+  --output-dir research/private_pipeline_gold_rebuild --freeze
+python3 scripts/train_pipeline_decisions.py \
+  --input research/private_pipeline_gold_rebuild/merged.jsonl --validate-only</code></pre></div>
+<p><strong>Jev 教师路径：</strong> 使用生成器的相同输入，额外采集完整候选概率。费用参数是每次运行分配上限；总预算还须核对网关余额与已有支出。失败请求不自动重试，日志保留，失败不能用学生预测补标签。</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">npm ci
+node --env-file=.env scripts/label_decision_dataset.mjs \
+  --input-dir research/private_toy --budget-usd 0.25 --concurrency 3 --max-failures 20
+node --env-file=.env scripts/label_decision_dataset.mjs \
+  --input-dir research/private_workflows_v2 --budget-usd 3 --concurrency 8 --max-failures 20
+node --env-file=.env scripts/label_decision_dataset.mjs \
+  --input-dir research/private_games_v2 --budget-usd 3 --concurrency 3 --max-failures 20
+python3 scripts/assemble_pipeline_dataset.py \
+  --workflows research/private_workflows_v2/labeled.jsonl \
+  --games-raw research/private_games_v2/all.jsonl \
+  --games-labels research/private_games_v2/labeled.jsonl \
+  --toy research/private_toy/labeled.jsonl \
+  --output-dir research/private_pipeline_v2 --freeze</code></pre></div>
+<p>原始 V2 使用早期 toy 标注器得到其冻结标签；上面统一标注器用于重新采集，不能保证服务响应与历史完全相同。若 workflows/toy 有未完成标签，先处理并审计完整覆盖再冻结；汇总器的固定 2,312 条检查会阻止静默缺数。游戏缺失标签由 raw+labels 合并保留原记录。</p>
+<p>Jev 数值记录为舍入概率，不叫 logits。当前训练仅使用完整、有限、非负、候选完全匹配且和为 1 的教师向量；不合格目标隔离，原记录仍可用于 gold 分支。普通 LLM 可以换作标签来源，但其 JSON 自报百分比不能伪装为原生概率。</p>
+<h2 id="3-模型与确切更新规则">3. 模型与确切更新规则</h2>
+<p>直接初始化 <code>Qwen/Qwen3-0.6B</code>，没有先训练 yes/no reranker。每个候选路径包含 state、question、当前候选语义和读出位置。一次 backbone 前向编码批内全部路径；Choice 使用共享标量头与无位置编码的集合注意力头输出该题 K 个 logits，再做 masked softmax。Boolean 使用单路径 sigmoid；Score 绕过集合注意力，输出完整等级分布及其期望。</p>
+<p>对完整一题：</p>
+<div class="codeblock"><span class="cb-title">text</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-text">p = softmax(z)
+L(q, p) = -sum_i q_i log p_i
+dL/dz_i = p_i - q_i</code></pre></div>
+<p><code>q</code> 可以是 Jev 分布、解析条件概率或程序专家策略。每题等权；完整候选集合一起计算分母，不能把 20 个候选拆成 20 个独立二分类 loss。训练 microbatch 只拆完整问题，梯度累积后再更新。推理没有输出 token 解码；当前 flat 路径重复计算前缀，尚未实现生产级共享前缀内核。</p>
+<p>安装本次记录的 <a href="https://github.com/TianyuCodings/NanoJev/blob/HEAD/requirements-toy.txt">依赖</a>，在 CUDA 机器运行：</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python scripts/train_pipeline_decisions.py \
+  --input research/private_pipeline_v2/merged.jsonl \
+  --output-dir runs/v2_teacher_seed17 \
+  --model Qwen/Qwen3-0.6B --revision c1899de289a04d12100db370d81485cdf75e47ca \
+  --objective teacher --seed 17 --head-steps 12 --steps 600 \
+  --batch-questions 12 --microbatch-questions 4 --max-microbatch-tokens 6000 \
+  --max-length 512 --eval-every 50 --precision bf16 --disable-native-triton</code></pre></div>
+<p>纯程序监督将 input 改为上述 gold_rebuild 包、objective 改为 <code>gold_distribution</code>、output-dir 改为新目录。V2 实际两目标各跑 seed 17/18/19；0.6B 在一张 80GB 卡上全参训练，8 卡用于独立对照，未把一个小模型无必要地切到 8 卡。<code>--disable-native-triton</code> 是本次宿主环境的兼容回退，不是所有环境必需参数。</p>
+<p>只在 dev 选择 checkpoint，calibration 不参与参数训练，test/OOD 不选择超参。实际 <code>config.json</code>、权重 SHA、数据 SHA、训练日志和逐题预测共同定义一个实验。</p>
+<h2 id="4-v3表示与覆盖的受控导航扩展">4. V3：表示与覆盖的受控导航扩展</h2>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python3 scripts/build_navigation_v3.py \
+  --v2-input research/private_games_v2/all.jsonl \
+  --output-dir research/private_navigation_v3 --seed 20260918
+node --env-file=.env scripts/label_decision_dataset.mjs \
+  --input-dir research/private_navigation_v3 --budget-usd 3 \
+  --max-requests 3100 --concurrency 8 --max-failures 20
+python3 scripts/assemble_navigation_v3_views.py</code></pre></div>
+<p>V3 排除全部 V2 地图后生成 500 张新地图、3,000 状态、9,000 题；训练为相同 300 张地图，每图 8 个曝光槽。四组比较 ASCII/坐标 × 单起点/多起点；另加 coords_multi 的 Jev 监督。单起点原始位置 300 个、多起点 1,874 个；D4 变换不冒充新的独立地图。每组加入相同 984 条旧 nongrid train replay。教师标签失效仅影响 teacher 分支覆盖。</p>
+<p>以下是预先指定主组的实际配置；其余四组只按冻结协议切换 input/目标/输出名：</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python scripts/train_pipeline_decisions.py \
+  --input research/private_navigation_v3/views/coords_multi.jsonl \
+  --init-checkpoint runs/v2_teacher_seed17 \
+  --output-dir runs/v3_gold_coords_multi_seed17 \
+  --objective gold_distribution --seed 17 --head-steps 0 --steps 1200 \
+  --batch-questions 12 --microbatch-questions 4 --max-microbatch-tokens 6000 \
+  --max-length 512 --eval-every 50 --precision bf16 --disable-native-triton</code></pre></div>
+<p>V3 实际五组都从同一个 V2 teacher checkpoint 继续训练，优化器重新初始化。因此这里的 gold 指 V3 更新目标，<strong>不表示权重谱系从未用过教师</strong>。纯开源、零 API 的新实验需要同时使用无教师的组装来源和 gold checkpoint；不能只改初始化路径：</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python3 scripts/assemble_navigation_v3_views.py \
+  --canonical research/private_navigation_v3/all.jsonl \
+  --labels research/private_navigation_v3/all.jsonl \
+  --replay research/private_pipeline_gold_rebuild/merged.jsonl \
+  --output-dir research/private_navigation_v3/gold_rebuild_views</code></pre></div>
+<p>这里的 <code>--labels</code> 读取无教师字段的同一份程序数据，不生成伪教师概率。训练 input 改用新 view、init 改用对应 V2 gold checkpoint，output-dir 也换名；这属于不同实验，需要另报结果。</p>
+<h2 id="5-benchmark-与运行中的游戏">5. Benchmark 与运行中的游戏</h2>
+<p>离线评测分别回答三件事：教师 KL/TV 测“像不像 Jev”；独立真值上的 NLL/Brier/ECE 测正确性和概率可靠性；已知条件分布上的 KL/TV 测是否恢复概率机制。专家动作分布只是策略约定，不能用其 ECE 冒充游戏获胜率校准。</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python scripts/evaluate_pipeline_decisions.py \
+  --input runs/v3_gold_coords_multi_seed17/predictions_test.jsonl \
+  --output runs/v3_gold_coords_multi_seed17/test_metrics.json
+python scripts/evaluate_navigation_v3.py \
+  --data-dir research/private_navigation_v3 \
+  --checkpoint-dir runs/v3_gold_coords_multi_seed17 \
+  --policy greedy --representation coords --precision bf16 --disable-native-triton \
+  --name v3_gold_coords_multi_seed17_greedy \
+  --output research/navigation_v3_v3_gold_coords_multi_seed17_greedy.json</code></pre></div>
+<p>再用 <code>--policy sample</code> 运行原始概率的 T=1 采样并保存不同文件；<code>--policy random</code>、<code>oracle</code> 不需要 checkpoint。固定 20 张 test 和 20 张 OOD 地图、每局独立 RNG、步数上限 <code>2×size²</code>；每个时间步将仍在运行的不同状态汇成一次模型前向。记录到达率、失败、路径效率、重访、原始概率、实际抽中动作及 forced moves。</p>
+<p>运行时只提供坐标、墙、目标、合法转移等原始环境信息。BFS/minimax 用于数据标签、单列 oracle 和离线评分；不能把答案特征或动作纠错混进学生输入/控制器。游戏受 <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev" target="_blank" rel="noopener">官方文字状态 Doom/Wikiracing</a> 启发，当前实现是独立网格与井字棋。</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python scripts/serve_decisions.py \
+  --checkpoint-dir runs/v3_gold_coords_multi_seed17 \
+  --web-root web --port 8765 --disable-native-triton</code></pre></div>
+<p>此服务加载一次本地学生，可多次调用，且不调用教师。静态回放另用 <code>npm run demo:replay</code>。完整回放、实时接口与运行成本必须分开显示，不能把保存的轨迹当作现场模型输出。</p>
+<p>把已完成的对局写入回放页，例如以下两个真实结果文件；若缺失或不完整，组装器会报错，不生成替代轨迹：</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python3 scripts/build_demo_artifact.py \
+  --models research/navigation_v3_v3_gold_coords_multi_seed17_greedy.json \
+           research/navigation_v3_v3_gold_coords_multi_seed17_sample.json \
+  --output web/demo_results.json</code></pre></div>
+<p>交付版本另外收录全部对照和 V2 失败，具体完整清单以包内数据为准。<code>scripts/summarize_pipeline_v2.py</code> 与 <code>scripts/summarize_navigation_v3.py</code> 对应两轮固定实验汇总；它们读取既定 run 的轻量产物及全部对照，不用于把任意部分重跑自动宣称为完整实验。</p>
+<h2 id="6-rlcd-与交付范围">6. RLCD 与交付范围</h2>
+<p><a href="https://docs.typesafe.ai/introduction/machine-learning-primer" target="_blank" rel="noopener">官方全称</a> 是 Reinforcement Learning for Calibrated Decisions。本轮一手核查没有取得其 reward、网络或训练数据配方。现在实现的是可验证的分布监督和程序监督；没有把普通 CE 改名为 RLCD。需要研究 RL 时，应在相同底座/数据/计算预算下比较 proper log loss、精确 Brier 和明确推导的 policy-gradient 估计，参见 <a href="../../../../../materials/02-nanojev/pages/research/rlcd_theory_zh/">数学分析</a>。</p>
+<p>源码、生成器、训练/推理/评估脚本、真实网页回放可以独立审阅。已有权重在用户服务器 <code>capyubara-0:/home/rwang/openjev_codex_20260917/runs/</code>；NanoJev 的 Git 仓库不包含这些权重或私有教师训练标签。可发布内容及包内复现边界见 <a href="../../../../../materials/02-nanojev/pages/research/release_scope_zh/">交付范围</a>。</p>
+<h2 id="7-nanojev-三方演示">7. NanoJev 三方演示</h2>
+<p>新三方对照固定使用 V3 中使用 Jev 分布监督训练的学生、真实 Jev API 与原始 Qwen3-0.6B，完整协议与真实轨迹见 <a href="../../../../../materials/02-nanojev/pages/research/nanojev_comparison_protocol_zh/">比较协议</a>。与早期默认程序监督服务不同，README 视频使用 <code>v3_teacher_coords_multi_seed17</code>，没有更改 V3 主实验选择。原始 Qwen 的离线权重准备与复跑说明见 <a href="../../../../../materials/02-nanojev/pages/research/navigation_v3_native_qwen_zh/">基线文档</a>。使用 Node.js ≥22 执行锁定 AI SDK 7 依赖；无需 API/GPU 的视频和交互回放已随仓库提供。</p><p class="reading-snapshot-note">快照未包含部分工程附件或配图；请通过上游链接或原始材料查看，收录范围见来源清单。</p>
+  </article>
+<nav class="pager"></nav>
+  <footer class="site-footer">第十一章知识库收录材料 · <a href="../../../../../materials/sources/">来源、版本与许可</a> · 第三方内容版权归各自作者；观点与数字请对照原始来源核验。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#1-先定义题目再找教师">1. 先定义题目，再找教师</a><a class="toc-item toc-l2" href="#2-数据构建与两种监督来源">2. 数据构建与两种监督来源</a><a class="toc-item toc-l2" href="#3-模型与确切更新规则">3. 模型与确切更新规则</a><a class="toc-item toc-l2" href="#4-v3表示与覆盖的受控导航扩展">4. V3：表示与覆盖的受控导航扩展</a><a class="toc-item toc-l2" href="#5-benchmark-与运行中的游戏">5. Benchmark 与运行中的游戏</a><a class="toc-item toc-l2" href="#6-rlcd-与交付范围">6. RLCD 与交付范围</a><a class="toc-item toc-l2" href="#7-nanojev-三方演示">7. NanoJev 三方演示</a></aside>
+</div>
+<script src="../../../../../assets/search-index.js"></script>
+<script src="../../../../../assets/lz-string.js"></script>
+<script src="../../../../../assets/app.js"></script>
+<script src="../../../../../assets/lab.js"></script>
+<script src="../../../../../assets/lesson.js"></script>
+</body>
+</html>

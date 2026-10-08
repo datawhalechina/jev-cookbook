@@ -24,6 +24,7 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 ## 📚 快速开始
 
 - **在线阅读**：[课程首页](https://datawhalechina.github.io/jev-cookbook/)（课程介绍、十一章导读与学习路线）
+- **拓展阅读**：[全部知识库](https://datawhalechina.github.io/jev-cookbook/materials/)（社区工程、研究文章、评测与训练资料，支持站内阅读和搜索）
 - **动手学习**：克隆本仓库，进入 [`main/`](main/README.md) 运行各章 Notebook（`./setup_env.sh` 一键建环境）
 
 **✨ 你将收获什么？**

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>把 Agent 的判断题拆给 Jev · Jev Cookbook</title>
+<meta name="description" content="把 Agent 的判断题拆给 Jev · Jev Cookbook 中文课程与参考文档" />
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="stylesheet" href="../../assets/course.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23286852'/%3E%3Ctext x='21' y='46' font-size='44' font-family='sans-serif' fill='white'%3EJ%3C/text%3E%3C/svg%3E" />
+</head>
+<body class="reading-page">
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">J</span>Jev Cookbook</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" aria-label="搜索课程与文档" placeholder="搜索课程与文档…" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <a class="course-nav-link" href="../../">课程首页</a>
+    <a class="course-nav-link" href="../../introduction/">中文文档</a>
+    <a class="course-nav-link" href="../../materials/">拓展阅读</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://github.com/datawhalechina/jev-cookbook" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><a class="nav-home" href="../../">课程首页</a><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">课程目录<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../course/01/">01 · 认识 Jev</a><a class="nav-item" href="../../course/02/">02 · 核心概念</a><a class="nav-item" href="../../course/03/">03 · 架构模式</a><a class="nav-item" href="../../course/04/">04 · 实战指南</a><a class="nav-item" href="../../course/05/">05 · 智能家居实验</a><a class="nav-item" href="../../course/06/">06 · 模型评测</a><a class="nav-item" href="../../course/07/">07 · 实战应用</a><a class="nav-item" href="../../course/08/">08 · 前沿研究</a><a class="nav-item" href="../../course/09/">09 · Agent 集成</a><a class="nav-item" href="../../course/10/">10 · 本地模型</a><a class="nav-item" href="../../course/11/">11 · 知识库</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a><a class="nav-item" href="../../introduction/coding-agents/">Jev 与编码智能体</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/">实战指南概览</a><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="9"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div><div class="nav-group open" data-group="10"><button class="nav-group-title" type="button">拓展阅读<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../materials/">全部知识库</a><a class="nav-item" href="../../materials/sources/">来源、版本与许可</a><a class="nav-item" href="../../materials/01-official-docs-zh/">TypeSafe 官方文档中文翻译</a><a class="nav-item" href="../../materials/02-nanojev/">NanoJev：小型决策模型</a><a class="nav-item" href="../../materials/03-jev-trader/">Jev Trader：交易决策工程</a><a class="nav-item" href="../../materials/04-fast-jev-compaction/">Fast Jev Compaction：上下文压缩</a><a class="nav-item" href="../../materials/05-awesome-jev/">Awesome Jev：生态资料导航</a><a class="nav-item" href="../../materials/06-typesafe-skills/">TypeSafe Skills：代理技能</a><a class="nav-item" href="../../materials/07-jev-ultrafast/">Jev Ultrafast：浏览器决策</a><a class="nav-item" href="../../materials/08-eve-decision-models/">Eve：决策模型研究</a><a class="nav-item" href="../../materials/09-typesafe-sdk-python/">TypeSafe Python SDK</a><a class="nav-item" href="../../materials/10-feishu-research/">Jev 深度研究报告</a><a class="nav-item" href="../../materials/11-typesafe-mario/">TypeSafe Mario：游戏决策案例</a><a class="nav-item" href="../../materials/12-wechat-article/">聊聊 Jev 模型到底是什么</a><a class="nav-item" href="../../materials/13-feishu-cookbook-plan/">Cookbook 规划与技术分析</a><a class="nav-item" href="../../materials/14-feishu-lecture/">Jev 模型应用入门与实践</a><a class="nav-item" href="../../materials/15-jevbench/">JevBench：独立评测基准</a><a class="nav-item current" href="../../materials/16-wechat-agent-engineering/">把 Agent 的判断题拆给 Jev</a><a class="nav-item" href="../../materials/17-wechat-silicon-grail/">Jev：在硅基世界掷圣杯</a><a class="nav-item" href="../../materials/rerank-lab/">Jev 能替代 Rerank 模型吗</a><a class="nav-item" href="../../materials/laya-arch/">Laya 决策模型架构解析</a><a class="nav-item" href="../../materials/laya-oss/">Laya 开源发布</a><a class="nav-item" href="../../materials/laya-trend/">Laya 与 Hugging Face 社区</a><a class="nav-item" href="../../materials/22-wechat-cookbook-intro/">Jev Cookbook 中文入门路线</a><a class="nav-item" href="../../materials/clef/">Clef：开源决策模型与 RL 平台</a><a class="nav-item" href="../../materials/polydao/">Jev 工程与置信度路由</a><a class="nav-item" href="../../materials/25-vixhal-gero-rl/">Gero-4B：RL 微调平台</a><a class="nav-item" href="../../materials/26-akshay-jev-judge/">Build a Jev Judge：评审实战</a><a class="nav-item" href="../../materials/27-avichawla-diy-jev/">自己动手做一个本地 Jev</a><a class="nav-item" href="../../materials/28-pg-jev/">pg-jev：在 SQL 中做语义判断</a><a class="nav-item" href="../../materials/29-wechat-startlux-decision/">StartLux 开源决策模型</a><a class="nav-item" href="../../materials/30-wechat-jev-skeptic/">Jev 演示的独立质疑与实测</a><a class="nav-item" href="../../materials/31-avb-choice-invariance/">训练选项顺序不变性</a><a class="nav-item" href="../../materials/32-omarsar-jev-as-judge/">Jev-as-a-Judge：智能体评估</a><a class="nav-item" href="../../materials/33-arena-jev-router-eval/">Arena：Jev Router 独立评测</a><a class="nav-item" href="../../materials/34-unsloth-train-decision-model/">用 Unsloth 训练决策模型</a><a class="nav-item" href="../../materials/laya-model/">Laya：本地接口与微调方案</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content" id="main-content"><article class="doc">
+<p class="course-breadcrumb"><a href="../../materials/">拓展阅读</a> / <a href="../../materials/16-wechat-agent-engineering/">把 Agent 的判断题拆给 Jev</a></p><p class="page-desc">知识库收录材料 · <a href="https://github.com/datawhalechina/jev-cookbook/blob/main/main/11_%E7%9F%A5%E8%AF%86%E5%BA%93/jev-cookbook/16-wechat-agent-engineering/article.md" target="_blank" rel="noopener">原始文件 ↗</a> · <a href="../../materials/sources/">来源、版本与许可</a></p><h1 id="一万字jev-工程实践长文把-agent-的判断题从大模型里拆出来">一万字Jev 工程实践长文：把 Agent 的“判断题”从大模型里拆出来</h1>
+<p>作者：daryl，高级前端开发</p>
+<p>丨 导语 从 TypeSafe AI 的 System One Model，到 <code>fast-jev-compaction</code> 的上下文剪枝，再到一个可运行的本地尝试</p>
+<p>最近 Jev 很火。它的传播路径很典型：先是 TypeSafe AI 发布一个听起来有点反常识的新模型，再是 Hacker News、知乎、Reddit 开始争论，接着 GitHub 上很快出现一批 Demo。有人拿它玩 Doom，有人拿它跑 Mario，也有人拿它接进浏览器自动化、代码审查、Agent 路由和上下文压缩里。</p>
+<p>我一开始对它也有点怀疑。一个“不生成文本”的模型，能有多大空间？现在 GPT、Claude 已经能做 structured output，也能走 tool calling，为什么还要单独搞一个 Jev？</p>
+<p>把几篇资料看完，再读 <code>fast-jev-compaction</code>，最后自己仿写了一个小 Demo 之后，我觉得它最值得聊的不是“模型本身有多神”，而是一个更具体的工程问题：</p>
+<p>Agent 里很多模型调用不是为了生成答案，而是为了替代码做一次判断。</p>
+<p>这句话如果成立，Jev 就不是“更便宜的 GPT”。它更像 Agent 系统里缺了很久的一个零件：快判断层。</p>
+<p><img src="../../assets/reading/16-wechat-agent-engineering/media/image-01.png" loading="lazy" alt="" loading="lazy" /></p>
+<h2 id="一jev-是什么把生成问题改成判断问题">一、Jev 是什么：把生成问题改成判断问题</h2>
+<p>Jev 是 TypeSafe AI 发布的 System One Model。它和我们熟悉的聊天模型不太一样：聊天模型擅长生成文本，Jev 则刻意放弃文本生成，只返回类型化的概率决策。</p>
+<p>换句话说，它不是让模型“说一段话”，而是让模型回答一个程序能直接使用的问题：选哪个、打几分、是不是。</p>
+<p>它的输入可以比较杂：用户目标、页面状态、工具结果摘要、业务字段、候选动作。它的输出必须很窄：选择哪个、打几分、某个命题成立的概率是多少。</p>
+<p><img src="../../assets/reading/16-wechat-agent-engineering/media/image-02.png" loading="lazy" alt="" loading="lazy" /></p>
+<p>它主要有三种原语：</p>
+<div class="table-wrap"><table><thead><tr><th>原语</th><th>中文理解</th><th>输出形态</th><th>适合场景</th></tr></thead><tbody><tr><td>Choice</td><td>单选题</td><td>选项 + 每个选项概率 + confidence</td><td>工具路由、动作选择、分类</td></tr><tr><td>Score</td><td>打分题</td><td>连续分数 + 概率分布 + confidence</td><td>风险评分、质量评分、相关性评分</td></tr><tr><td>Noul</td><td>判断题</td><td>0 ~ 1 的概率</td><td>是否保留、是否危险、是否达成目标</td></tr></tbody></table></div>
+<p>举个最贴近开发的例子。</p>
+<p>如果现在上下文里有一段测试日志，系统只想知道“这段日志还要不要保留”，传统大模型可能会输出一段解释：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>这段日志包含失败原因、文件路径和鉴权相关信息，建议保留。</code></pre></div>
+<p>这句话人能看懂，但代码还要继续解析。</p>
+<p>Jev 的返回更像这样：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>{
+  &quot;answers&quot;: {
+    &quot;result_t3&quot;: {
+      &quot;noul&quot;: 0.87
+    }
+  }
+}</code></pre></div>
+<p>这就可以直接进入代码分支：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>if (keepResult &gt;= 0.5) {
+  keepFullResult();
+}</code></pre></div>
+<p>这就是 Jev 最核心的变化：<strong>把模型输出从“文本”变成“可执行的概率判断”。</strong></p>
+<p>和 GPT / Claude 的 structured output 相比，Jev 的差别不是“能不能返回 JSON”。现在大模型都能返回 JSON。真正的差别是：Jev 从一开始就放弃自由文本生成，只做封闭输出空间里的概率判断。</p>
+<p><img src="../../assets/reading/16-wechat-agent-engineering/media/image-03.png" loading="lazy" alt="" loading="lazy" /></p>
+<p>这带来一个很适合 Agent 的架构分工：</p>
+<div class="table-wrap"><table><thead><tr><th>层次</th><th>职责</th><th>典型组件</th></tr></thead><tbody><tr><td>慢思考层</td><td>规划、解释、生成、复杂推理</td><td>GPT / Claude / Gemini</td></tr><tr><td>快判断层</td><td>路由、筛选、评分、门禁</td><td>Jev / Jev-like 模型</td></tr><tr><td>确定性层</td><td>权限、状态、副作用、回滚</td><td>普通代码</td></tr><tr><td>兜底层</td><td>高风险或低置信度处理</td><td>人工 / 更强模型</td></tr></tbody></table></div>
+<p>需要注意的是，Jev 不是“更便宜的 GPT”。它不适合写文章、解释复杂代码，也不适合做长链路规划。它更适合放在 Agent 内部，处理那些输出空间固定、调用频率高、又需要语义理解的小判断。</p>
+<p>Jev 最适合的位置，不是 Agent 的大脑，而是 Agent 的反射神经。</p>
+<h2 id="二为什么-agent-需要一个快判断层">二、为什么 Agent 需要一个快判断层</h2>
+<p>现在写 coding agent，最容易遇到的瓶颈不是“模型不会说话”，而是上下文越来越长。</p>
+<p>一个稍微真实一点的修 Bug 过程，通常会经历这些步骤：</p>
+<ol><li><p>用户描述问题；</p></li><li><p>Agent 搜索代码；</p></li><li><p>读取多个文件；</p></li><li><p>执行测试；</p></li><li><p>查看失败日志；</p></li><li><p>再读取相关文件；</p></li><li><p>修改代码；</p></li><li><p>再跑测试；</p></li><li><p>如果失败，继续循环。</p></li></ol>
+<p>每一步都会往历史里塞内容。用户约束、助手推理、工具调用、工具结果、错误日志、文件片段，全都堆进一个 context 里。</p>
+<p><img src="../../assets/reading/16-wechat-agent-engineering/media/image-04.png" loading="lazy" alt="" loading="lazy" /></p>
+<p>真正撑爆上下文的，往往不是用户说的话，也不是助手说的话，而是工具结果。</p>
+<div class="table-wrap"><table><thead><tr><th>内容类型</th><th>是否经常很长</th><th>是否必须全文保留</th><th>典型风险</th></tr></thead><tbody><tr><td>用户需求</td><td>否</td><td>是</td><td>删掉会丢约束</td></tr><tr><td>助手回复</td><td>中</td><td>通常要保留</td><td>删掉会丢计划和承诺</td></tr><tr><td>read_file 结果</td><td>是</td><td>看情况</td><td>文件全文可能过期或可重读</td></tr><tr><td>search_content 结果</td><td>是</td><td>看情况</td><td>很多匹配只是探索痕迹</td></tr><tr><td>execute_command 日志</td><td>是</td><td>看情况</td><td>失败栈重要，成功日志可能无用</td></tr><tr><td>list_dir 结果</td><td>是</td><td>通常不需要全文</td><td>目录树容易占空间</td></tr></tbody></table></div>
+<p>这里有一个很具体的例子。</p>
+<p>原始测试日志可能是：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>FAIL order-export.test.ts
+Error: Timeout of 5000ms exceeded
+  at exportOrders (/repo/src/services/orderExport.ts:42:19)
+Expected authorization header to be preserved.</code></pre></div>
+<p>如果被摘要成：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>之前订单导出测试失败了。</code></pre></div>
+<p>听起来没错，但关键细节已经没了：</p>
+<ul><li><p><code>order-export.test.ts</code> 是哪个测试失败；</p></li><li><p><code>5000ms</code> 是什么超时阈值；</p></li><li><p><code>/repo/src/services/orderExport.ts:42:19</code> 是具体定位；</p></li><li><p><code>authorization header</code> 说明这个问题不只是性能，还牵涉鉴权约束。</p></li></ul>
+<p>所以传统 summary 有一个天然问题：它能省 token，但会改写事实。对 coding agent 来说，这个代价有时候很高。</p>
+<p>上下文压缩最怕的不是删掉废话，而是把关键事实改写成一句“差不多”。</p>
+<p>我们当然可以继续用通用大模型做上下文压缩。比如让模型读完整历史，然后输出一段总结。</p>
+<p>这条路能用，但在高频 Agent 里会遇到三层断裂。</p>
+<h3 id="第一层生成成本和判断需求不匹配">第一层：生成成本和判断需求不匹配</h3>
+<p>很多时候，系统不是想让模型“写一段总结”，而是想知道某个工具结果还值不值得留。</p>
+<p>这是一个判断题，不是作文题。</p>
+<p>如果为了回答“这段日志还要不要留”，调用一次大模型，让它读完整上下文、生成一段解释、再被代码解析，这个链路太重。</p>
+<div class="table-wrap"><table><thead><tr><th>任务</th><th>真正需要的输出</th><th>用通用 LLM 的浪费点</th></tr></thead><tbody><tr><td>是否保留工具结果</td><td>0 ~ 1 概率</td><td>生成解释文本</td></tr><tr><td>该调哪个工具</td><td>枚举选项</td><td>生成 reasoning + action</td></tr><tr><td>搜索结果是否相关</td><td>分数</td><td>输出自然语言评价</td></tr><tr><td>是否转人工</td><td>布尔概率</td><td>写判断理由</td></tr></tbody></table></div>
+<h3 id="第二层摘要会破坏可复核性">第二层：摘要会破坏可复核性</h3>
+<p>工具结果常常是后续定位问题的证据。文件路径、错误码、栈信息、命令参数，都是精确内容。摘要会把这些精确内容变成“含义相近”的描述。</p>
+<p>对文章、会议纪要来说，这种改写可以接受。对代码修复来说，风险更高。</p>
+<p>因为 Agent 下一步不是“理解大意”，而是要继续执行动作。</p>
+<h3 id="第三层置信度没有进入代码分支">第三层：置信度没有进入代码分支</h3>
+<p>通用大模型也可以说“我有 80% 把握”。但这通常只是文本里的自我描述，不一定是经过校准的概率。</p>
+<p>Jev 的设计目标是把概率变成接口返回值，让代码可以用阈值控制行为：</p>
+<div class="table-wrap"><table><thead><tr><th>概率区间</th><th>系统动作</th><th>说明</th></tr></thead><tbody><tr><td>&gt;= 0.8</td><td>自动执行</td><td>适合低风险、高重复场景</td></tr><tr><td>0.5 ~ 0.8</td><td>保守处理</td><td>截断、保留摘要、请求补充信息</td></tr><tr><td>&lt; 0.5</td><td>删除或回退</td><td>低价值内容可清理，高风险场景转人工</td></tr></tbody></table></div>
+<p>当然，这里要非常谨慎。概率不是安全证明，必须用自己的数据做校准和 shadow mode 验证。</p>
+<p>通用模型的问题不是不聪明，而是它把“判断”包装成了“生成”。</p>
+<h2 id="三fast-jev-compaction不做摘要只做保留决策">三、fast-jev-compaction：不做摘要，只做保留决策</h2>
+<p><code>fast-jev-compaction</code> 是 GitHub 上一个很有代表性的 Jev 项目。它的目标不是让 Jev 写代码，也不是让 Jev 接管 Agent，而是处理一个更具体的问题：Claude Code / coding agent 的历史上下文越来越大，哪些工具调用和工具结果可以删？</p>
+<p>它的策略很克制：</p>
+<ul><li><p>用户文本不改写；</p></li><li><p>助手文本不改写；</p></li><li><p>工具调用和工具结果配对处理；</p></li><li><p>旧工具结果要么完整保留，要么截断，要么删除；</p></li><li><p>如果 Jev 失败或压缩收益不够，可以回退到原来的 summary 流程。</p></li></ul>
+<p><img src="../../assets/reading/16-wechat-agent-engineering/media/image-05.png" loading="lazy" alt="" loading="lazy" /></p>
+<p>这和传统 summary 是两条不同路线。</p>
+<p>传统 summary 的做法是把旧历史改写成一段短文本。优点是省 token，缺点是路径、错误码、命令参数这类细节可能被“概括掉”。<code>fast-jev-compaction</code> 的做法是保留原文的精确性：重要的原样留下，不重要的直接删，中间态就保留调用并截断结果。</p>
+<p>它真正有意思的地方在于，它没有沿用“让大模型总结历史”的惯性，而是把上下文压缩拆成两个判断题：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>keepCall：这个工具调用本身还重要吗？
+keepResult：这个工具结果全文还需要保留吗？</code></pre></div>
+<p>这两个概率组合起来，就能得到三种动作：完整保留、只保留调用并截断结果、调用和结果一起删除。</p>
+<p><code>fast-jev-compaction</code> 是一个 Claude Code 插件，也可以作为 npm 库使用。它解决的问题很窄：当会话需要 compact 时，不再把旧历史交给大模型总结，而是让 Jev 对历史里的工具调用逐个打分，判断哪些应该原样保留，哪些只需要留下调用痕迹，哪些可以整体删除。</p>
+<p>它的核心约束是：<strong>用户文本和助手文本不改写；只处理工具调用和工具结果。</strong></p>
+<p>这个约束很重要。用户文本里通常有原始需求和硬约束，助手文本里有已承诺的计划和正在执行的思路，这两类内容被摘要改写后容易变味。工具结果不同：它们占空间最大，也最容易过期，而且很多内容可以重新读取或重新执行。</p>
+<p>所以 <code>fast-jev-compaction</code> 不是“总结器”，而是“工具历史清理器”。它做的不是把历史改写成一段更短的话，而是在每个工具调用上做一次保留价值判断。</p>
+<p><img src="../../assets/reading/16-wechat-agent-engineering/media/image-06.png" loading="lazy" alt="" loading="lazy" /></p>
+<p>它的设计可以拆成三层：</p>
+<div class="table-wrap"><table><thead><tr><th>层次</th><th>做什么</th><th>为什么重要</th></tr></thead><tbody><tr><td>对象层</td><td>把 tool_use 和 tool_result 配成一组</td><td>避免留下孤立调用或孤立结果</td></tr><tr><td>判断层</td><td>为每组工具历史生成 keepCall / keepResult 两个问题</td><td>把复合压缩任务拆成两个窄判断</td></tr><tr><td>执行层</td><td>根据阈值执行 keep / drop_result / drop_call</td><td>让压缩动作可测试、可回退、可统计</td></tr></tbody></table></div>
+<p>这个项目很适合用来理解 Jev，因为它把 Jev 的优势落到了一个真实问题上：高频、封闭、可回退、需要概率，但不需要生成。</p>
+<h2 id="四demo-实现拆解从历史消息到压缩决策">四、Demo 实现拆解：从历史消息到压缩决策</h2>
+<p><img src="../../assets/reading/16-wechat-agent-engineering/media/image-07.png" loading="lazy" alt="" loading="lazy" /></p>
+<p>它的主流程可以拆成 6 步：</p>
+<ol><li><p>收集历史里的 <code>tool_use</code> 和 <code>tool_result</code>；</p></li><li><p>按 <code>tool_use_id</code> 配对；</p></li><li><p>标记 pinned：首条消息、最近 N 条消息固定保留；</p></li><li><p>构造给 Jev 看的 <code>state</code>；</p></li><li><p>对每个非 pinned 工具调用问两个 <code>Noul</code> 问题；</p></li><li><p>根据 <code>keepCall</code> / <code>keepResult</code> 重建消息列表。</p></li></ol>
+<p>我们在 Demo 里保留了这个主流程。</p>
+<p>📍 来源：src/compact.js 第 28-49 行 ```</p>
+  </article>
+<nav class="pager"><a class="pager-prev" href="../../materials/15-jevbench/"><span>上一篇</span><strong>JevBench：独立评测基准</strong></a><a class="pager-next" href="../../materials/17-wechat-silicon-grail/"><span>下一篇</span><strong>Jev：在硅基世界掷圣杯</strong></a></nav>
+  <footer class="site-footer">第十一章知识库收录材料 · <a href="../../materials/sources/">来源、版本与许可</a> · 第三方内容版权归各自作者；观点与数字请对照原始来源核验。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#一jev-是什么把生成问题改成判断问题">一、Jev 是什么：把生成问题改成判断问题</a><a class="toc-item toc-l2" href="#二为什么-agent-需要一个快判断层">二、为什么 Agent 需要一个快判断层</a><a class="toc-item toc-l3" href="#第一层生成成本和判断需求不匹配">第一层：生成成本和判断需求不匹配</a><a class="toc-item toc-l3" href="#第二层摘要会破坏可复核性">第二层：摘要会破坏可复核性</a><a class="toc-item toc-l3" href="#第三层置信度没有进入代码分支">第三层：置信度没有进入代码分支</a><a class="toc-item toc-l2" href="#三fast-jev-compaction不做摘要只做保留决策">三、fast-jev-compaction：不做摘要，只做保留决策</a><a class="toc-item toc-l2" href="#四demo-实现拆解从历史消息到压缩决策">四、Demo 实现拆解：从历史消息到压缩决策</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/lz-string.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/lab.js"></script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

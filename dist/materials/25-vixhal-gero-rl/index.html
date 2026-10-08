@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gero-4B：RL 微调平台 · Jev Cookbook</title>
+<meta name="description" content="Gero-4B：RL 微调平台 · Jev Cookbook 中文课程与参考文档" />
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="stylesheet" href="../../assets/course.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23286852'/%3E%3Ctext x='21' y='46' font-size='44' font-family='sans-serif' fill='white'%3EJ%3C/text%3E%3C/svg%3E" />
+</head>
+<body class="reading-page">
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">J</span>Jev Cookbook</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" aria-label="搜索课程与文档" placeholder="搜索课程与文档…" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <a class="course-nav-link" href="../../">课程首页</a>
+    <a class="course-nav-link" href="../../introduction/">中文文档</a>
+    <a class="course-nav-link" href="../../materials/">拓展阅读</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://github.com/datawhalechina/jev-cookbook" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><a class="nav-home" href="../../">课程首页</a><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">课程目录<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../course/01/">01 · 认识 Jev</a><a class="nav-item" href="../../course/02/">02 · 核心概念</a><a class="nav-item" href="../../course/03/">03 · 架构模式</a><a class="nav-item" href="../../course/04/">04 · 实战指南</a><a class="nav-item" href="../../course/05/">05 · 智能家居实验</a><a class="nav-item" href="../../course/06/">06 · 模型评测</a><a class="nav-item" href="../../course/07/">07 · 实战应用</a><a class="nav-item" href="../../course/08/">08 · 前沿研究</a><a class="nav-item" href="../../course/09/">09 · Agent 集成</a><a class="nav-item" href="../../course/10/">10 · 本地模型</a><a class="nav-item" href="../../course/11/">11 · 知识库</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a><a class="nav-item" href="../../introduction/coding-agents/">Jev 与编码智能体</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/">实战指南概览</a><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="9"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div><div class="nav-group open" data-group="10"><button class="nav-group-title" type="button">拓展阅读<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../materials/">全部知识库</a><a class="nav-item" href="../../materials/sources/">来源、版本与许可</a><a class="nav-item" href="../../materials/01-official-docs-zh/">TypeSafe 官方文档中文翻译</a><a class="nav-item" href="../../materials/02-nanojev/">NanoJev：小型决策模型</a><a class="nav-item" href="../../materials/03-jev-trader/">Jev Trader：交易决策工程</a><a class="nav-item" href="../../materials/04-fast-jev-compaction/">Fast Jev Compaction：上下文压缩</a><a class="nav-item" href="../../materials/05-awesome-jev/">Awesome Jev：生态资料导航</a><a class="nav-item" href="../../materials/06-typesafe-skills/">TypeSafe Skills：代理技能</a><a class="nav-item" href="../../materials/07-jev-ultrafast/">Jev Ultrafast：浏览器决策</a><a class="nav-item" href="../../materials/08-eve-decision-models/">Eve：决策模型研究</a><a class="nav-item" href="../../materials/09-typesafe-sdk-python/">TypeSafe Python SDK</a><a class="nav-item" href="../../materials/10-feishu-research/">Jev 深度研究报告</a><a class="nav-item" href="../../materials/11-typesafe-mario/">TypeSafe Mario：游戏决策案例</a><a class="nav-item" href="../../materials/12-wechat-article/">聊聊 Jev 模型到底是什么</a><a class="nav-item" href="../../materials/13-feishu-cookbook-plan/">Cookbook 规划与技术分析</a><a class="nav-item" href="../../materials/14-feishu-lecture/">Jev 模型应用入门与实践</a><a class="nav-item" href="../../materials/15-jevbench/">JevBench：独立评测基准</a><a class="nav-item" href="../../materials/16-wechat-agent-engineering/">把 Agent 的判断题拆给 Jev</a><a class="nav-item" href="../../materials/17-wechat-silicon-grail/">Jev：在硅基世界掷圣杯</a><a class="nav-item" href="../../materials/rerank-lab/">Jev 能替代 Rerank 模型吗</a><a class="nav-item" href="../../materials/laya-arch/">Laya 决策模型架构解析</a><a class="nav-item" href="../../materials/laya-oss/">Laya 开源发布</a><a class="nav-item" href="../../materials/laya-trend/">Laya 与 Hugging Face 社区</a><a class="nav-item" href="../../materials/22-wechat-cookbook-intro/">Jev Cookbook 中文入门路线</a><a class="nav-item" href="../../materials/clef/">Clef：开源决策模型与 RL 平台</a><a class="nav-item" href="../../materials/polydao/">Jev 工程与置信度路由</a><a class="nav-item current" href="../../materials/25-vixhal-gero-rl/">Gero-4B：RL 微调平台</a><a class="nav-item" href="../../materials/26-akshay-jev-judge/">Build a Jev Judge：评审实战</a><a class="nav-item" href="../../materials/27-avichawla-diy-jev/">自己动手做一个本地 Jev</a><a class="nav-item" href="../../materials/28-pg-jev/">pg-jev：在 SQL 中做语义判断</a><a class="nav-item" href="../../materials/29-wechat-startlux-decision/">StartLux 开源决策模型</a><a class="nav-item" href="../../materials/30-wechat-jev-skeptic/">Jev 演示的独立质疑与实测</a><a class="nav-item" href="../../materials/31-avb-choice-invariance/">训练选项顺序不变性</a><a class="nav-item" href="../../materials/32-omarsar-jev-as-judge/">Jev-as-a-Judge：智能体评估</a><a class="nav-item" href="../../materials/33-arena-jev-router-eval/">Arena：Jev Router 独立评测</a><a class="nav-item" href="../../materials/34-unsloth-train-decision-model/">用 Unsloth 训练决策模型</a><a class="nav-item" href="../../materials/laya-model/">Laya：本地接口与微调方案</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content" id="main-content"><article class="doc">
+<p class="course-breadcrumb"><a href="../../materials/">拓展阅读</a> / <a href="../../materials/25-vixhal-gero-rl/">Gero-4B：RL 微调平台</a></p><p class="page-desc">知识库收录材料 · <a href="https://github.com/datawhalechina/jev-cookbook/blob/main/main/11_%E7%9F%A5%E8%AF%86%E5%BA%93/jev-cookbook/25-vixhal-gero-rl/article.md" target="_blank" rel="noopener">原始文件 ↗</a> · <a href="../../materials/sources/">来源、版本与许可</a></p><h1 id="搭建一个-rl-微调平台训练-jev-式决策模型">搭建一个 RL 微调平台，训练 JEV 式决策模型</h1>
+<blockquote><p>原文：<a href="https://x.com/TheVixhal/status/2106439792800198966" target="_blank" rel="noopener">Building an RL fine-tuning platform to train JEV-like decision models</a> · X 长文 · @TheVixhal（vixhaℓ）· 2026-10-03</p>
+<p>译文为社区学习用途的非官方中文翻译，版权归原作者所有。</p></blockquote>
+<p>这篇文章讲的是我们如何搭建一个小型训练平台，把一个普通的开放 LLM（Qwen3-4B）变成决策模型。</p>
+<p>最终成果是 <a href="https://huggingface.co/vixhal-baraiya/Gero-4B" target="_blank" rel="noopener">Gero-4B</a>，下面写的全部是我们实际用过的代码，只是稍作简化，方便跟着读。</p>
+<p>我们在 MacBook（M5 Pro，24 GB）上使用 Apple 的 MLX 完成训练，但这些思路在 PyTorch 里同样行得通。</p>
+<hr />
+<h2 id="我们想让模型做什么">我们想让模型做什么</h2>
+<p>决策模型回答的是这类问题：</p>
+<ul><li><p><strong>Choice：</strong>「这个工单应该交给哪个团队处理？」选项为 billing、technical、account、shipping。</p></li><li><p><strong>Score：</strong>「这个问题有多严重？」答案是从 &quot;cosmetic&quot;（外观小问题）到 &quot;everyone is blocked&quot;（所有人都被阻塞）的有序等级。</p></li><li><p><strong>Yes/no：</strong>「客户满意吗？」</p></li></ul>
+<p>它不会写「我觉得是 billing」，而是返回类似这样的东西：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{&quot;billing&quot;: 0.974, &quot;technical&quot;: 0.011, &quot;account&quot;: 0.010, &quot;shipping&quot;: 0.005}</code></pre></div>
+<p>这里有两点很关键：</p>
+<ol><li><p><strong>输出是数字</strong>，你的代码可以直接拿来用。不用做解析，也不会出现「模型回复了错误格式」的情况。</p></li><li><p><strong>数字应该是诚实的。</strong>如果模型说 0.9，那它应该大约每 10 次对 9 次。这就叫「校准」（calibrated），也是做这一切的根本原因。校准过的置信度让你可以说「0.95 以上的自动处理，其余转人工」。</p></li></ol>
+<p>普通聊天 LLM 恰恰在第 2 点上很糟糕。问它们有多确定，它们会开心地对那些一半时间都会答错的东西说出 95%。</p>
+<hr />
+<h2 id="计划三个阶段">计划：三个阶段</h2>
+<p>我们把工作拆成三个阶段，每个阶段只做一件事：</p>
+<div class="table-wrap"><table><thead><tr><th>阶段</th><th>任务</th><th>不该做的事</th></tr></thead><tbody><tr><td>1. 架构改造</td><td>把模型改造成给选项打分，而不是写文本</td><td></td></tr><tr><td>2. 结构训练</td><td>教它读懂问题格式</td><td>教真实世界知识</td></tr><tr><td>3. RL 训练</td><td>教它做出校准的决策</td><td>重新教格式</td></tr></tbody></table></div>
+<p>把各阶段的职责分开听起来是件小事，但它救过我们很多次。出了问题，我们清楚地知道该去查哪个阶段。</p>
+<hr />
+<h2 id="环境准备">环境准备</h2>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">pip install mlx mlx-lm</code></pre></div>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import json
+import mlx.core as mx
+import mlx.nn as nn
+from mlx_lm import load
+from mlx_lm.tuner import linear_to_lora_layers
+
+model, tok = load(&quot;mlx-community/Qwen3-4B-4bit&quot;)   # 4-bit so it fits in 24 GB
+model.freeze()                                        # base weights stay frozen
+linear_to_lora_layers(model, 8, {&quot;rank&quot;: 16, &quot;scale&quot;: 8.0, &quot;dropout&quot;: 0.0})</code></pre></div>
+<p>我们只训练最后 8 层上的小型 LoRA 适配器。基座模型对语言已经知道得够多了。我们只想改变它作答的方式，而不是它知道的内容。</p>
+<hr />
+<h2 id="第-1-步提示词格式">第 1 步：提示词格式</h2>
+<p>每个问题都渲染成一个 <em>prefix</em>（前缀，即上下文）加上每个选项各一条 <em>branch</em>（分支）：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">SYSTEM = &quot;Judge how well the Option answers the Question, given the State.&quot;
+
+def render(state, question, options):
+    if not isinstance(state, str):
+        state = json.dumps(state, ensure_ascii=False)
+    prefix = (&quot;&lt;|im_start|&gt;system\n&quot; + SYSTEM + &quot;&lt;|im_end|&gt;\n&quot;
+              &quot;&lt;|im_start|&gt;user\n&lt;State&gt;: &quot; + state + &quot;\n&lt;Question&gt;: &quot; + question + &quot;\n&quot;)
+    branches = [f&quot;&lt;Option&gt;: {o}&lt;|im_end|&gt;&quot; for o in options]
+    return prefix, branches</code></pre></div>
+<p>注意，选项列表<strong>没有</strong>写进 prefix。每个选项只存在于自己的 branch 里。这是刻意为之，也是下一步的关键想法。</p>
+<p>对于是非题，两个选项就是「no」文本和「yes」文本，按此顺序。对带描述的选择题选项，我们写成 &quot;billing - payments, invoices and refunds&quot; 这样的形式。</p>
+<hr />
+<h2 id="第-2-步把-llm-变成打分器branch-读出">第 2 步：把 LLM 变成打分器（branch 读出）</h2>
+<h3 id="我们的第一次尝试以及它为什么失败">我们的第一次尝试，以及它为什么失败</h3>
+<p>我们最初的想法很简单：把所有选项编号放进提示词，再加一个带 256 个输出的分类头，每个选项槽位对应一个输出。选项 1 是槽位 0，选项 2 是槽位 1，依此类推。</p>
+<p>在测试超过 6 个选项之前，它看起来一切正常。选项一多，准确率就崩了。查看分类头的权重后，我们找到了原因：第 6 到 255 行基本还停在随机初始值上。我们的训练数据几乎从来没有超过 6 个选项，所以这些槽位从未被训练过。一个有 256 个槽位的模型，只学过其中 6 个。</p>
+<p>它还有第二个问题：按顺序列出选项，意味着模型可以学到「答案通常靠前」。这就是位置偏差（position bias），会毁掉校准。</p>
+<h3 id="修复方案一个共享打分器每个选项一条-branch">修复方案：一个共享打分器，每个选项一条 branch</h3>
+<p>不用槽位，我们改为：</p>
+<ol><li><p>彻底移除 LM head。</p></li><li><p>加一个小小的线性层 Linear(2560, 1)，把隐藏状态变成一个分数。</p></li><li><p>前向跑一次 prefix，然后把每个选项当作独立的 branch 来跑——branch 可以看 prefix，但<strong>不能</strong>看其他选项。</p></li><li><p>从每条 branch 的最后一个 token 读出分数，再对 branches 做 softmax。</p></li></ol>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">class Gero(nn.Module):
+    def __init__(self, backbone, hidden=2560):
+        super().__init__()
+        self.backbone = backbone
+        self.scorer = nn.Linear(hidden, 1, bias=False)
+        # Hidden states have a norm around 300, so 1e-3 gives scores spread
+        # around 0.3: close to uniform at the start, but not so tiny that
+        # gradients die.
+        self.scorer.weight = mx.random.normal(self.scorer.weight.shape) * 1e-3
+
+m = Gero(model)</code></pre></div>
+<p>接下来是高效运行 branch 的诀窍。MLX 的层接收一个带有 update_and_fetch(k, v) 方法的 cache 对象。我们写了两个小 cache 类。第一个负责前向前缀过程，记录该层的 prefix keys 和 values。第二个把同一份 prefix 提供给每条 branch。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">class Record:
+    &quot;&quot;&quot;Prefix pass: remember this layer&#x27;s keys and values.&quot;&quot;&quot;
+    def __init__(self):
+        self.offset = 0
+    def update_and_fetch(self, k, v):
+        self.k, self.v = k, v
+        self.offset += k.shape[2]
+        return k, v
+
+class SharePrefix:
+    &quot;&quot;&quot;Branch pass: every branch sees the same prefix keys and values.&quot;&quot;&quot;
+    def __init__(self, rec):
+        self.pk, self.pv, self.offset = rec.k, rec.v, rec.offset
+    def update_and_fetch(self, k, v):
+        B = k.shape[0]                      # number of branches
+        pk = mx.broadcast_to(self.pk, (B,) + self.pk.shape[1:])
+        pv = mx.broadcast_to(self.pv, (B,) + self.pv.shape[1:])
+        return mx.concatenate([pk, k], 2), mx.concatenate([pv, v], 2)
+
+def run(backbone, ids, mask, caches):
+    t = backbone.model
+    h = t.embed_tokens(ids)
+    for layer, c in zip(t.layers, caches):
+        h = layer(h, mask, c)
+    return t.norm(h)
+
+def branch_logits(m, pre_ids, opt_ids):
+    recs = [Record() for _ in m.backbone.model.layers]
+    run(m.backbone, mx.array([pre_ids]), &quot;causal&quot;, recs)      # prefix, once
+
+    P, Lb = len(pre_ids), max(len(o) for o in opt_ids)
+    ids = mx.array([o + [0] * (Lb - len(o)) for o in opt_ids])  # pad branches
+    r = mx.arange(Lb)
+    mask = mx.concatenate([mx.ones((Lb, P), dtype=mx.bool_),   # see all of the prefix
+                           r[:, None] &gt;= r[None, :]], axis=1)  # causal inside the branch
+    h = run(m.backbone, ids, mask, [SharePrefix(x) for x in recs])
+
+    last = mx.array([len(o) - 1 for o in opt_ids])
+    return m.scorer(h[mx.arange(len(opt_ids)), last].astype(mx.float32)).squeeze(-1)</code></pre></div>
+<p>mask 是其中的关键部分。每条 branch 的那一行能看到：</p>
+<div class="codeblock"><span class="cb-title">markdown</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-markdown">            prefix tokens        its own tokens
+branch A:   [1 1 1 1 1 1 1 1]    [causal]
+branch B:   [1 1 1 1 1 1 1 1]    [causal]      &lt;- but never A&#x27;s tokens</code></pre></div>
+<p>由于各 branch 是 batch 里各自独立的行，选项 B 在物理上根本看不到选项 A。短 branch 末尾的 padding 也无所谓，因为我们从最后一个真实 token 读分数，而且 mask 是因果的（causal）。</p>
+<p>这个设计带来的好处：</p>
+<ul><li><p><strong>从构造上就没有位置偏差。</strong>打乱选项顺序，每个分数分毫不差。我们测过：最大差异是 0.0。</p></li><li><p><strong>任意数量的选项。</strong>一个共享打分器意味着 2 个选项和 256 个选项用的是同一套权重。不存在没训练过的槽位。</p></li><li><p><strong>便宜。</strong>prefix（通常是比较长的那部分）只计算一次，不管有多少个选项。</p></li></ul>
+<p>选项之间仍然存在竞争，通过 softmax 实现。它们各自单独打分，但放在一起训练。</p>
+<p>一个你应该永远跑一下的快速健全性测试：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">pre, brs = render(&quot;Charged twice for my invoice.&quot;, &quot;Which team?&quot;, [&quot;billing&quot;, &quot;technical&quot;, &quot;shipping&quot;])
+enc = lambda s: tok.encode(s, add_special_tokens=False)
+a = mx.softmax(branch_logits(m, enc(pre), [enc(b) for b in brs]))
+b = mx.softmax(branch_logits(m, enc(pre), [enc(b) for b in reversed(brs)]))
+print(a, b[::-1])   # should be identical</code></pre></div>
+<hr />
+<h2 id="第-3-步阶段-2-的数据教格式而不教内容">第 3 步：阶段 2 的数据，教格式而不教内容</h2>
+<p>阶段 2 只有一件事：教模型正确读懂问题格式。大量选项、有序等级、不同措辞的是非题、否定句。</p>
+<p>阶段 2 的第一版用的是真实数据集（新闻主题、情感等等）。能用，但模型在同时学两样东西：格式和内容。出了问题，我们分不清是哪一部分坏了。</p>
+<p>于是我们换成了<strong>无内容</strong>（content-free）数据。虚构的货箱、货架和像 QX-417A 这种毫无意义的编码。想答对，唯一的办法就是真正去读状态和问题。</p>
+<p>下面是我们是非题生成器的简化版：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import random
+
+NOUL_OPTS = [(&quot;no&quot;, &quot;yes&quot;), (&quot;false&quot;, &quot;true&quot;), (&quot;incorrect&quot;, &quot;correct&quot;)]
+
+def make_yes_no(R, i):
+    n = R.randint(2, 8)
+    shelves = R.sample(range(1, 100), n)
+    items = [f&quot;{R.choice([&#x27;QX&#x27;,&#x27;FJ&#x27;,&#x27;RT&#x27;,&#x27;ZP&#x27;])}-{R.randint(100,999)}{R.choice(&#x27;ABCDEFG&#x27;)}&quot; for _ in range(n)]
+    ask = R.randrange(n)
+
+    truth = (i % 2 == 0)                         # exactly 50/50 on the fact
+    # the wrong item is taken from ANOTHER shelf in the same state,
+    # so &quot;is this code in the text?&quot; never gives away the answer
+    probe = items[ask] if truth else items[(ask + 1) % n]
+    negated = (i // 2) % 2 == 1                  # exactly 50/50 on negation
+
+    if negated:
+        q = f&quot;Is it false that shelf {shelves[ask]} holds {probe}?&quot;
+    else:
+        q = f&quot;Does shelf {shelves[ask]} hold {probe}?&quot;
+    state = &quot;Manifest: &quot; + &quot;; &quot;.join(f&quot;shelf {s} holds {it}&quot; for s, it in zip(shelves, items)) + &quot;.&quot;
+    no, yes = R.choice(NOUL_OPTS)
+    return dict(state=state, question=q, options=[no, yes], target=int(truth != negated))</code></pre></div>
+<p>留意这些小细节，因为每一个都修掉了一个我们真踩过的 bug：</p>
+<ul><li><p><strong>事实恰好 50/50</strong>，否定也恰好 50/50。如果「yes」在 60% 的情况下是对的，模型就只会学成无脑说 yes。</p></li><li><p><strong>错误答案来自同一个状态。</strong>早期版本里错误编码是随机生成的，于是「这个编码在文本里出现过吗？」不用读题就能解出问题。模型立刻就找到了这条捷径。</p></li><li><p><strong>是非题的措辞会变</strong>（no/yes、false/true、incorrect/correct），这样模型就没法死记一个词。</p></li></ul>
+<p>我们还为其他题型写了类似的生成器：选择题（1 到 256 个选项，按对数均匀采样，这样大列表真的会出现）、评分题（2 到 10 个有序等级，各等级均衡），以及一些阅读技能：否定、「原文真的这么说了吗？」、把正确的属性绑定到正确的事物上。</p>
+<h3 id="否定捷径一个值得了解的失误">否定捷径（一个值得了解的失误）</h3>
+<p>有一阵子，为了修否定的问题，我们加了大量否定问句。训练准确率上去了，我们很高兴。结果一个真实蕴含（entailment）任务上的准确率从 0.775 掉到了 0.617。</p>
+<p>事情是这样的：在我们的数据里，「not」「false」这类否定词只出现在否定问句里。于是模型学到了「看到否定词就把答案反过来」。而在真实文本里，否定词到处都是——在状态里、在普通问题里——模型开始翻转那些不该翻转的答案。</p>
+<p>修复办法是<em>去相关</em>（decorrelate）：在状态和普通问题里也放否定词，让这个词本身不携带任何信息。</p>
+<hr />
+<h2 id="第-4-步训练之前先检查数据">第 4 步：训练之前先检查数据</h2>
+<p>这是整个项目里最大的一课。我们在坏数据上浪费的时间比其他任何事情都多。所以我们写了一个检查器，在每次训练前运行，一旦发现不对劲就拒绝继续。</p>
+<p>下面是其中一些检查：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from collections import Counter
+
+def check_leak(train, holdout):
+    &quot;&quot;&quot;Train and holdout must not share a state, not just an index.&quot;&quot;&quot;
+    seen = {json.dumps(e[&quot;state&quot;], sort_keys=True) for e in train}
+    leaked = [e for e in holdout if json.dumps(e[&quot;state&quot;], sort_keys=True) in seen]
+    assert not leaked, f&quot;{len(leaked)} holdout states also appear in train&quot;
+
+def check_position(data):
+    &quot;&quot;&quot;The right answer should not prefer one position.&quot;&quot;&quot;
+    for k in {e_k for e_k in (len(e[&quot;options&quot;]) for e in data) if e_k &lt;= 6}:
+        rows = [e for e in data if len(e[&quot;options&quot;]) == k]
+        top = Counter(e[&quot;target&quot;] for e in rows).most_common(1)[0][1] / len(rows)
+        assert top &lt; 1 / k + 0.10, f&quot;k={k}: one slot holds {top:.0%} of answers&quot;
+
+def check_majority_text(data):
+    &quot;&quot;&quot;If always picking the same option TEXT scores well, the item can be solved without reading.&quot;&quot;&quot;
+    gold = Counter(e[&quot;options&quot;][e[&quot;target&quot;]] for e in data)
+    worst = gold.most_common(1)[0][1] / len(data)
+    assert worst &lt; 0.6, f&quot;answer text &#x27;{gold.most_common(1)[0][0]}&#x27; is right {worst:.0%} of the time&quot;
+
+def check_string_presence(data):
+    &quot;&quot;&quot;&#x27;Pick whichever option appears in the state&#x27; must not work.&quot;&quot;&quot;
+    solved = 0
+    for e in data:
+        hits = [i for i, o in enumerate(e[&quot;options&quot;]) if o in json.dumps(e[&quot;state&quot;])]
+        solved += hits == [e[&quot;target&quot;]]
+    assert solved / len(data) &lt; 0.05, f&quot;string presence solves {solved/len(data):.0%}&quot;</code></pre></div>
+<p>最后一条特别阴险。在我们的选择题数据里，正确项总是写在状态里，而错误项是随机编码。「选那个在文本里出现过的选项」几乎能解掉所有题。从同一个状态里取干扰项之后，这个问题才修好。</p>
+<p>另外，永远要主动测试你的检查器：造一个已知有泄漏的数据集，确认检查器能抓住它。一个从不失败的检查器，可能只是它自己坏了。</p>
+<hr />
+<h2 id="第-5-步阶段-2-训练">第 5 步：阶段 2 训练</h2>
+<p>损失就是针对目标分布的普通交叉熵。我们用软目标（完整的概率列表）而不是单个索引，反正阶段 3 也需要它。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">def stage2_loss(model, batch):
+    total = 0.0
+    for e in batch:
+        logits = branch_logits(model, e[&quot;pre_ids&quot;], e[&quot;opt_ids&quot;])
+        logp = logits - mx.logsumexp(logits)
+        target = mx.array(e[&quot;soft&quot;])            # one-hot for normal items
+        total = total - (target * logp).sum()
+    return total / len(batch)</code></pre></div>
+<h3 id="两个优化器以及为什么放大梯度行不通">两个优化器，以及为什么放大梯度行不通</h3>
+<p>打分器是全新初始化的，需要比 LoRA 权重更大的学习率。我们最初的尝试是把打分器的梯度乘以 20。在 Adam 下这毫无作用。</p>
+<p>Adam 会把每个梯度除以一个对其自身大小的滑动估计。你把梯度乘以 20，这个估计也跟着放大 20 倍，两者正好抵消。于是我们的「20 倍学习率」整整一轮训练都是无效操作。真正的解决办法是用两个优化器：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import mlx.optimizers as optim
+
+opt_scorer = optim.AdamW(learning_rate=5e-4)
+opt_lora = optim.AdamW(learning_rate=3e-5)
+step_fn = nn.value_and_grad(m, stage2_loss)
+
+for step in range(steps):
+    batch = rng.sample(train, 8)
+    loss, g = step_fn(m, batch)
+    g, _ = optim.clip_grad_norm(g, 1.0)
+    p = m.trainable_parameters()
+    m.update(opt_scorer.apply_gradients({&quot;scorer&quot;: g[&quot;scorer&quot;]}, {&quot;scorer&quot;: p[&quot;scorer&quot;]}))
+    m.update(opt_lora.apply_gradients({&quot;backbone&quot;: g[&quot;backbone&quot;]}, {&quot;backbone&quot;: p[&quot;backbone&quot;]}))
+    mx.eval(m.parameters(), opt_scorer.state, opt_lora.state)</code></pre></div>
+<h3 id="阶段-2-什么时候算完成">阶段 2 什么时候算完成？</h3>
+<p>我们定了一条退出规则：每个结构族都要在留出条目上达到 0.98 的准确率，<strong>并且</strong>真实任务上的准确率不能下降。后半句很重要。在虚构的货箱上刷到满分、同时悄悄弄坏真实阅读能力，是太容易发生的事。</p>
+<p>还有，要经常保存 checkpoint。我们有一次杀掉了一个没有进展的训练，把它仅有的一份 checkpoint 也弄丢了。现在我们每 150 步保存一次。</p>
+<hr />
+<h2 id="第-6-步阶段-3rl-奖励">第 6 步：阶段 3，RL 奖励</h2>
+<p>正是这一部分让它成为决策模型。目标是：<strong>模型的概率应当与它实际答对的频率相符。</strong></p>
+<h3 id="什么是正规评分规则proper-scoring-rule">什么是正规评分规则（proper scoring rule）？</h3>
+<p>想象一枚 70% 概率正面朝上的硬币。你必须报出一个概率，然后按实际抛掷的结果拿奖励。如果一个奖励让你报出真值 0.7 成为最优策略，它就是 <em>proper</em>（正规的）。不是报 1.0 显得自信，也不是报 0.5 求稳。</p>
+<p>log 分数（对实际发生的结果取 log p）是 proper 的，Brier 分数（Brier score）也是。如果你的奖励不 proper，RL 会兴高采烈地找到作弊的办法。</p>
+<h3 id="那个显而易见的奖励是坏的">那个显而易见的奖励是坏的</h3>
+<p>我们最先想到的奖励听起来很合理：</p>
+<blockquote><p>让模型选一个答案。再根据它对这个答案的置信度对「答对与否」预测得有多好来给它奖励。</p></blockquote>
+<p>把这个想法写成代码，并且写成精确的期望值形式，这样我们能看到训练最终停在哪里：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">truth = mx.array([0.174, 0.261, 0.005, 0.001, 0.141, 0.418])   # true answer odds
+
+def naive_loss(z):
+    p = mx.softmax(z)
+    c = mx.clip(p, 1e-6, 1 - 1e-6)
+    # choose option a with prob p(a), score how well p(a) predicts &quot;a is right&quot;
+    per_choice = truth * mx.log(c) + (1 - truth) * mx.log1p(-c)
+    return -(p * per_choice).sum()</code></pre></div>
+<p>对它跑梯度下降，看看它停在哪：</p>
+<div class="codeblock"><span class="cb-title">markdown</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-markdown">truth  [0.174, 0.261, 0.005, 0.001, 0.141, 0.418]
+naive  [0.200, 0.181, 0.208, 0.208, 0.202, 0.001]</code></pre></div>
+<p>正确答案（0.418）被压到了 0.001。模型找到了一个作弊方式：挑一个几乎肯定错的选项，说「我不太确定」，校准得分就很好看。它「校准」得完美无缺，却完全没用。</p>
+<h3 id="我们的奖励">我们的奖励</h3>
+<p>我们把它拆成都 proper 的两部分：</p>
+<ol><li><p><strong>完整分布：</strong>从条目的真实答案分布中采样真实结果，奖励 log p(outcome)。这会把整个分布推向真值。</p></li><li><p><strong>决策校准：</strong>看模型的首选答案和它的置信度 c。采到的结果与它一致时奖励 log c，不一致时奖励 log(1 - c)。这让实际决策的置信度变得诚实。</p></li></ol>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">def rl_loss(logits, soft, G, rng, lam=1.0):
+    logp = logits - mx.logsumexp(logits)
+    k = len(soft)
+    outcomes = rng.choices(range(k), weights=soft, k=G)   # G sampled outcomes
+
+    top = int(mx.argmax(logp).item())
+    c = mx.clip(mx.exp(logp[top]), 1e-6, 1 - 1e-6)
+
+    full = mx.stack([logp[y] for y in outcomes]).mean()
+    hit_rate = sum(1 for y in outcomes if y == top) / G
+    calib = hit_rate * mx.log(c) + (1 - hit_rate) * mx.log1p(-c)
+    return -(full + lam * calib)</code></pre></div>
+<p>和之前一样的测试：</p>
+<div class="codeblock"><span class="cb-title">markdown</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-markdown">truth  [0.174, 0.261, 0.005, 0.001, 0.141, 0.418]
+ours   [0.174, 0.261, 0.005, 0.001, 0.141, 0.418]</code></pre></div>
+<p>它正好落在真值上。<strong>对你发明的任何奖励，永远要跑这个测试。</strong>只花一分钟，却本可以为我们省下好几天。</p>
+<p>我们每个条目用 G = 8 个结果，结果从数据中采样，而不是从模型中采。模型永远不会被直接告知真实概率。它只看得到发生了什么。</p>
+<h3 id="真实概率从哪里来">「真实概率」从哪里来？</h3>
+<p>对普通的标注数据，目标是 one-hot（该标签以概率 1 发生）。但校准模型也需要见到真正不确定的样本，否则它学到的永远只有「要 100% 确定」。</p>
+<p>所以我们生成带软标签的<em>模糊</em>条目。比如一段简短日志，两个选项与证据契合得同样好，目标就是 [0.5, 0.5]，正确行为是输出 0.5。我们把确定条目和模糊条目混在一起（最终训练中确定条目约占 40%），并在损失里给模糊条目更高的权重，免得占多数的确定条目把它们淹没。</p>
+<h3 id="kl-锚定的失误">KL 锚定的失误</h3>
+<p>很多 RL 配方都会加一个 KL 惩罚，让模型保持在出发点附近。我们也加了一个。结果更糟了。</p>
+<p>原因是：KL 惩罚是把模型往<em>旧</em>模型的答案方向拉。这等于多了一个与真值竞争的目标，于是最优答案不再是真值，而是落在真值和旧模型之间的某处。我们的模型变得不那么锐利：它不再区分简单样本和困难样本。</p>
+<p>对于任何要加进损失里的东西，我们最终遵守的规则是：<strong>在模型概率等于真值的那一点上，附加项的梯度必须为零。</strong>不为零，它就会挪动最优点。KL 锚定过不了这个测试，所以我们把它的权重设成了 0。</p>
+<h3 id="另外两个坑过我们的小问题">另外两个坑过我们的小问题</h3>
+<ul><li><p><strong>Brier 对比 log 分数。</strong>在用 RL 奖励之前，我们训练阶段 3 用的是直接对软标签算的损失，而且一开始用的是 Brier。Brier 是 proper 的，但模型非常自信时它的梯度会变得极小。在 0.999 的置信度下，它比 log 分数的梯度小大约 250 倍，所以过度自信的模型几乎得不到纠正。我们的 RL 奖励建立在 log 分数之上，避开了这个问题。</p></li><li><p><strong>裁剪梯度。</strong>log 分数恰恰在你正想修复的过度自信样本上会产生很大的梯度。一次没裁剪的尖峰就能毁掉一整轮训练。</p></li></ul>
+<hr />
+<h2 id="第-7-步正确地度量校准">第 7 步：正确地度量校准</h2>
+<p>度量错了，就无从改进。而我们有一段时间就度量错了。</p>
+<h3 id="可靠性与分辨力">可靠性与分辨力</h3>
+<p>只看准确率是不够的。我们把 Brier 分数拆成两部分（这叫 Murphy 分解）：</p>
+<ul><li><p><strong>可靠性（Reliability）：</strong>置信度离实际准确率有多远。越低越好。这就是校准。</p></li><li><p><strong>分辨力（Resolution）：</strong>置信度能把答对和答错的答案区分得多好。越高越好。</p></li></ul>
+<p>为什么两个都要？一个在答对率 70% 的任务上永远说「70%」的模型，可靠性是完美的。但它毫无用处，因为它分不清简单样本和困难样本。分辨力能抓住这一点。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">def murphy(rows, bins=10):
+    &quot;&quot;&quot;rows: list of (confidence, correct) pairs.&quot;&quot;&quot;
+    n = len(rows)
+    base = sum(o for _, o in rows) / n
+    groups = [[] for _ in range(bins)]
+    for c, o in rows:
+        groups[min(bins - 1, int(c * bins))].append((c, o))
+    rel = res = 0.0
+    for g in groups:
+        if not g:
+            continue
+        conf = sum(c for c, _ in g) / len(g)
+        acc = sum(o for _, o in g) / len(g)
+        rel += len(g) / n * (conf - acc) ** 2
+        res += len(g) / n * (acc - base) ** 2
+    return rel, res</code></pre></div>
+<h3 id="选择性准确率">选择性准确率</h3>
+<p>这才是实践中真正要紧的数字：如果我只在模型置信度不低于 0.9 时才行动，这部分有多准，又能覆盖我多少数据？</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">def selective(rows, thr=0.9):
+    hi = [(c, o) for c, o in rows if c &gt;= thr]
+    return dict(coverage=len(hi) / len(rows),
+                accuracy=sum(o for _, o in hi) / len(hi),
+                promised=sum(c for c, _ in hi) / len(hi))</code></pre></div>
+<p>如果 accuracy 接近 promised，你就可以信任这个阈值。</p>
+<h3 id="指标的-bug">指标的 bug</h3>
+<p>对模糊条目，我们最初的做法是：答案与最可能的标签一致就算「正确」。听起来没问题，但想想一个概率为 [0.55, 0.45] 的条目。诚实的模型说 0.55。它选了第一个选项，按我们的指标 100%「正确」，于是它 0.55 的置信度看起来严重<em>欠</em>自信。而一个说 0.99 的过度自信模型看起来完美。</p>
+<p>我们的指标奖励的恰恰是我们想消除的行为。用数字说：诚实模型的可靠性误差是 0.1019，过度自信的模型是 0.0001。</p>
+<p>修复办法：对模糊条目，「正确」取所选选项的真实概率 soft[pred]，而不是 0/1 匹配。</p>
+<div class="codeblock"><span class="cb-title">markdown</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-markdown">correct = soft[pred]          # not: 1.0 if pred == argmax(soft) else 0.0</code></pre></div>
+<p>修好之后，我们不得不重新度量每一个 checkpoint，一些已经写下的结论也随之翻转。</p>
+<hr />
+<h2 id="第-8-步守护各个阶段">第 8 步：守护各个阶段</h2>
+<p>阶段 3 该教的是决策，不是格式。但 RL 更新的是同一批 LoRA 权重，所以它可能慢慢抹掉阶段 2 教会的东西。</p>
+<p>所以在阶段 3 期间，我们持续运行一个结构探针：从未训练过的全新无内容问题。如果它的准确率朝任一方向变动超过 0.01，就说明出问题了：</p>
+<ul><li><p>如果<strong>下降</strong>，是阶段 3 在覆盖阶段 2。</p></li><li><p>如果<strong>上升</strong>，说明阶段 2 其实没做完。</p></li></ul>
+<p>我们还在训练脚本里放了一个硬检查：只要有任何纯结构数据混进阶段 3 的训练集，脚本就直接崩溃。本该分开的阶段，在代码里也应该是分开的，而不只是在我们脑子里。</p>
+<hr />
+<h2 id="第-9-步导出为普通的-hugging-face-模型">第 9 步：导出为普通的 Hugging Face 模型</h2>
+<p>训练是在 4-bit 基座加 LoRA 上完成的，这只能在 MLX 里运行。要发布，我们：</p>
+<ol><li><p>把每个 LoRA 合并进对应的层。你不能把浮点更新直接加到打包好的 4-bit 权重上，所以先反量化：W = dequantize(W_q) + scale * B @ A。</p></li><li><p>把其余所有层反量化为 bf16。</p></li><li><p>把我们的打分器改名为 score.weight，保存为带一个 label 的 <strong>Qwen3ForSequenceClassification</strong>。</p></li></ol>
+<p>最后一步之所以可行，是因为我们的 branch 读出在数学上等价于：把每个选项当作独立完整的序列跑一遍，再从它的最后一个 token 读出分数。这恰好就是 Hugging Face 序列分类头所做的事。我们的技巧只是通过共享 prefix 让它更快。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from mlx_lm.utils import dequantize_model
+from mlx.utils import tree_flatten, tree_unflatten
+
+fused = [(n, mod.fuse(dequantize=True)) for n, mod in m.backbone.named_modules() if hasattr(mod, &quot;fuse&quot;)]
+m.backbone.update_modules(tree_unflatten(fused))
+bb = dequantize_model(m.backbone)
+
+weights = {k: v.astype(mx.bfloat16) for k, v in tree_flatten(bb.parameters())}
+weights.pop(&quot;lm_head.weight&quot;, None)               # tied embeddings, no LM head needed
+weights[&quot;score.weight&quot;] = m.scorer.weight.astype(mx.bfloat16)
+mx.save_safetensors(&quot;gero-4b/model.safetensors&quot;, weights, metadata={&quot;format&quot;: &quot;pt&quot;})
+# plus config.json with architectures=[&quot;Qwen3ForSequenceClassification&quot;], num_labels=1</code></pre></div>
+<p>然后做验证。我们只加载导出的文件，在 1,866 个留出条目上与训练 checkpoint 对比。首选答案在 98.8% 的条目上一致，而那些微小的差异与正常的数值噪声处于同一量级。</p>
+<hr />
+<h2 id="我们犯过的错你就不用再犯了">我们犯过的错（你就不用再犯了）</h2>
+<ol><li><p>一个 256 槽位的分类头，其中只有 6 个槽位被训练过。</p></li><li><p>否定词只出现在否定问句里，于是模型学会了「翻转」捷径。</p></li><li><p>错误答案不在状态里，于是「提到了吗？」就能解题。</p></li><li><p>在 Adam 下靠放大梯度来获得更高学习率。会相互抵消。</p></li><li><p>一个不 proper 的天真 RL 奖励，把正确答案压到了 0.001。</p></li><li><p>一个把最优点推离真值的 KL 锚定。</p></li><li><p>一个在模糊条目上奖励过度自信的校准指标。</p></li></ol>
+<hr />
+<p>模型在 Hugging Face 上：<a href="https://huggingface.co/vixhal-baraiya/Gero-4B" target="_blank" rel="noopener">vixhal-baraiya/Gero-4B</a>，想试的话可以去试试。</p>
+<p><strong>继续构建，继续学习。</strong></p>
+  </article>
+<nav class="pager"><a class="pager-prev" href="../../materials/polydao/"><span>上一篇</span><strong>Jev 工程与置信度路由</strong></a><a class="pager-next" href="../../materials/26-akshay-jev-judge/"><span>下一篇</span><strong>Build a Jev Judge：评审实战</strong></a></nav>
+  <footer class="site-footer">第十一章知识库收录材料 · <a href="../../materials/sources/">来源、版本与许可</a> · 第三方内容版权归各自作者；观点与数字请对照原始来源核验。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#我们想让模型做什么">我们想让模型做什么</a><a class="toc-item toc-l2" href="#计划三个阶段">计划：三个阶段</a><a class="toc-item toc-l2" href="#环境准备">环境准备</a><a class="toc-item toc-l2" href="#第-1-步提示词格式">第 1 步：提示词格式</a><a class="toc-item toc-l2" href="#第-2-步把-llm-变成打分器branch-读出">第 2 步：把 LLM 变成打分器（branch 读出）</a><a class="toc-item toc-l3" href="#我们的第一次尝试以及它为什么失败">我们的第一次尝试，以及它为什么失败</a><a class="toc-item toc-l3" href="#修复方案一个共享打分器每个选项一条-branch">修复方案：一个共享打分器，每个选项一条 branch</a><a class="toc-item toc-l2" href="#第-3-步阶段-2-的数据教格式而不教内容">第 3 步：阶段 2 的数据，教格式而不教内容</a><a class="toc-item toc-l3" href="#否定捷径一个值得了解的失误">否定捷径（一个值得了解的失误）</a><a class="toc-item toc-l2" href="#第-4-步训练之前先检查数据">第 4 步：训练之前先检查数据</a><a class="toc-item toc-l2" href="#第-5-步阶段-2-训练">第 5 步：阶段 2 训练</a><a class="toc-item toc-l3" href="#两个优化器以及为什么放大梯度行不通">两个优化器，以及为什么放大梯度行不通</a><a class="toc-item toc-l3" href="#阶段-2-什么时候算完成">阶段 2 什么时候算完成？</a><a class="toc-item toc-l2" href="#第-6-步阶段-3rl-奖励">第 6 步：阶段 3，RL 奖励</a><a class="toc-item toc-l3" href="#什么是正规评分规则proper-scoring-rule">什么是正规评分规则（proper scoring rule）？</a><a class="toc-item toc-l3" href="#那个显而易见的奖励是坏的">那个显而易见的奖励是坏的</a><a class="toc-item toc-l3" href="#我们的奖励">我们的奖励</a><a class="toc-item toc-l3" href="#真实概率从哪里来">「真实概率」从哪里来？</a><a class="toc-item toc-l3" href="#kl-锚定的失误">KL 锚定的失误</a><a class="toc-item toc-l3" href="#另外两个坑过我们的小问题">另外两个坑过我们的小问题</a><a class="toc-item toc-l2" href="#第-7-步正确地度量校准">第 7 步：正确地度量校准</a><a class="toc-item toc-l3" href="#可靠性与分辨力">可靠性与分辨力</a><a class="toc-item toc-l3" href="#选择性准确率">选择性准确率</a><a class="toc-item toc-l3" href="#指标的-bug">指标的 bug</a><a class="toc-item toc-l2" href="#第-8-步守护各个阶段">第 8 步：守护各个阶段</a><a class="toc-item toc-l2" href="#第-9-步导出为普通的-hugging-face-模型">第 9 步：导出为普通的 Hugging Face 模型</a><a class="toc-item toc-l2" href="#我们犯过的错你就不用再犯了">我们犯过的错（你就不用再犯了）</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/lz-string.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/lab.js"></script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

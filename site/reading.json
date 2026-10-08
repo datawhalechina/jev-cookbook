@@ -1,0 +1,247 @@
+[
+  {
+    "directory": "01-official-docs-zh",
+    "slug": "01-official-docs-zh",
+    "title": "TypeSafe 官方文档中文翻译",
+    "group": "基础与资料导航",
+    "summary": "System One、三种原语、架构模式、API 与 SDK 文档。"
+  },
+  {
+    "directory": "02-nanojev",
+    "slug": "02-nanojev",
+    "title": "NanoJev：小型决策模型",
+    "group": "模型原理与训练",
+    "summary": "模型设计、训练流程、游戏实验与研究文档。"
+  },
+  {
+    "directory": "03-jev-trader",
+    "slug": "03-jev-trader",
+    "title": "Jev Trader：交易决策工程",
+    "group": "应用与 Agent 工程",
+    "summary": "交易代理的状态构造、判断接口与执行策略。"
+  },
+  {
+    "directory": "04-fast-jev-compaction",
+    "slug": "04-fast-jev-compaction",
+    "title": "Fast Jev Compaction：上下文压缩",
+    "group": "应用与 Agent 工程",
+    "summary": "Claude Code 上下文筛选与压缩的工程实现。"
+  },
+  {
+    "directory": "05-awesome-jev",
+    "slug": "05-awesome-jev",
+    "title": "Awesome Jev：生态资料导航",
+    "group": "基础与资料导航",
+    "summary": "按场景整理的模型、工具、项目与研究资源。"
+  },
+  {
+    "directory": "06-typesafe-skills",
+    "slug": "06-typesafe-skills",
+    "title": "TypeSafe Skills：代理技能",
+    "group": "应用与 Agent 工程",
+    "summary": "让编码代理理解并使用 Jev 的技能说明。"
+  },
+  {
+    "directory": "07-jev-ultrafast",
+    "slug": "07-jev-ultrafast",
+    "title": "Jev Ultrafast：浏览器决策",
+    "group": "应用与 Agent 工程",
+    "summary": "浏览器动作、回放、速度与工程边界的文档。"
+  },
+  {
+    "directory": "08-eve-decision-models",
+    "slug": "08-eve-decision-models",
+    "title": "Eve：决策模型研究",
+    "group": "模型原理与训练",
+    "summary": "Vercel Eve 对 Jev 与决策模型的研究记录。"
+  },
+  {
+    "directory": "09-typesafe-sdk-python",
+    "slug": "09-typesafe-sdk-python",
+    "title": "TypeSafe Python SDK",
+    "group": "应用与 Agent 工程",
+    "summary": "Python 客户端、请求类型与 SDK 使用说明。"
+  },
+  {
+    "directory": "10-feishu-research",
+    "slug": "10-feishu-research",
+    "title": "Jev 深度研究报告",
+    "group": "基础与资料导航",
+    "summary": "算法、成本、性能基准与工程落地的三篇报告。"
+  },
+  {
+    "directory": "11-typesafe-mario",
+    "slug": "11-typesafe-mario",
+    "title": "TypeSafe Mario：游戏决策案例",
+    "group": "应用与 Agent 工程",
+    "summary": "马里奥案例中的观测、动作与模型调用链路。"
+  },
+  {
+    "directory": "12-wechat-article",
+    "slug": "12-wechat-article",
+    "title": "聊聊 Jev 模型到底是什么",
+    "group": "基础与资料导航",
+    "summary": "腾讯技术工程对 System One 与 Jev 的介绍。"
+  },
+  {
+    "directory": "13-feishu-cookbook-plan",
+    "slug": "13-feishu-cookbook-plan",
+    "title": "Cookbook 规划与技术分析",
+    "group": "基础与资料导航",
+    "summary": "知识库规划、技术解析与应用前景研究。"
+  },
+  {
+    "directory": "14-feishu-lecture",
+    "slug": "14-feishu-lecture",
+    "title": "Jev 模型应用入门与实践",
+    "group": "基础与资料导航",
+    "summary": "入门讲座整理稿、原语示例与应用讨论。"
+  },
+  {
+    "directory": "15-jevbench",
+    "slug": "15-jevbench",
+    "title": "JevBench：独立评测基准",
+    "group": "评测与独立观察",
+    "summary": "计分方法、版本结果、组合策略与实施文档。"
+  },
+  {
+    "directory": "16-wechat-agent-engineering",
+    "slug": "16-wechat-agent-engineering",
+    "title": "把 Agent 的判断题拆给 Jev",
+    "group": "应用与 Agent 工程",
+    "summary": "腾讯技术工程的长文：问题设计与工程实践。"
+  },
+  {
+    "directory": "17-wechat-silicon-grail",
+    "slug": "17-wechat-silicon-grail",
+    "title": "Jev：在硅基世界掷圣杯",
+    "group": "基础与资料导航",
+    "summary": "从开发者视角讨论决策模型的用途与限制。"
+  },
+  {
+    "directory": "18-wechat-rerank-experiment",
+    "slug": "rerank-lab",
+    "title": "Jev 能替代 Rerank 模型吗",
+    "group": "评测与独立观察",
+    "summary": "Milvus 与 SciFact 上的重排序对照实验。"
+  },
+  {
+    "directory": "19-wechat-laya-architecture",
+    "slug": "laya-arch",
+    "title": "Laya 决策模型架构解析",
+    "group": "模型原理与训练",
+    "summary": "魔搭社区对 Laya 架构与决策接口的介绍。"
+  },
+  {
+    "directory": "20-wechat-laya-oss-release",
+    "slug": "laya-oss",
+    "title": "Laya 开源发布",
+    "group": "模型原理与训练",
+    "summary": "PaperAgent 的开源报道与使用案例。"
+  },
+  {
+    "directory": "21-wechat-laya-hf-trending",
+    "slug": "laya-trend",
+    "title": "Laya 与 Hugging Face 社区",
+    "group": "模型原理与训练",
+    "summary": "机器之心关于 Laya 社区关注与榜单的报道。"
+  },
+  {
+    "directory": "22-wechat-cookbook-intro",
+    "slug": "22-wechat-cookbook-intro",
+    "title": "Jev Cookbook 中文入门路线",
+    "group": "基础与资料导航",
+    "summary": "课程学习路线与项目图文介绍。"
+  },
+  {
+    "directory": "23-clef-decision-models",
+    "slug": "clef",
+    "title": "Clef：开源决策模型与 RL 平台",
+    "group": "模型原理与训练",
+    "summary": "Cloudflare 发布文、评测表与 RL 微调服务。"
+  },
+  {
+    "directory": "24-polydao-jev-engineering",
+    "slug": "polydao",
+    "title": "Jev 工程与置信度路由",
+    "group": "应用与 Agent 工程",
+    "summary": "任务分拣、问题设计、模型回退与成本分析。"
+  },
+  {
+    "directory": "25-vixhal-gero-rl",
+    "slug": "25-vixhal-gero-rl",
+    "title": "Gero-4B：RL 微调平台",
+    "group": "模型原理与训练",
+    "summary": "用 MLX 构建决策模型训练平台的实践教程。"
+  },
+  {
+    "directory": "26-akshay-jev-judge",
+    "slug": "26-akshay-jev-judge",
+    "title": "Build a Jev Judge：评审实战",
+    "group": "应用与 Agent 工程",
+    "summary": "有界评审问题、依据性核查与 Opik 集成。"
+  },
+  {
+    "directory": "27-avichawla-diy-jev",
+    "slug": "27-avichawla-diy-jev",
+    "title": "自己动手做一个本地 Jev",
+    "group": "模型原理与训练",
+    "summary": "约束选项、next-token 打分与 SGLang 部署。"
+  },
+  {
+    "directory": "28-pg-jev",
+    "slug": "28-pg-jev",
+    "title": "pg-jev：在 SQL 中做语义判断",
+    "group": "应用与 Agent 工程",
+    "summary": "PostgreSQL 扩展上手文与项目 README 中译。"
+  },
+  {
+    "directory": "29-wechat-startlux-decision",
+    "slug": "29-wechat-startlux-decision",
+    "title": "StartLux 开源决策模型",
+    "group": "模型原理与训练",
+    "summary": "模型发布报道、架构、基准数字与部署路线。"
+  },
+  {
+    "directory": "30-wechat-jev-skeptic",
+    "slug": "30-wechat-jev-skeptic",
+    "title": "Jev 演示的独立质疑与实测",
+    "group": "评测与独立观察",
+    "summary": "游戏演示的源码核查、对照实验与数据口径。"
+  },
+  {
+    "directory": "31-avb-choice-invariance",
+    "slug": "31-avb-choice-invariance",
+    "title": "训练选项顺序不变性",
+    "group": "模型原理与训练",
+    "summary": "位置偏差、数据构建与轻量决策模型训练笔记。"
+  },
+  {
+    "directory": "32-omarsar-jev-as-judge",
+    "slug": "32-omarsar-jev-as-judge",
+    "title": "Jev-as-a-Judge：智能体评估",
+    "group": "应用与 Agent 工程",
+    "summary": "轨迹评审、问题标准、阈值路由与裁判验证。"
+  },
+  {
+    "directory": "33-arena-jev-router-eval",
+    "slug": "33-arena-jev-router-eval",
+    "title": "Arena：Jev Router 独立评测",
+    "group": "评测与独立观察",
+    "summary": "真实智能体会话上的路由质量、延迟与成本。"
+  },
+  {
+    "directory": "34-unsloth-train-decision-model",
+    "slug": "34-unsloth-train-decision-model",
+    "title": "用 Unsloth 训练决策模型",
+    "group": "模型原理与训练",
+    "summary": "数据格式、训练、校准、保存与决策 API。"
+  },
+  {
+    "directory": "laya-model",
+    "slug": "laya-model",
+    "title": "Laya：本地接口与微调方案",
+    "group": "模型原理与训练",
+    "summary": "模型比较、本地调用与数据构建、微调说明。"
+  }
+]

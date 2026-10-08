@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>用 Unsloth 训练决策模型 · Jev Cookbook</title>
+<meta name="description" content="用 Unsloth 训练决策模型 · Jev Cookbook 中文课程与参考文档" />
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="stylesheet" href="../../assets/course.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23286852'/%3E%3Ctext x='21' y='46' font-size='44' font-family='sans-serif' fill='white'%3EJ%3C/text%3E%3C/svg%3E" />
+</head>
+<body class="reading-page">
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">J</span>Jev Cookbook</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" aria-label="搜索课程与文档" placeholder="搜索课程与文档…" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <a class="course-nav-link" href="../../">课程首页</a>
+    <a class="course-nav-link" href="../../introduction/">中文文档</a>
+    <a class="course-nav-link" href="../../materials/">拓展阅读</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://github.com/datawhalechina/jev-cookbook" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><a class="nav-home" href="../../">课程首页</a><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">课程目录<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../course/01/">01 · 认识 Jev</a><a class="nav-item" href="../../course/02/">02 · 核心概念</a><a class="nav-item" href="../../course/03/">03 · 架构模式</a><a class="nav-item" href="../../course/04/">04 · 实战指南</a><a class="nav-item" href="../../course/05/">05 · 智能家居实验</a><a class="nav-item" href="../../course/06/">06 · 模型评测</a><a class="nav-item" href="../../course/07/">07 · 实战应用</a><a class="nav-item" href="../../course/08/">08 · 前沿研究</a><a class="nav-item" href="../../course/09/">09 · Agent 集成</a><a class="nav-item" href="../../course/10/">10 · 本地模型</a><a class="nav-item" href="../../course/11/">11 · 知识库</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a><a class="nav-item" href="../../introduction/coding-agents/">Jev 与编码智能体</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/">实战指南概览</a><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="9"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div><div class="nav-group open" data-group="10"><button class="nav-group-title" type="button">拓展阅读<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../materials/">全部知识库</a><a class="nav-item" href="../../materials/sources/">来源、版本与许可</a><a class="nav-item" href="../../materials/01-official-docs-zh/">TypeSafe 官方文档中文翻译</a><a class="nav-item" href="../../materials/02-nanojev/">NanoJev：小型决策模型</a><a class="nav-item" href="../../materials/03-jev-trader/">Jev Trader：交易决策工程</a><a class="nav-item" href="../../materials/04-fast-jev-compaction/">Fast Jev Compaction：上下文压缩</a><a class="nav-item" href="../../materials/05-awesome-jev/">Awesome Jev：生态资料导航</a><a class="nav-item" href="../../materials/06-typesafe-skills/">TypeSafe Skills：代理技能</a><a class="nav-item" href="../../materials/07-jev-ultrafast/">Jev Ultrafast：浏览器决策</a><a class="nav-item" href="../../materials/08-eve-decision-models/">Eve：决策模型研究</a><a class="nav-item" href="../../materials/09-typesafe-sdk-python/">TypeSafe Python SDK</a><a class="nav-item" href="../../materials/10-feishu-research/">Jev 深度研究报告</a><a class="nav-item" href="../../materials/11-typesafe-mario/">TypeSafe Mario：游戏决策案例</a><a class="nav-item" href="../../materials/12-wechat-article/">聊聊 Jev 模型到底是什么</a><a class="nav-item" href="../../materials/13-feishu-cookbook-plan/">Cookbook 规划与技术分析</a><a class="nav-item" href="../../materials/14-feishu-lecture/">Jev 模型应用入门与实践</a><a class="nav-item" href="../../materials/15-jevbench/">JevBench：独立评测基准</a><a class="nav-item" href="../../materials/16-wechat-agent-engineering/">把 Agent 的判断题拆给 Jev</a><a class="nav-item" href="../../materials/17-wechat-silicon-grail/">Jev：在硅基世界掷圣杯</a><a class="nav-item" href="../../materials/rerank-lab/">Jev 能替代 Rerank 模型吗</a><a class="nav-item" href="../../materials/laya-arch/">Laya 决策模型架构解析</a><a class="nav-item" href="../../materials/laya-oss/">Laya 开源发布</a><a class="nav-item" href="../../materials/laya-trend/">Laya 与 Hugging Face 社区</a><a class="nav-item" href="../../materials/22-wechat-cookbook-intro/">Jev Cookbook 中文入门路线</a><a class="nav-item" href="../../materials/clef/">Clef：开源决策模型与 RL 平台</a><a class="nav-item" href="../../materials/polydao/">Jev 工程与置信度路由</a><a class="nav-item" href="../../materials/25-vixhal-gero-rl/">Gero-4B：RL 微调平台</a><a class="nav-item" href="../../materials/26-akshay-jev-judge/">Build a Jev Judge：评审实战</a><a class="nav-item" href="../../materials/27-avichawla-diy-jev/">自己动手做一个本地 Jev</a><a class="nav-item" href="../../materials/28-pg-jev/">pg-jev：在 SQL 中做语义判断</a><a class="nav-item" href="../../materials/29-wechat-startlux-decision/">StartLux 开源决策模型</a><a class="nav-item" href="../../materials/30-wechat-jev-skeptic/">Jev 演示的独立质疑与实测</a><a class="nav-item" href="../../materials/31-avb-choice-invariance/">训练选项顺序不变性</a><a class="nav-item" href="../../materials/32-omarsar-jev-as-judge/">Jev-as-a-Judge：智能体评估</a><a class="nav-item" href="../../materials/33-arena-jev-router-eval/">Arena：Jev Router 独立评测</a><a class="nav-item current" href="../../materials/34-unsloth-train-decision-model/">用 Unsloth 训练决策模型</a><a class="nav-item" href="../../materials/laya-model/">Laya：本地接口与微调方案</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content" id="main-content"><article class="doc">
+<p class="course-breadcrumb"><a href="../../materials/">拓展阅读</a> / <a href="../../materials/34-unsloth-train-decision-model/">用 Unsloth 训练决策模型</a></p><p class="page-desc">知识库收录材料 · <a href="https://github.com/datawhalechina/jev-cookbook/blob/main/main/11_%E7%9F%A5%E8%AF%86%E5%BA%93/jev-cookbook/34-unsloth-train-decision-model/article.md" target="_blank" rel="noopener">原始文件 ↗</a> · <a href="../../materials/sources/">来源、版本与许可</a></p><h1 id="用-unsloth-训练你自己的决策模型train-your-own-decision-model-with-unsloth">用 Unsloth 训练你自己的决策模型（Train your own Decision Model with Unsloth）</h1>
+<blockquote><p>原文：<a href="https://unsloth.ai/docs/basics/train-your-own-decision-model-with-unsloth" target="_blank" rel="noopener">Train your own Decision Model with Unsloth</a> · Unsloth 官方文档 · unsloth.ai · 快照 2026-10-08</p>
+<p>译文为社区学习用途的非官方中文翻译，版权归原作者所有。</p></blockquote>
+<hr />
+<h2 id="作者与来源">作者与来源</h2>
+<p><strong>Unsloth（unsloth.ai，UnslothAI）</strong>是最知名的开源大模型微调库之一：以自研 Triton 内核把 LoRA/QLoRA 微调做到显著更快、更省显存著称，覆盖 Qwen、Gemma、Llama 等主流开源模型，提供桌面App、命令行与 Python API 三种用法。</p>
+<p>本页是其官方文档的一篇教程，宣布微调库<strong>一等支持「决策模型」训练</strong>：新增 <code>FastDecisionModel</code> / <code>DecisionTrainer</code> API，给语言模型接一个与 <strong>Clef 同设计</strong>的打分头，把 Qwen、Gemma 这类 LLM 变成「只做判断、不生成文本」的决策模型；数据格式与 <strong>Laya、Clef 通用</strong>，训练完可以直接挂进本地的 Decision API，<strong>顶替 <code>laya</code> / <code>jev-latest</code> 端点对外服务</strong>。</p>
+<p><strong>与本库其他条目的关系</strong>：这等于把本库 <strong>25 号</strong>（MacBook 上 RL 训 Gero-4B）和 <strong>27 号</strong>（免训练读 logits）两条自制路线做了「工业化合流」——免训练路线保底、LoRA 微调可达 78%，而且 4GB 显存、42 分钟就能出结果；<strong>10 号</strong>（laya-model）训的模型本身还能继续微调（表中 Laya fine-tuned：2.5GB、10 分钟、77%）。</p>
+<hr />
+<h2 id="正文">正文</h2>
+<p>微调 Qwen、Gemma 这类 LLM，让它们以<strong>带校准的概率</strong>做决策。</p>
+<p>你现在可以用 Unsloth 训练自己的决策模型——就像 <strong>Jev</strong>、<strong>Laya</strong> 和 <strong>Clef</strong> 那样。微调 <a href="https://unsloth.ai/docs/models/qwen3.8" target="_blank" rel="noopener">Qwen3.8</a> 和 <a href="https://unsloth.ai/docs/models/gemma-4" target="_blank" rel="noopener">Gemma 4</a> 等 LLM，把它们变成决策模型：<strong>做决策</strong>而不是生成文本。微调后的模型读取你的输入，给你提供的选项打分，返回一个带概率的选择。训练后的基准成绩见下表：</p>
+<div class="table-wrap"><table><thead><tr><th>模型</th><th>typed-decisions</th><th>BANKING77</th><th>CLINC150</th><th>留出集准确率</th></tr></thead><tbody><tr><td>Qwen3.5-0.8B</td><td>36% → <strong>73%</strong></td><td>7% → <strong>74%</strong></td><td>19% → <strong>76%</strong></td><td>78%</td></tr><tr><td>Qwen3.5-2B</td><td>33% → <strong>78%</strong></td><td>1% → 58%</td><td>1% → 62%</td><td>81%</td></tr></tbody></table></div>
+<p>我们用 <strong>LoRA（r=64）只训了一个 epoch</strong>、给 LLM 接上 Clef 式的打分头，就把下游准确率从 30–37%（大致等于瞎猜）拉到了<strong>最高 78%</strong>。</p>
+<p>训练使用与 Laya 和 Clef 相同的数据集格式。测试集对训练数据做了<strong>去污染</strong>（decontamination）处理。</p>
+<blockquote><p>演示视频：<a href="https://github.com/user-attachments/assets/92959172-d2a2-450b-a5bf-6369a1e5ae16" target="_blank" rel="noopener">github.com/user-attachments/assets/92959172-d2a2-450b-a5bf-6369a1e5ae16</a></p></blockquote>
+<p><strong>所有模型</strong>都可以这么做——你还可以对 Laya / Clef 这类现成决策模型<strong>继续微调</strong>。</p>
+<div class="table-wrap"><table><thead><tr><th>模型</th><th>测试准确率</th><th>显存</th><th>训练时长</th></tr></thead><tbody><tr><td>Qwen3.5-0.8B</td><td>78%</td><td>4GB</td><td>42 分钟</td></tr><tr><td>Qwen3.5-2B</td><td>81%</td><td>8GB</td><td>40 分钟</td></tr><tr><td>Llama 3.2 3B</td><td>79%</td><td>4.1GB</td><td>30 分钟</td></tr><tr><td>Gemma 4 E4B</td><td>77%</td><td>14.4GB</td><td>49 分钟</td></tr><tr><td>Laya（继续微调）</td><td>77%</td><td>2.5GB</td><td>10 分钟</td></tr></tbody></table></div>
+<p>数据集混合了 <strong>12 个来源</strong>外加 <code>typed-decisions</code>：<code>ag_news</code>、<code>arc</code>、<code>banking77</code>、<code>boolq</code>、<code>clinc150</code>、<code>commonsense_qa</code>、<code>mmlu</code>、<code>mnli</code>、<code>prompt_injections</code>、<code>snli</code>、<code>sst5</code> 和 <code>wanli</code>。<strong>测试集共 3,000 行</strong>：2,000 行来自 typed-decisions，500 行来自 BANKING77，500 行来自 CLINC150。</p>
+<h3 id="-在-unsloth桌面版里训练">🦥 在 Unsloth（桌面版）里训练</h3>
+<p><strong>第一步：安装 Unsloth。</strong> 最简单的方式是下载 <a href="https://unsloth.ai/download" target="_blank" rel="noopener">Unsloth 桌面应用</a>，支持 macOS、Windows 和 Linux。也可以手动安装——macOS/Linux/WSL：<code>curl -fsSL https://unsloth.ai/install.sh | sh</code>；Windows PowerShell：<code>irm https://unsloth.ai/install.ps1 | iex</code>。</p>
+<p><strong>第二步：选模型和数据集。</strong> 打开 Train 标签页，选一个 LLM（比如 <code>unsloth/Qwen3.5-4B</code>），然后把 <strong>Train as</strong> 设为 <strong>Decision model</strong>。Unsloth 会自动填好合适的设置。想复现我们的结果：epochs 设 2、LoRA rank 设 16、学习率设 2e-4。上传文件或从 Hugging Face 选一个数据集（按数据集格式），typed-decisions 要把 <strong>Subset</strong> 设为 <code>all</code>。</p>
+<p><img src="../../assets/reading/34-unsloth-train-decision-model/media/image-01.png" loading="lazy" alt="图1：Unsloth 桌面版——模型选 Qwen3.5-4B，方法 QLoRA，Train as 下拉里选 Decision model" loading="lazy" /></p>
+<p><strong>第三步：开始训练。</strong> 点击 <strong>Start Training</strong>。Unsloth 会报告训练前后在留出决策上的准确率，并对模型的置信度做校准。</p>
+<p><img src="../../assets/reading/34-unsloth-train-decision-model/media/image-02.png" loading="lazy" alt="图2：训练完成——Unsloth 报告训练前后的留出集准确率与校准结果" loading="lazy" /></p>
+<p><strong>第四步：在 Decision API 里使用。</strong> 点击 <strong>Use in Decision API</strong>。之后使用 <code>laya</code>、<code>default</code> 或 <code>jev-latest</code> 的请求都会路由到你的模型。</p>
+<p><img src="../../assets/reading/34-unsloth-train-decision-model/media/image-03.png" loading="lazy" alt="图3：Use in Decision API——把训练好的模型接入本地 Decision API" loading="lazy" /></p>
+<p>你的模型还会以运行名出现在 Settings → API 的 Decision API → Model 下拉里。</p>
+<p><img src="../../assets/reading/34-unsloth-train-decision-model/media/image-04.png" loading="lazy" alt="图4：Settings → API 里的模型下拉，显示训练出的模型名" loading="lazy" /></p>
+<p><strong>第五步：试玩。</strong> 在 Decision API 的 &quot;Try It&quot; 里直接跟训练好的决策模型交互：</p>
+<p><img src="../../assets/reading/34-unsloth-train-decision-model/media/image-05.png" loading="lazy" alt="图5：Try a decision 面板——选 Choice 类型问题，输入待判断文本" loading="lazy" /></p>
+<p><img src="../../assets/reading/34-unsloth-train-decision-model/media/image-06.png" loading="lazy" alt="图6：运行结果——billing 28.6%、account 27.2%、sales 25.3%、technical 18.9%，每个选项带概率" loading="lazy" /></p>
+<h3 id="-用代码训练">🐍 用代码训练</h3>
+<p><code>pip install --upgrade unsloth</code> 安装或更新后，用下面的代码训练你自己的决策模型：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from unsloth import FastDecisionModel, DecisionTrainer, is_bfloat16_supported
+from datasets import load_dataset
+from transformers import TrainingArguments
+
+model, tokenizer = FastDecisionModel.from_pretrained(
+    model_name = &quot;unsloth/Qwen3.5-4B&quot;,
+    max_seq_length = 2048,
+    load_in_4bit = True,
+)
+
+model = FastDecisionModel.get_peft_model(
+    model,
+    r = 16,
+    lora_alpha = 16,
+    lora_dropout = 0,
+    use_gradient_checkpointing = &quot;unsloth&quot;,
+    random_state = 3407,
+)
+
+dataset = load_dataset(&quot;LocalLLaMA/typed-decisions&quot;, &quot;all&quot;, split = &quot;train&quot;)
+items, report = FastDecisionModel.build_dataset(dataset, tokenizer, model)
+print(f&quot;Skipped {report[&#x27;skipped&#x27;]} of {report[&#x27;total&#x27;]} decisions&quot;)
+
+train_items, eval_items = FastDecisionModel.split_holdout(items, seed = 3407)
+
+trainer = DecisionTrainer(
+    model = model,
+    processing_class = tokenizer,
+    train_dataset = train_items,
+    eval_dataset = eval_items,
+    args = TrainingArguments(
+        per_device_train_batch_size = 8,
+        gradient_accumulation_steps = 4,
+        num_train_epochs = 2,
+        learning_rate = 2e-4,
+        lr_scheduler_type = &quot;cosine&quot;,
+        warmup_steps = 10,
+        weight_decay = 0.01,
+        bf16 = is_bfloat16_supported(),
+        fp16 = not is_bfloat16_supported(),
+        eval_strategy = &quot;epoch&quot;,
+        logging_steps = 10,
+        output_dir = &quot;outputs&quot;,
+        report_to = &quot;none&quot;,
+        seed = 3407,
+    ),
+)
+trainer.train()</code></pre></div>
+<p>要用 Llama 或 Gemma 4，把 <code>model_name</code> 改成 <code>unsloth/Llama-3.2-3B-Instruct</code> 或 <code>unsloth/gemma-4-E4B-it</code>。其他 Unsloth 能微调的 LLM 应该同样可行。</p>
+<p>用你自己的数据时，参考数据集格式：每行包含一个状态（state）、要判断的问题和金标答案。</p>
+<h4 id="校准与保存">校准与保存</h4>
+<p>在 <code>split_holdout</code> 留出的那些数据上做校准，让模型的概率与它的实际正确率对齐：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">metrics = FastDecisionModel.calibrate(model, tokenizer, eval_items)
+print(metrics) # 留出集准确率、校准误差（ECE）和损失</code></pre></div>
+<p>然后保存。<code>save_pretrained</code> 保存 LoRA 适配器和打分头；<code>save_pretrained_merged</code> 保存完整的 16-bit 模型：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">model.save_pretrained(&quot;qwen-decisions&quot;)
+model.save_pretrained_merged(&quot;qwen-decisions-merged&quot;)
+# model.push_to_hub(&quot;hf_username/qwen-decisions&quot;, token = &quot;hf_...&quot;)</code></pre></div>
+<p>重新加载的方式与加载基座模型相同：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">model, tokenizer = FastDecisionModel.from_pretrained(&quot;qwen-decisions&quot;, load_in_4bit = True)</code></pre></div>
+<h3 id="-做决策">🎯 做决策</h3>
+<p>给 <code>predict</code> 传一个输入和要判断的问题，格式与数据集一致：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">FastDecisionModel.for_inference(model)
+answers = FastDecisionModel.predict(
+    model,
+    tokenizer,
+    &quot;Hi, I was charged twice for invoice #4411. Please refund the duplicate today.&quot;,
+    {
+        &quot;team&quot;: {
+            &quot;type&quot;: &quot;choice&quot;,
+            &quot;instructions&quot;: &quot;Which team should handle this?&quot;,
+            &quot;criteria&quot;: {
+                &quot;billing&quot;: &quot;invoices, payments, refunds&quot;,
+                &quot;technical&quot;: &quot;bugs, outages, errors&quot;,
+                &quot;sales&quot;: &quot;pricing, new plans&quot;,
+            },
+        },
+        &quot;refund&quot;: {&quot;type&quot;: &quot;noul&quot;, &quot;instructions&quot;: &quot;Does the customer ask for a refund?&quot;},
+    },
+)
+print(answers[&quot;team&quot;][&quot;answer&quot;])        # &quot;billing&quot;
+print(answers[&quot;team&quot;][&quot;probabilities&quot;]) # {&quot;billing&quot;: ..., &quot;sales&quot;: ..., &quot;technical&quot;: ...}</code></pre></div>
+<p><code>answer</code> 在 choice 里是选项键名，noul 里是 <code>True</code>/<code>False</code>，score 里是档位数字。每个答案还带有与 Decision API 答案相同的字段。</p>
+<p>要在有标注的测试集上查准确率，用 <code>evaluate</code>：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">test = load_dataset(&quot;LocalLLaMA/typed-decisions&quot;, &quot;all&quot;, split = &quot;test&quot;)
+test_items, _ = FastDecisionModel.build_dataset(test, tokenizer, model)
+print(FastDecisionModel.evaluate(model, tokenizer, test_items))</code></pre></div>
+<h3 id="接入-decision-api">接入 Decision API</h3>
+<p>详细的服务指南见 <a href="https://unsloth.ai/docs/models/decision-laya" target="_blank" rel="noopener">decision-laya 文档</a>。在 Unsloth 里训练的模型会出现在 Settings → API。用代码训练的模型，启动 Unsloth 时指向保存的合并目录：</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">UNSLOTH_SYSTEMONE_MODEL=/path/to/qwen-decisions-merged unsloth studio -H 0.0.0.0 -p 8888</code></pre></div>
+<p>在 Settings → API 里打开 Decision API 后，使用 <code>laya</code>、<code>default</code> 或 <code>jev-latest</code> 的请求都会走你的模型，答案格式与 Laya 一致。模型需要 GPU，首次请求时加载（可能需要几分钟）。训练任务占用 GPU 时，Decision API 会等待，训练结束后恢复应答。</p>
+<h3 id="工作原理">工作原理</h3>
+<p>Unsloth 把你的输入放进一个 prompt，后面跟上每个问题及其选项。LLM 只读一遍。一个小型打分头——与 Cloudflare 的 Clef 同设计——查看 LLM 输出中每个问题、每个选项对应的部分，给每个选项打分，<strong>一次把所有问题一起判完</strong>。它从不写文本，所以不用在 LLM 的词预测上花显存。</p>
+<h3 id="-推荐设置">⚙️ 推荐设置</h3>
+<ul><li><p>从 4-bit LoRA、rank 16、学习率 2e-4 起步。新打分头默认用 1e-4，可在 <code>DecisionTrainer</code> 里用 <code>head_learning_rate</code> 修改。</p></li><li><p>typed-decisions 上我们用了 2 个 epoch。数据更少时试 3 或 4。</p></li><li><p>快速试跑可设 <code>max_steps = 60</code>：Qwen3.5-4B 在 L4 上 10 分钟到了 76%。</p></li><li><p>显存不够时，批量减半、梯度累积翻倍。</p></li><li><p><code>max_seq_length</code> 决定训练时的最长输入。输入过长时保留问题与选项、截断输入末尾来适配。推理最多读 16,384 token。</p></li></ul>
+<hr />
+<h2 id="译注">译注</h2>
+<ul><li><p><strong>成绩口径</strong>：两张表的数字均为 Unsloth 自报（厂商口径）。文档声明测试集做了去污染、且含 2,000 行留出数据，口径比一般「在训练集上自测」的自报更严，但仍无第三方复测——按本库 <strong>30 号</strong>的方法论，引用前建议自己跑一遍 <code>evaluate</code>（代码文中已给出）。</p></li><li><p><strong>「Clef 式打分头」</strong>：即在 LLM 之上加一个小型分类头，直接对「问题×选项」输出概率，不再走词表——这与本库 <strong>32 号</strong>（omarsar 教程引用的 Clef 架构）和 <strong>27 号</strong>（免训练直接读 logits）是同一思路的两种实现：27 号不改模型权重，这里要训 LoRA + 打分头。</p></li><li><p><strong><code>typed-decisions</code> 数据集</strong>在 Hugging Face 的 <code>LocalLLaMA/typed-decisions</code>，格式为「状态 + 问题（choice/noul/score 三型）+ 金标」，与 Laya/Clef 的训练格式通用。</p></li><li><p><strong>原文的小不一致照实保留</strong>：导语写 &quot;Qwen3.8&quot;，表格与代码用的是 Qwen3.5 系列——以代码为准。</p></li><li><p>页面末尾附有一段 GitBook 平台给 AI 智能体的检索说明（Agent Instructions），与教程内容无关，未收录。</p></li><li><p><strong>与本库训练路线的对照</strong>：本库演讲材料的四路线里，这属于路线 B（监督微调版）——比 25 号的 RL 路线简单（有标注就能训，不需要奖励设计），比 27 号的免训练路线多一步训练但准确率高得多（73–81% 对约 60% 档）；「Laya 继续微调 10 分钟到 77%」提示现成决策模型做领域适配的成本已经很低。</p></li></ul>
+  </article>
+<nav class="pager"><a class="pager-prev" href="../../materials/33-arena-jev-router-eval/"><span>上一篇</span><strong>Arena：Jev Router 独立评测</strong></a><a class="pager-next" href="../../materials/laya-model/"><span>下一篇</span><strong>Laya：本地接口与微调方案</strong></a></nav>
+  <footer class="site-footer">第十一章知识库收录材料 · <a href="../../materials/sources/">来源、版本与许可</a> · 第三方内容版权归各自作者；观点与数字请对照原始来源核验。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#作者与来源">作者与来源</a><a class="toc-item toc-l2" href="#正文">正文</a><a class="toc-item toc-l3" href="#-在-unsloth桌面版里训练">🦥 在 Unsloth（桌面版）里训练</a><a class="toc-item toc-l3" href="#-用代码训练">🐍 用代码训练</a><a class="toc-item toc-l3" href="#-做决策">🎯 做决策</a><a class="toc-item toc-l3" href="#接入-decision-api">接入 Decision API</a><a class="toc-item toc-l3" href="#工作原理">工作原理</a><a class="toc-item toc-l3" href="#-推荐设置">⚙️ 推荐设置</a><a class="toc-item toc-l2" href="#译注">译注</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/lz-string.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/lab.js"></script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

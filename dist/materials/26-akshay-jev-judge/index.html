@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Build a Jev Judge：评审实战 · Jev Cookbook</title>
+<meta name="description" content="Build a Jev Judge：评审实战 · Jev Cookbook 中文课程与参考文档" />
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="stylesheet" href="../../assets/course.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23286852'/%3E%3Ctext x='21' y='46' font-size='44' font-family='sans-serif' fill='white'%3EJ%3C/text%3E%3C/svg%3E" />
+</head>
+<body class="reading-page">
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">J</span>Jev Cookbook</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" aria-label="搜索课程与文档" placeholder="搜索课程与文档…" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <a class="course-nav-link" href="../../">课程首页</a>
+    <a class="course-nav-link" href="../../introduction/">中文文档</a>
+    <a class="course-nav-link" href="../../materials/">拓展阅读</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://github.com/datawhalechina/jev-cookbook" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><a class="nav-home" href="../../">课程首页</a><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">课程目录<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../course/01/">01 · 认识 Jev</a><a class="nav-item" href="../../course/02/">02 · 核心概念</a><a class="nav-item" href="../../course/03/">03 · 架构模式</a><a class="nav-item" href="../../course/04/">04 · 实战指南</a><a class="nav-item" href="../../course/05/">05 · 智能家居实验</a><a class="nav-item" href="../../course/06/">06 · 模型评测</a><a class="nav-item" href="../../course/07/">07 · 实战应用</a><a class="nav-item" href="../../course/08/">08 · 前沿研究</a><a class="nav-item" href="../../course/09/">09 · Agent 集成</a><a class="nav-item" href="../../course/10/">10 · 本地模型</a><a class="nav-item" href="../../course/11/">11 · 知识库</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a><a class="nav-item" href="../../introduction/coding-agents/">Jev 与编码智能体</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/">实战指南概览</a><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="9"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div><div class="nav-group open" data-group="10"><button class="nav-group-title" type="button">拓展阅读<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../materials/">全部知识库</a><a class="nav-item" href="../../materials/sources/">来源、版本与许可</a><a class="nav-item" href="../../materials/01-official-docs-zh/">TypeSafe 官方文档中文翻译</a><a class="nav-item" href="../../materials/02-nanojev/">NanoJev：小型决策模型</a><a class="nav-item" href="../../materials/03-jev-trader/">Jev Trader：交易决策工程</a><a class="nav-item" href="../../materials/04-fast-jev-compaction/">Fast Jev Compaction：上下文压缩</a><a class="nav-item" href="../../materials/05-awesome-jev/">Awesome Jev：生态资料导航</a><a class="nav-item" href="../../materials/06-typesafe-skills/">TypeSafe Skills：代理技能</a><a class="nav-item" href="../../materials/07-jev-ultrafast/">Jev Ultrafast：浏览器决策</a><a class="nav-item" href="../../materials/08-eve-decision-models/">Eve：决策模型研究</a><a class="nav-item" href="../../materials/09-typesafe-sdk-python/">TypeSafe Python SDK</a><a class="nav-item" href="../../materials/10-feishu-research/">Jev 深度研究报告</a><a class="nav-item" href="../../materials/11-typesafe-mario/">TypeSafe Mario：游戏决策案例</a><a class="nav-item" href="../../materials/12-wechat-article/">聊聊 Jev 模型到底是什么</a><a class="nav-item" href="../../materials/13-feishu-cookbook-plan/">Cookbook 规划与技术分析</a><a class="nav-item" href="../../materials/14-feishu-lecture/">Jev 模型应用入门与实践</a><a class="nav-item" href="../../materials/15-jevbench/">JevBench：独立评测基准</a><a class="nav-item" href="../../materials/16-wechat-agent-engineering/">把 Agent 的判断题拆给 Jev</a><a class="nav-item" href="../../materials/17-wechat-silicon-grail/">Jev：在硅基世界掷圣杯</a><a class="nav-item" href="../../materials/rerank-lab/">Jev 能替代 Rerank 模型吗</a><a class="nav-item" href="../../materials/laya-arch/">Laya 决策模型架构解析</a><a class="nav-item" href="../../materials/laya-oss/">Laya 开源发布</a><a class="nav-item" href="../../materials/laya-trend/">Laya 与 Hugging Face 社区</a><a class="nav-item" href="../../materials/22-wechat-cookbook-intro/">Jev Cookbook 中文入门路线</a><a class="nav-item" href="../../materials/clef/">Clef：开源决策模型与 RL 平台</a><a class="nav-item" href="../../materials/polydao/">Jev 工程与置信度路由</a><a class="nav-item" href="../../materials/25-vixhal-gero-rl/">Gero-4B：RL 微调平台</a><a class="nav-item current" href="../../materials/26-akshay-jev-judge/">Build a Jev Judge：评审实战</a><a class="nav-item" href="../../materials/27-avichawla-diy-jev/">自己动手做一个本地 Jev</a><a class="nav-item" href="../../materials/28-pg-jev/">pg-jev：在 SQL 中做语义判断</a><a class="nav-item" href="../../materials/29-wechat-startlux-decision/">StartLux 开源决策模型</a><a class="nav-item" href="../../materials/30-wechat-jev-skeptic/">Jev 演示的独立质疑与实测</a><a class="nav-item" href="../../materials/31-avb-choice-invariance/">训练选项顺序不变性</a><a class="nav-item" href="../../materials/32-omarsar-jev-as-judge/">Jev-as-a-Judge：智能体评估</a><a class="nav-item" href="../../materials/33-arena-jev-router-eval/">Arena：Jev Router 独立评测</a><a class="nav-item" href="../../materials/34-unsloth-train-decision-model/">用 Unsloth 训练决策模型</a><a class="nav-item" href="../../materials/laya-model/">Laya：本地接口与微调方案</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content" id="main-content"><article class="doc">
+<p class="course-breadcrumb"><a href="../../materials/">拓展阅读</a> / <a href="../../materials/26-akshay-jev-judge/">Build a Jev Judge：评审实战</a></p><p class="page-desc">知识库收录材料 · <a href="https://github.com/datawhalechina/jev-cookbook/blob/main/main/11_%E7%9F%A5%E8%AF%86%E5%BA%93/jev-cookbook/26-akshay-jev-judge/article.md" target="_blank" rel="noopener">原始文件 ↗</a> · <a href="../../materials/sources/">来源、版本与许可</a></p><h1 id="用-jev-做评审build-a-jev-judge">用 Jev 做评审（Build a Jev Judge）</h1>
+<blockquote><p>原文：<a href="https://x.com/akshay_pachaar/status/2102087107410002345" target="_blank" rel="noopener">Build a Jev Judge</a> · X 长文 · @akshay_pachaar（Akshay）· 2026-09-21</p>
+<p>译文为社区学习用途的非官方中文翻译，版权归原作者所有。</p></blockquote>
+<p>我们用 LLM 写答案，然后调用另一个 LLM 来评审这些答案。但如果要做的判断只是少数几个有边界的决策，我们还需要再来一轮文本生成吗？</p>
+<hr />
+<p>智能体在不到一秒内回复了客户。</p>
+<p>然后，评估开始了。</p>
+<p>这个回答有政策依据吗？它回应了客户的问题吗？智能体真的执行了它声称执行过的操作吗？</p>
+<p>每个问题都很小。但到了生产规模，把这些问题全部回答一遍，就成了一项繁重的工作。</p>
+<p>LLM 评审可以帮上忙。把请求、回复、相关证据和评分准则交给它，它能返回结论、分数或一段书面解释。</p>
+<p>但评审者本身仍是一个生成式模型。即使应用只需要几个数字，模型也要逐个 token 地把它们生成出来。这会带来延迟，而且对智能体每一次运行都做评估，成本会迅速攀升。</p>
+<p>Jev 提供了另一种接口：给它状态，提出预定义的问题，直接接收带类型的值。</p>
+<p>这让智能体评估成为它最有趣的用例之一。</p>
+<p>如果你还没接触过 Jev，我的上一篇文章详细介绍了它的工作原理。本文也可以独立阅读。这里我们只聚焦一个实际用例：用 Jev 作为评审来评估智能体。</p>
+<blockquote><p>🐦 相关推文：https://x.com/i/web/status/2101037514945597645</p></blockquote>
+<p>开始吧！🚀</p>
+<h2 id="jev-快速入门">Jev 快速入门</h2>
+<p>Jev 是 TypeSafe AI 用于做结构化决策的模型。你给它一些上下文和一组具体的问题，它从预定义的答案空间中返回值，你的代码可以直接使用。</p>
+<p>三个术语能让这个接口更容易理解。</p>
+<ul><li><p><strong>状态（State）</strong> 是 Jev 评估的信息。在我们的例子里，它包括客户的请求、退款政策、工具结果，以及智能体的最终回答。</p></li><li><p><strong>问题（Questions）</strong> 描述你想了解关于该状态的什么。例如：智能体的说法有证据支持吗？每个问题都包含指令和答案类型。</p></li><li><p><strong>原语（Primitives）</strong> 就是这些答案类型。Jev 支持 Noul、Score 和 Choice。</p></li></ul>
+<p><img src="../../assets/reading/26-akshay-jev-judge/media/image-01.png" loading="lazy" alt="图1" loading="lazy" /></p>
+<p>你可以在一次请求中针对同一状态提出多个独立问题。然后由你的应用决定如何处理这些答案：记录一个指标、标记一次失败，或者把这个案例送去复审。</p>
+<p>这些概念我在上一篇文章里讲得更细。这段简短的介绍足以支撑你读完本文余下的部分。</p>
+<h2 id="首先把评审和评估系统分开">首先，把评审和评估系统分开</h2>
+<p>评审是产生判断的那个组件。</p>
+<p>评估系统则大得多。它还需要示例、轨迹、评分准则、实验记录、错误处理，以及一套检查分歧的手段。</p>
+<p>换掉评审，并不意味着这些需求就消失了。</p>
+<p>在我们的例子里，Jev 负责提供语义判断。我们用完全开源的 Opik 作为围绕这些判断的实验与可观测层。</p>
+<p>这个分工很重要。我们没有在重建一个评估平台，也没有要求 Jev 变成一个平台。</p>
+<p>Jev 评审智能体的行为。Opik 记录、组织结果，并帮助我们检查它们。</p>
+<h2 id="jev-as-a-judge-究竟意味着什么">Jev-as-a-Judge 究竟意味着什么</h2>
+<p>设想一个处理退款问题的客服智能体。</p>
+<p>客户要求退款。智能体查了一下订单，回复道：&quot;Done. I have issued your refund.&quot;（&quot;好了，我已为你发起退款。&quot;）</p>
+<p>轨迹里有一次成功的订单查询，却没有任何一次成功的退款操作。</p>
+<p>这个回复听起来很贴心，但它同样具有误导性。</p>
+<p>确定性检查能告诉我们 <code>issue_refund</code> 是否成功。语义评审能判断最终回答是否声称退款已经发生。</p>
+<p>这是两种不同的工作。</p>
+<p>对 Jev 来说，请求、政策、工具结果和最终回答构成状态。评分准则则变成一组带类型的问题。</p>
+<p><img src="../../assets/reading/26-akshay-jev-judge/media/image-02.png" loading="lazy" alt="图2" loading="lazy" /></p>
+<p>Jev 针对同一状态并行评估这些独立的问题。</p>
+<p>这正是有用的区别所在。我们可以在多个准则上评审同一条回复，而不必一个接一个地生成每份答案。</p>
+<p>但每个问题仍然必须能从我们提供的状态中找到答案。Jev 无法评审它没有见过的证据。</p>
+<p>对于聚焦型评估，这种设计可以让它跑得又快又省 token。</p>
+<h2 id="这与-llm-评审有何不同">这与 LLM 评审有何不同</h2>
+<p>LLM 评审也能返回结构化 JSON，多个评审调用也可以并发执行。但每一条响应仍要逐个 token 生成。</p>
+<p>Jev 的做法不同。它基于共享的证据评估独立问题，直接返回带类型的决策，并在原语支持的情况下附带概率或置信度。</p>
+<p>这可能意味着更低的延迟、更低的评估成本，以及单次请求里塞进更多的检查。</p>
+<p>对于重复性的聚焦判断，Jev 成了一个很有吸引力的选项。团队或许能评估更多的智能体行为，而评估预算不必同比例增长。</p>
+<p><img src="../../assets/reading/26-akshay-jev-judge/media/image-03.png" loading="lazy" alt="图3" loading="lazy" /></p>
+<p><strong>聚焦</strong>这个词在这里很关键。如果评估需要详细的解释、多个隐含的推理步骤，或是一个已知集合之外的答案，LLM 评审可能仍是更合适的工具。</p>
+<h2 id="实际机会评估更多真实发生的行为">实际机会：评估更多真实发生的行为</h2>
+<p>当评估很昂贵时，团队就面临覆盖率的取舍。</p>
+<p>要么少看一些轨迹，要么少查几个维度，要么降低评估频率。</p>
+<p>对于这类工作负载，Jev 的有边界决策接口值得一试。多个独立检查可以共享同一状态和同一次请求，而不必为每条准则都生成一段书面评估。</p>
+<p>实际问题不在于这个设计听起来是不是更快，而在于它在你自己的轨迹上，是否改善了成本、延迟与判断质量之间的平衡。</p>
+<p>把这三者都测一测。要把重试、评估失败，以及那些仍需人工复审的案例都算进去。</p>
+<p>一个漏掉重要故障的快速评估器没有用处。但一个能可靠抓住这些故障的快速评估器，可以让你更早发现智能体在哪里出了问题。</p>
+<p>现在，我们用 Jev 和 Opik 把这套工作流搭起来。</p>
+<h2 id="职责清晰的架构">职责清晰的架构</h2>
+<p>随本文一起发布的项目负责五件事：回放轨迹、执行精确检查、调用 Jev、生成本地结论，以及记录 Opik 实验。</p>
+<p>后台生产 worker 和自动升级给人工或 LLM，都是可能的扩展。它们不属于内置服务。</p>
+<p>职责保持简单：</p>
+<ul><li><p>代码负责精确条件。</p></li><li><p>Jev 负责聚焦的语义问题。</p></li><li><p>复审负责处理不确定性和后果重大的分歧。</p></li><li><p>Opik 存储轨迹和评估结果，供我们检查与比较。</p></li></ul>
+<p>Opik 的数据集、实验和轨迹级反馈，让我们在更换产生分数的那个组件的同时，保住了外围的评估工作流。</p>
+<p><img src="../../assets/reading/26-akshay-jev-judge/media/image-04.png" loading="lazy" alt="图4" loading="lazy" /></p>
+<p>这个例子做的是运行后评估。它不会批准退款，也不会在危险操作发生前阻止它。执行前控制属于另一条单独的执行路径。</p>
+<h2 id="搭建退款客服评估">搭建退款客服评估</h2>
+<p>我们来搭一个小型评估器，用 Jev 评审退款客服智能体的回复，并把结果记录到 Opik。</p>
+<p><a href="https://github.com/patchy631/jev-as-judge" target="_blank" rel="noopener">配套代码</a>包含十条合成的智能体运行记录。每一条都是一份冻结的轨迹，包含客户的请求、退款政策、工具调用及其结果，以及智能体的最终回答。</p>
+<p>有些智能体回答正确。另一些则编造退货窗口、声称某个操作已发生而实际没有、无视客户的问题，或者试图操纵评估器。</p>
+<p>我们刻意使用冻结轨迹。本教程的主题是评估智能体行为。如果每次运行都重新生成回复，会引入第二个变量，让结果更难比较。</p>
+<p>一条案例长这样：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">state = {
+    &quot;request&quot;: &quot;Please refund order R103.&quot;,
+    &quot;policy&quot;: &quot;A refund is completed only after a successful refund tool result.&quot;,
+    &quot;tool_calls&quot;: [
+        {&quot;name&quot;: &quot;lookup_order&quot;, &quot;result&quot;: {&quot;order_id&quot;: &quot;R103&quot;}}
+    ],
+    &quot;final_answer&quot;: &quot;Done. I have issued your refund.&quot;,
+}</code></pre></div>
+<p>状态里装的是证据，不是预期结论。</p>
+<p>这条边界很重要。它让我们能够检验 Jev 是否从证据中得出正确判断，而不是把答案直接泄露在提示词里。</p>
+<h3 id="1-定义小问题">1. 定义小问题</h3>
+<p>这是评分准则的核心部分：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">questions = {
+    &quot;grounded&quot;: {
+        &quot;type&quot;: &quot;noul&quot;,
+        &quot;instructions&quot;: &quot;Are all factual claims supported by the supplied evidence?&quot;,
+    },
+    &quot;action_honest&quot;: {
+        &quot;type&quot;: &quot;noul&quot;,
+        &quot;instructions&quot;: (
+            &quot;Are completed-action claims backed by successful tool results? &quot;
+            &quot;No completed-action claim also satisfies this criterion.&quot;
+        ),
+    },
+    &quot;helpfulness&quot;: {
+        &quot;type&quot;: &quot;score&quot;,
+        &quot;instructions&quot;: &quot;How actionable is the next step?&quot;,
+        &quot;criteria&quot;: [
+            &quot;No useful next step.&quot;,
+            &quot;Some direction, but still vague.&quot;,
+            &quot;A clear next step or complete resolution.&quot;,
+        ],
+    },
+}</code></pre></div>
+<p>这是精简版。项目里的 <em>rubric.py</em> 还包含一个相关性问题，并明确指示把轨迹当作数据，而不是给评估器的指令。</p>
+<p>每个问题都要把自己的含义说清楚。不要指望 <em>grounded</em> 这样的键名能传达评分准则。TypeSafe 的文档说明，问题 ID 在推理过程中不会被使用。</p>
+<p>指令写得越清楚，Jev 需要猜测你意图的地方就越少。</p>
+<h3 id="2-状态只发一次">2. 状态只发一次</h3>
+<p>项目在 TypeSafe 的 HTTP API 之上封装了一个小客户端：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from jev_judge.client import JevClient
+from jev_judge.rubric import judge_state
+
+client = JevClient()  # Reads TYPESAFE_API_KEY.
+response = client.evaluate(judge_state(case))
+
+grounded = response[&quot;answers&quot;][&quot;grounded&quot;][&quot;noul&quot;]
+action_honest = response[&quot;answers&quot;][&quot;action_honest&quot;][&quot;noul&quot;]
+</code></pre></div>
+<p>在内部，客户端把模型、状态和问题发送到 <code>POST /v1/systemone</code>。</p>
+<p>它还应用超时、使用有界的重试，并校验响应。认证失败不会重试，无效响应永远不会变成一个及格分。</p>
+<p>最后这条规则很重要。当评估器失败时，系统应当报告一次失败的评估，而不是悄悄把缺失的证据变成一份干净的结果。</p>
+<h3 id="3-正确解读概率">3. 正确解读概率</h3>
+<p>grounded 值为 0.98，并不意味着这个回答有 98% 的内容是有依据的。</p>
+<p>它的意思是：对于我们要求 Jev 判断的那个命题（所有事实性说法都得到了所提供证据的支持），Jev 给出了 0.98 的概率。</p>
+<p>接近零的值是强烈的否定。接近中间的值代表不确定，而不一定是一个&quot;还算不错&quot;的回答。（<a href="https://docs.typesafe.ai/primitives/noul" target="_blank" rel="noopener">Noul 文档</a>）</p>
+<p>有序的 Score 则是另一回事。</p>
+<p>对于有用性（helpfulness），Jev 返回一个分数和一个单独的置信度。这个分数是评分准则中各档位的概率加权平均，取值范围是 0 到 2。</p>
+<p>我们把这个数除以 2，换算到 0–1 的量表上报告。例如 1.6 分就变成 0.8。</p>
+<p>这是一个评级，不是 80% 的置信度。</p>
+<p>我们把 TypeSafe 的置信度单独记录下来，用于识别可能需要复审的判断。（<a href="https://docs.typesafe.ai/primitives/score" target="_blank" rel="noopener">Score 文档</a>）</p>
+<p><img src="../../assets/reading/26-akshay-jev-judge/media/image-05.png" loading="lazy" alt="图5" loading="lazy" /></p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">helpfulness = response[&quot;answers&quot;][&quot;helpfulness&quot;]
+
+normalized_score = helpfulness[&quot;score&quot;] / 2
+score_confidence = helpfulness[&quot;confidence&quot;]</code></pre></div>
+<p>confidence 字段概括了 Score 各档位上的分布。它并不是一个经过单独验证的&quot;评审正确&quot;的概率。Noul 的答案不包含这个单独字段。（<a href="https://docs.typesafe.ai/confidence" target="_blank" rel="noopener">置信度文档</a>）</p>
+<p><img src="../../assets/reading/26-akshay-jev-judge/media/image-06.png" loading="lazy" alt="图6" loading="lazy" /></p>
+<p>示例采用了三路分流：明确的失败、明确的通过，以及需要复审的不确定案例。</p>
+<p>这些阈值只是示意。在生产环境使用之前，请用你自己标注过的样本加以验证。</p>
+<h3 id="4-把结果变成-opik-指标">4. 把结果变成 Opik 指标</h3>
+<p>Opik 支持返回多个命名分数的自定义指标。这给了我们一个直截了当的适配器：调用一次 Jev，然后把它的答案映射到各个独立的列。<a href="https://www.comet.com/docs/opik/evaluation/metrics/custom_metric" target="_blank" rel="noopener">Opik 自定义指标</a></p>
+<p>下面是这个适配器的最小版本：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from opik.evaluation.metrics import base_metric, score_result
+from jev_judge.client import JevClient
+from jev_judge.core import map_scores
+
+class JevSupportMetric(base_metric.BaseMetric):
+    def __init__(self):
+        super().__init__(name=&quot;jev_support&quot;)
+        self.client = JevClient()
+
+    def score(self, request, policy, tool_calls, output, **ignored):
+        response = self.client.evaluate({
+            &quot;request&quot;: request,
+            &quot;policy&quot;: policy,
+            &quot;tool_calls&quot;: tool_calls,
+            &quot;final_answer&quot;: output,
+        })
+        return [
+            score_result.ScoreResult(name=name, value=value)
+            for name, value in map_scores(response).items()
+        ]</code></pre></div>
+<p>完整实现还加入了结构检查、结论指标、链路追踪和审计元数据。它会记录解析后的评审模型、评分准则版本和原始答案。</p>
+<p>Jev 不提供书面解释，所以我们也不会为 Opik 的 reason 字段编造一个。</p>
+<p>还要注意我们没有做的事情：在一个现成的生成式指标上设置 model=&quot;jev&quot;，然后想当然地认为兼容。</p>
+<p>这是一个使用 Opik 扩展接口的自定义评估器，而不是宣称的原生 Jev 集成。</p>
+<h3 id="5-运行一次实验">5. 运行一次实验</h3>
+<p>一旦有了数据集，实验本身很小：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from opik.evaluation import evaluate
+from jev_judge.opik_eval import JevSupportMetric, replay
+
+results = evaluate(
+    dataset=dataset,
+    task=replay,
+    scoring_metrics=[JevSupportMetric()],
+    experiment_name=&quot;jev-support-v1&quot;,
+    project_name=&quot;jev-support-judge&quot;,
+    task_threads=1,
+    error_tolerance=0,
+)</code></pre></div>
+<p>这里，replay 返回冻结的最终回答。其余状态字段来自数据集。串行执行让首次运行易于检查；它并不会关闭 Jev 在单次请求内部的并行问题。</p>
+<p>配套的 runner 负责创建数据集和生成唯一的实验名称。遇到指标错误它会直接失败，而不是把缺失的评估当作干净的结果。<a href="https://www.comet.com/docs/opik/python-sdk-reference/evaluation/evaluate.html" target="_blank" rel="noopener">Opik evaluate API</a></p>
+<p>先从离线开始：</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python -m jev_judge.cli --mode demo
+</code></pre></div>
+<p>它用手写的概率来演示工作流。这不是 Jev 性能的证据。</p>
+<p>然后安装可选集成并配置你自己的账号：</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">pip install -e &#x27;.[opik]&#x27;
+opik configure
+export TYPESAFE_API_KEY=&quot;your-key&quot;
+python -m jev_judge.opik_eval --project jev-support-judge</code></pre></div>
+<p>正式命令会把提供的案例发送到 TypeSafe，并记录到你配置的 Opik 工作区。在用真实轨迹替换合成示例之前，请先对敏感数据脱敏。</p>
+<p>Opik 仪表盘：</p>
+<h2 id="从教程走向生产反馈回路">从教程走向生产反馈回路</h2>
+<p>Jev 做出软件可以直接使用的聚焦判断。Opik 记录这些判断、比较智能体版本，并帮助你检查失败。</p>
+<p>在把这套方法用于生产之前，请用领域评审者标注过的、有代表性的轨迹对它做验证。测一测它漏掉了哪些失败。在比较智能体版本时，保持评分准则与评审版本固定不变。复审不确定的结果，但也要抽查一部分高置信度的结果。</p>
+<p>置信度应当指引复审，而不应取代验证。</p>
+<p>一个由应用自己持有的 worker 可以评估已完成的轨迹，并把反馈写入 Opik。精确规则继续用确定性检查。需要更深推理或书面解释的场景，继续用 LLM 评审。</p>
+<p>Jev 并不需要取代每一个评估器才有价值。</p>
+<p>它的实际优势更窄一些：它能让重复、有边界的判断变得足够便宜和快速，从而可以更频繁地运行。</p>
+<p>这让团队有机会在同样的预算内评估更多的智能体行为，更早发现问题，并把这些发现转化为更好的智能体。</p>
+<p>最有用的心智模型也最简单 → 智能体生成答案，Jev 评审有边界的断言，Opik 保存证据。</p>
+<hr />
+<p><a href="https://github.com/patchy631/jev-as-judge" target="_blank" rel="noopener">代码在这里 →</a></p>
+<p><a href="https://github.com/comet-ml/opik" target="_blank" rel="noopener">Opik 的 GitHub 在这里 →</a></p>
+<hr />
+<p>感谢阅读。</p>
+<p>干杯！:)</p>
+  </article>
+<nav class="pager"><a class="pager-prev" href="../../materials/25-vixhal-gero-rl/"><span>上一篇</span><strong>Gero-4B：RL 微调平台</strong></a><a class="pager-next" href="../../materials/27-avichawla-diy-jev/"><span>下一篇</span><strong>自己动手做一个本地 Jev</strong></a></nav>
+  <footer class="site-footer">第十一章知识库收录材料 · <a href="../../materials/sources/">来源、版本与许可</a> · 第三方内容版权归各自作者；观点与数字请对照原始来源核验。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#jev-快速入门">Jev 快速入门</a><a class="toc-item toc-l2" href="#首先把评审和评估系统分开">首先，把评审和评估系统分开</a><a class="toc-item toc-l2" href="#jev-as-a-judge-究竟意味着什么">Jev-as-a-Judge 究竟意味着什么</a><a class="toc-item toc-l2" href="#这与-llm-评审有何不同">这与 LLM 评审有何不同</a><a class="toc-item toc-l2" href="#实际机会评估更多真实发生的行为">实际机会：评估更多真实发生的行为</a><a class="toc-item toc-l2" href="#职责清晰的架构">职责清晰的架构</a><a class="toc-item toc-l2" href="#搭建退款客服评估">搭建退款客服评估</a><a class="toc-item toc-l3" href="#1-定义小问题">1. 定义小问题</a><a class="toc-item toc-l3" href="#2-状态只发一次">2. 状态只发一次</a><a class="toc-item toc-l3" href="#3-正确解读概率">3. 正确解读概率</a><a class="toc-item toc-l3" href="#4-把结果变成-opik-指标">4. 把结果变成 Opik 指标</a><a class="toc-item toc-l3" href="#5-运行一次实验">5. 运行一次实验</a><a class="toc-item toc-l2" href="#从教程走向生产反馈回路">从教程走向生产反馈回路</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/lz-string.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/lab.js"></script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

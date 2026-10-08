@@ -272,18 +272,9 @@ def _related_map():
 
 RELATED = _related_map()
 
-# 拓展阅读：从第 11 章知识库挂载进站点的文章 (nav_slug, 源目录 slug, 标题, 说明)
-MATERIALS = [
-    ("clef", "23-clef-decision-models", "Clef：开源决策模型与 RL 微调平台",
-     "Cloudflare 官方发布文 · Jev Decision Index 完整评测表"),
-    ("polydao", "24-polydao-jev-engineering", "Jev 工程实战：账单砍掉 90%",
-     "从业者手册 · 四桶分拣 / 置信度路由 / Kimi K3 兜底"),
-    ("rerank-lab", "18-wechat-rerank-experiment", "Jev 能替代 Rerank 模型吗",
-     "Milvus + SciFact 80 条实测对照"),
-    ("laya-arch", "19-wechat-laya-architecture", "Laya 决策模型架构解析", "魔搭 ModelScope 社区"),
-    ("laya-oss", "20-wechat-laya-oss-release", "Laya 开源发布", "PaperAgent"),
-    ("laya-trend", "21-wechat-laya-hf-trending", "Laya 登上 HuggingFace 榜单", "机器之心报道"),
-]
+# 所有知识库板块的阅读入口；六个已发布的文章 slug 保持兼容。
+with open(os.path.join(SITE, "reading.json"), encoding="utf-8") as reading_file:
+    READING = json.load(reading_file)
 
 NAV = [
     ("课程目录", COURSE_NAV),
@@ -329,7 +320,8 @@ NAV = [
         ("legal", "法律条款"),
     ]),
     ("客户端 SDK", [("sdk", "SDK 概览")] + PY_SDK + JS_SDK),
-    ("拓展阅读", [("materials/" + m[0], m[2]) for m in MATERIALS]),
+    ("拓展阅读", [("materials", "全部知识库"), ("materials/sources", "来源、版本与许可")]
+     + [("materials/" + item["slug"], item["title"]) for item in READING]),
 ]
 
 FLAT_NAV = [p for _g, items in NAV for p, _l in items]
@@ -1530,47 +1522,244 @@ def related_html(page, skip_notebook=False):
     rows = []
     for badge, path, label in items:
         icon = {"notebook": "📓 笔记本", "article": "📰 拓展文章", "chapter": "📘 教程章节"}[badge]
+        source = os.path.join(ROOT, path)
+        href = ("../" * (page.count("/") + 1) + quote(KNOWLEDGE_PAGES[source], safe="/") + "/"
+                if source in KNOWLEDGE_PAGES else GH_BASE + path)
         rows.append(f'<div class="related-item"><span class="related-badge {badge}">{icon}</span>'
-                    f'<a href="{GH_BASE}{esc(path)}" target="_blank" rel="noopener">{esc(label)}</a></div>')
+                    f'<a href="{esc(href)}" target="_blank" rel="noopener">{esc(label)}</a></div>')
     return (f'<div class="related"><div class="related-title">深入学习 · 教程与素材</div>'
             f'<div class="related-list">{"".join(rows)}</div>'
-            f'<div class="related-note">链接跳转到 GitHub 仓库（datawhalechina/jev-cookbook）对应文件；'
-            f'notebook 在 GitHub 上可直接阅读渲染结果。</div></div>')
+            f'<div class="related-note">拓展文章在本站阅读；Notebook 与工程链接到 GitHub 仓库，'
+            f'Notebook 可在 GitHub 直接阅读。</div></div>')
 
 
 KB_ROOT = os.path.join(ROOT, "main", "11_知识库", "jev-cookbook")
+KNOWLEDGE_PAGES = {}
+KNOWLEDGE_DIRS = {}
+KNOWLEDGE_ITEMS = {}
 
-def render_material(nav_slug, src_slug, title, desc):
-    """把知识库文章渲染成站点页面（含 media 资源）。"""
-    src_dir = os.path.join(KB_ROOT, src_slug)
-    md_path = os.path.join(src_dir, "article.md")
-    if not os.path.exists(md_path):
-        print(f"警告: 素材缺失 {md_path}")
-        return
-    page = "materials/" + nav_slug
-    text = read(md_path)
-    R = Renderer(page)
-    text, fences = extract_fences(text)
-    R.fences = fences
-    body = R.render_md(text)
-    body = _CODE_TOKEN_RE.sub(lambda m: R.fence_html(int(m.group(1))), body)
-    body = rewrite_links(body, page, list_pages() + [page], {}, from_root=False)
-    head = (f'<p class="page-desc">{esc(desc)} · 收录自第 11 章知识库，'
-            f'<a href="{GH_BASE}main/11_知识库/jev-cookbook/{src_slug}/article.md" '
-            f'target="_blank" rel="noopener">查看来源与登记信息 ↗</a></p>')
-    body = head + body
-    toc = []
-    for m in TOC_SCAN_RE.finditer(body):
-        lv, hid, t = int(m.group(1)), m.group(2), m.group(3)
-        toc.append((lv, re.sub(r"<[^>]+>", "", t).strip(), hid))
+
+def knowledge_manifest():
+    """发现全部 Markdown，并把已存在的官方文档映射到原阅读路径。"""
+    directories = {name for name in os.listdir(KB_ROOT)
+                   if os.path.isdir(os.path.join(KB_ROOT, name))}
+    declared = {item["directory"] for item in READING}
+    if directories != declared:
+        raise ValueError(f"拓展阅读目录未同步: {directories ^ declared}")
+    pages, folders, items = {}, {}, {}
+    doc_pages = set(list_pages())
+    for item in READING:
+        folder = os.path.join(KB_ROOT, item["directory"])
+        files = sorted(os.path.join(dp, fn) for dp, _, names in os.walk(folder)
+                       for fn in names if fn.endswith(".md"))
+        candidates = [os.path.join(folder, name)
+                      for name in ("article.md", "README.zh-CN.md", "README.md")]
+        entry = next((path for path in candidates if path in files), files[0])
+        item["files"], item["entry"] = files, entry
+        item["page"] = "materials/" + item["slug"]
+        folders[folder] = item["page"]
+        for path in files:
+            relative = os.path.relpath(path, folder).replace(os.sep, "/")
+            doc = relative[:-3]
+            if item["directory"] == "01-official-docs-zh" and doc in doc_pages:
+                page = doc
+            else:
+                page = item["page"] if path == entry else item["page"] + "/pages/" + doc
+            pages[path], items[path] = page, item
+            parent = os.path.dirname(path)
+            while parent != folder:
+                rel = os.path.relpath(parent, folder).replace(os.sep, "/")
+                folders.setdefault(parent, item["page"] + "/topics/" + rel)
+                parent = os.path.dirname(parent)
+    for name, page in (("README.md", "materials/overview"), ("SOURCES.md", "materials/sources")):
+        pages[os.path.join(KB_ROOT, name)] = page
+    folders[KB_ROOT] = "materials"
+    return pages, folders, items
+
+
+def reading_title(path):
+    match = HEADING_RE.search(BOILER_RE.sub("", read(path)))
+    return plain_text(match.group(2)) if match else os.path.basename(path)[:-3]
+
+
+def reading_catalog(base="", compact=False):
+    groups = []
+    for index, group in enumerate(dict.fromkeys(item["group"] for item in READING), 1):
+        entries = [item for item in READING if item["group"] == group]
+        cards = []
+        for item in entries:
+            number = item["directory"].split("-")[0] if item["directory"] != "laya-model" else "L"
+            cards.append(f'<a class="reading-card" href="{base}{item["page"]}/">'
+                         f'<span class="reading-number">{number}</span><div>'
+                         f'<h3>{esc(item["title"])}</h3><p>{esc(item["summary"])}</p>'
+                         f'<span class="reading-count">{len(item["files"])} 份文档 · 在线阅读</span>'
+                         '</div><span aria-hidden="true">→</span></a>')
+        heading = f'<span>{esc(group)}</span><small>{len(entries)} 个板块</small>'
+        grid = f'<div class="reading-grid">{"".join(cards)}</div>'
+        if compact:
+            groups.append(f'<details class="reading-group"{" open" if index == 1 else ""}>'
+                          f'<summary>{heading}</summary>{grid}</details>')
+        else:
+            groups.append(f'<section class="reading-group" id="reading-group-{index}">'
+                          f'<h2>{heading}</h2>{grid}</section>')
+    return "".join(groups)
+
+
+def knowledge_links(body, source, page):
+    """文档互链留在站内；只复制引用的配图，未收录的工程附件回到上游。"""
     base = "../" * (page.count("/") + 1)
-    write(os.path.join(DIST, page, "index.html"), render_shell(page, title, body, toc, base))
-    media_src = os.path.join(src_dir, "media")
-    if os.path.isdir(media_src):
-        dist_media = os.path.join(DIST, page, "media")
-        if os.path.isdir(dist_media):
-            shutil.rmtree(dist_media)
-        shutil.copytree(media_src, dist_media)
+    item = KNOWLEDGE_ITEMS.get(source)
+    upstream = None
+    if item:
+        row = next((line for line in read(os.path.join(KB_ROOT, "SOURCES.md")).splitlines()
+                    if line.startswith('| `' + item["directory"] + '/`')), "")
+        match = re.search(r'https://github\.com/([^/)]+/[^/)]+)', row)
+        upstream = "https://github.com/" + match.group(1) if match else None
+    missing = []
+
+    def resolve(raw):
+        target = urlsplit(html.unescape(raw))
+        if target.scheme or target.netloc or not target.path:
+            return None, target
+        folder = os.path.dirname(source)
+        if target.path.startswith("/"):
+            folder = os.path.join(KB_ROOT, item["directory"]) if item else KB_ROOT
+        resolved = os.path.abspath(os.path.join(folder, unquote(target.path).lstrip("/")))
+        if os.path.commonpath([ROOT, resolved]) != ROOT:
+            return None, target
+        return resolved, target
+
+    def href_replace(match):
+        raw = html.unescape(match.group(2))
+        resolved, target = resolve(raw)
+        if resolved is None:
+            return match.group(0)
+        # Markdown 的扩展名可省略，目录入口则使用自动生成的主题列表。
+        candidates = (resolved, resolved + ".md")
+        dest = next((KNOWLEDGE_PAGES[path] for path in candidates if path in KNOWLEDGE_PAGES), None)
+        dest = dest or KNOWLEDGE_DIRS.get(resolved)
+        if dest:
+            url = base + quote(dest, safe="/") + "/"
+        elif os.path.exists(resolved):
+            url = course_repo_url(os.path.relpath(resolved, ROOT).replace(os.sep, "/"))
+        else:
+            missing.append(raw)
+            if upstream:
+                relative = os.path.relpath(resolved, os.path.join(KB_ROOT, item["directory"]))
+                url = upstream + "/blob/HEAD/" + quote(relative, safe="/")
+            else:
+                url = course_repo_url(os.path.relpath(source, ROOT).replace(os.sep, "/"))
+        if target.fragment:
+            url += "#" + target.fragment
+        return f'href="{esc(url)}"'
+
+    body = re.sub(r"(href)=[\"']([^\"']*)[\"']", href_replace, body)
+
+    def image_replace(match):
+        tag = match.group(0)
+        attr = re.search(r"src=[\"']([^\"']*)[\"']", tag)
+        if not attr:
+            return tag
+        raw = html.unescape(attr.group(1))
+        if raw.startswith("data:"):
+            return tag
+        cached = mintcdn_to_local(raw) if raw.startswith("https://mintcdn") else None
+        if cached and os.path.isfile(os.path.join(DIST, cached)):
+            url = base + cached
+        else:
+            resolved, _ = resolve(raw)
+            if resolved and os.path.isfile(resolved):
+                relative = os.path.relpath(resolved, KB_ROOT).replace(os.sep, "/")
+                if relative.startswith("../"):
+                    relative = "shared/" + os.path.relpath(resolved, ROOT).replace(os.sep, "/")
+                asset = "assets/reading/" + relative
+                if item and item["slug"] != item["directory"]:
+                    folder = os.path.join(KB_ROOT, item["directory"])
+                    if os.path.commonpath([folder, resolved]) == folder:
+                        # 兼容早期六篇文章已发布的配图地址。
+                        asset = item["page"] + "/" + os.path.relpath(resolved, folder).replace(os.sep, "/")
+                dest = os.path.join(DIST, asset)
+                os.makedirs(os.path.dirname(dest), exist_ok=True)
+                shutil.copy2(resolved, dest)
+                url = base + quote(asset, safe="/")
+            else:
+                missing.append(raw)
+                alt = re.search(r"alt=[\"']([^\"']*)[\"']", tag)
+                label = html.unescape(alt.group(1)) if alt else "配图"
+                return f'<span class="reading-missing-media">{esc(label)}（见原始材料）</span>'
+        return tag[:attr.start()] + f'src="{esc(url)}" loading="lazy"' + tag[attr.end():]
+
+    body = re.sub(r"<img\b[^>]*>", image_replace, body)
+    if missing:
+        body += ('<p class="reading-snapshot-note">快照未包含部分工程附件或配图；'
+                 '请通过上游链接或原始材料查看，收录范围见来源清单。</p>')
+    return body
+
+
+def reading_document_list(paths, base):
+    return '<ul class="reading-document-list">' + "".join(
+        f'<li><a href="{base}{quote(KNOWLEDGE_PAGES[path], safe="/")}/">'
+        f'{esc(reading_title(path))}</a><small>{esc(os.path.basename(path))}</small></li>'
+        for path in paths) + '</ul>'
+
+
+def render_knowledge():
+    entries = []
+    for source, page in KNOWLEDGE_PAGES.items():
+        if not page.startswith("materials/"):
+            continue  # 官方中文文档已有完整阅读页，避免重复内容和搜索结果。
+        renderer = Renderer(page)
+        text = strip_export_blocks(BOILER_RE.sub("", read(source)))
+        text, renderer.fences = extract_fences(text)
+        body = renderer.render_md(text)
+        body = _CODE_TOKEN_RE.sub(lambda m: "" if int(m.group(1)) in renderer.used_fences
+                                 else renderer.fence_html(int(m.group(1))), body)
+        body = knowledge_links(fix_img_tags(body), source, page)
+        item = KNOWLEDGE_ITEMS.get(source)
+        title = item["title"] if item and source == item["entry"] else reading_title(source)
+        base = "../" * (page.count("/") + 1)
+        breadcrumb = f'<p class="course-breadcrumb"><a href="{base}materials/">拓展阅读</a>'
+        if item:
+            breadcrumb += f' / <a href="{base}{item["page"]}/">{esc(item["title"])}</a>'
+        breadcrumb += '</p>'
+        source_url = course_repo_url(os.path.relpath(source, ROOT).replace(os.sep, "/"))
+        head = (f'{breadcrumb}<p class="page-desc">知识库收录材料 · '
+                f'<a href="{source_url}" target="_blank" rel="noopener">原始文件 ↗</a> · '
+                f'<a href="{base}materials/sources/">来源、版本与许可</a></p>')
+        if not re.search(r'<h1\b', body):
+            body = f'<h1>{esc(title)}</h1>' + body
+        if item and source == item["entry"] and len(item["files"]) > 1:
+            head += (f'<details class="reading-documents"><summary>本板块全部文档'
+                     f'（{len(item["files"])} 份）</summary>'
+                     + reading_document_list(item["files"], base) + '</details>')
+        body = head + body
+        toc = [(int(m.group(1)), plain_text(m.group(3)), m.group(2))
+               for m in TOC_SCAN_RE.finditer(body)]
+        write(os.path.join(DIST, page, "index.html"), render_shell(page, title, body, toc, base))
+        text = re.sub(r"<[^>]+>", " ", body)
+        entries.append({"p": page, "t": title, "g": "拓展阅读", "b": re.sub(r"\s+", " ", text)[:12000]})
+    for source, page in KNOWLEDGE_DIRS.items():
+        if page in KNOWLEDGE_PAGES.values() or source == KB_ROOT:
+            continue
+        paths = [path for path in KNOWLEDGE_PAGES if path.startswith(source + os.sep)]
+        base = "../" * (page.count("/") + 1)
+        title = os.path.basename(source) + " · 文档目录"
+        body = (f'<p><a href="{base}materials/">返回拓展阅读</a></p><h1>{esc(title)}</h1>'
+                + reading_document_list(paths, base))
+        write(os.path.join(DIST, page, "index.html"), render_shell(page, title, body, [], base))
+    count = len(KNOWLEDGE_PAGES)
+    body = ('<h1>拓展阅读 · 全部知识库</h1>'
+            f'<p class="reading-lead">{len(READING)} 个板块，{count} 份文档（含总览与来源清单）。'
+            '从工程实践到模型训练与独立评测，按主题选择，或用顶部搜索查找具体内容。</p>'
+            '<p><a href="../course/11/">第十一章导读</a> · '
+            '<a href="sources/">来源、版本与许可</a> · <a href="overview/">知识库原始总览</a></p>'
+            + reading_catalog("../"))
+    write(os.path.join(DIST, "materials/index.html"),
+          render_shell("materials", "拓展阅读 · 全部知识库", body, [], "../"))
+    entries.append({"p": "materials", "t": "拓展阅读 · 全部知识库", "g": "拓展阅读",
+                    "b": " ".join(item["title"] + " " + item["summary"] for item in READING)})
+    print(f'[知识库] {len(READING)} 个板块，{count} 份 Markdown 全部挂载')
+    return entries
 
 
 # ---------------------------------------------------------------- 外壳
@@ -1609,6 +1798,11 @@ def course_links(body, source):
             os.makedirs(os.path.dirname(dest), exist_ok=True)
             shutil.copy2(resolved, dest)
             url = "../../" + quote(asset, safe="/")
+        elif resolved in KNOWLEDGE_PAGES or resolved in KNOWLEDGE_DIRS:
+            dest = KNOWLEDGE_PAGES.get(resolved) or KNOWLEDGE_DIRS[resolved]
+            url = "../../" + quote(dest, safe="/") + "/"
+            if target.fragment:
+                url += "#" + target.fragment
         elif rel in chapter_pages and not target.fragment:
             url = "../../" + chapter_pages[rel] + "/"
         else:
@@ -1672,12 +1866,16 @@ def render_home():
         groups.append(f'<div class="curriculum-group"><div class="curriculum-stage">'
                       f'<span>0{index}</span><h3>{esc(stage)}</h3></div>'
                       f'<div class="chapter-list">{"".join(rows)}</div></div>')
-    body = read(os.path.join(SITE, "home.html")).replace("{{curriculum}}", "".join(groups))
+    body = (read(os.path.join(SITE, "home.html"))
+            .replace("{{curriculum}}", "".join(groups))
+            .replace("{{reading}}", reading_catalog(compact=True))
+            .replace("{{reading_count}}", str(len(READING))))
     return render_shell("@home", "Jev 中文课程", body, [], "")
 
 def render_shell(page, title, body, toc, base):
     is_home = page == "@home"
     is_course = page.startswith("course/")
+    is_reading = page == "materials" or page.startswith("materials/")
     if page in FLAT_NAV:
         p = FLAT_NAV.index(page)
         prev_page = FLAT_NAV[p - 1] if p > 0 else None
@@ -1688,7 +1886,8 @@ def render_shell(page, title, body, toc, base):
     nav_parts = ['<nav class="sidebar-nav" id="sidebar-nav">']
     nav_parts.append(f'<a class="nav-home" href="{base}">课程首页</a>')
     for gi, (group, items) in enumerate(NAV):
-        has_current = any(ip == page for ip, _ in items) or (is_home and gi == 0)
+        has_current = any(ip == page or (is_reading and page.startswith(ip + "/"))
+                          for ip, _ in items) or (is_home and gi == 0)
         nav_parts.append(f'<div class="nav-group{" open" if has_current else ""}" data-group="{gi}">')
         nav_parts.append(f'<button class="nav-group-title" type="button">{esc(group)}'
                          f'<span class="chev">▾</span></button>')
@@ -1719,6 +1918,10 @@ def render_shell(page, title, body, toc, base):
         footer = (f'Datawhale · Jev Cookbook 开源课程 · '
                   f'<a href="{REPO_URL}/blob/main/LICENSE" target="_blank" rel="noopener">'
                   '原创内容 CC BY-NC-SA 4.0</a> · 第三方内容遵循各自许可')
+    elif is_reading:
+        footer = (f'第十一章知识库收录材料 · '
+                  f'<a href="{base}materials/sources/">来源、版本与许可</a> · '
+                  '第三方内容版权归各自作者；观点与数字请对照原始来源核验。')
     else:
         footer = (f'配套中文参考文档：<a href="{ORIGIN_URL}" target="_blank" rel="noopener">'
                   'docs.typesafe.ai</a> 的社区翻译，以英文原文为准；内容版权归原作者所有。')
@@ -1734,7 +1937,7 @@ def render_shell(page, title, body, toc, base):
 <link rel="stylesheet" href="{base}assets/course.css" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23286852'/%3E%3Ctext x='21' y='46' font-size='44' font-family='sans-serif' fill='white'%3EJ%3C/text%3E%3C/svg%3E" />
 </head>
-<body class="{'home-page' if is_home else 'course-page' if is_course else 'reference-page'}">
+<body class="{'home-page' if is_home else 'course-page' if is_course else 'reading-page' if is_reading else 'reference-page'}">
 <a class="skip-link" href="#main-content">跳到主要内容</a>
 <header class="topbar">
   <button class="menu-btn" id="menu-btn" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">☰</button>
@@ -1746,8 +1949,9 @@ def render_shell(page, title, body, toc, base):
   <div class="top-actions">
     <a class="course-nav-link" href="{base}{'#curriculum' if is_home else ''}">{'课程目录' if is_home else '课程首页'}</a>
     <a class="course-nav-link" href="{base}introduction/">中文文档</a>
+    <a class="course-nav-link" href="{base}materials/">拓展阅读</a>
     <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
-    <a class="origin-link" href="{REPO_URL if is_home or is_course else ORIGIN_URL}" target="_blank" rel="noopener">{'GitHub' if is_home or is_course else '英文原文'} ↗</a>
+    <a class="origin-link" href="{REPO_URL if is_home or is_course or is_reading else ORIGIN_URL}" target="_blank" rel="noopener">{'GitHub' if is_home or is_course or is_reading else '英文原文'} ↗</a>
   </div>
 </header>
 <div class="layout">
@@ -1820,6 +2024,8 @@ def validate(pages):
 # ---------------------------------------------------------------- 主流程
 
 def main():
+    global KNOWLEDGE_PAGES, KNOWLEDGE_DIRS, KNOWLEDGE_ITEMS
+    KNOWLEDGE_PAGES, KNOWLEDGE_DIRS, KNOWLEDGE_ITEMS = knowledge_manifest()
     pages = list_pages()
     print(f"内容页面: {len(pages)}")
     missing = [p for p in pages if p not in NAV_LABELS]
@@ -1843,8 +2049,6 @@ def main():
     for course in COURSES:
         entries.append(render_course(course))
         print(f'[课程] course/{course["number"]}')
-    write(os.path.join(DIST, "assets", "search-index.js"),
-          "window.SEARCH_INDEX=" + json.dumps(entries, ensure_ascii=False) + ";")
 
     total = len(pages)
     for i, p in enumerate(pages, 1):
@@ -1862,10 +2066,9 @@ def main():
               render_shell(p, title, body, toc, base))
         print(f"[{i}/{total}] {p}")
 
-    # 拓展阅读（第 11 章知识库文章挂载）
-    for nav_slug, src_slug, m_title, m_desc in MATERIALS:
-        render_material(nav_slug, src_slug, m_title, m_desc)
-        print(f"[素材] materials/{nav_slug}")
+    entries.extend(render_knowledge())
+    write(os.path.join(DIST, "assets", "search-index.js"),
+          "window.SEARCH_INDEX=" + json.dumps(entries, ensure_ascii=False) + ";")
 
     write(os.path.join(DIST, "index.html"), render_home())
     print("根页面: /index.html")

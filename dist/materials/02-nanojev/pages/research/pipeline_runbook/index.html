@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NanoJev pipeline: data, training, evaluation, and serving · Jev Cookbook</title>
+<meta name="description" content="NanoJev pipeline: data, training, evaluation, and serving · Jev Cookbook 中文课程与参考文档" />
+<link rel="stylesheet" href="../../../../../assets/style.css" />
+<link rel="stylesheet" href="../../../../../assets/course.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23286852'/%3E%3Ctext x='21' y='46' font-size='44' font-family='sans-serif' fill='white'%3EJ%3C/text%3E%3C/svg%3E" />
+</head>
+<body class="reading-page">
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="../../../../../"><span class="brand-mark">J</span>Jev Cookbook</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" aria-label="搜索课程与文档" placeholder="搜索课程与文档…" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <a class="course-nav-link" href="../../../../../">课程首页</a>
+    <a class="course-nav-link" href="../../../../../introduction/">中文文档</a>
+    <a class="course-nav-link" href="../../../../../materials/">拓展阅读</a>
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://github.com/datawhalechina/jev-cookbook" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><a class="nav-home" href="../../../../../">课程首页</a><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">课程目录<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../course/01/">01 · 认识 Jev</a><a class="nav-item" href="../../../../../course/02/">02 · 核心概念</a><a class="nav-item" href="../../../../../course/03/">03 · 架构模式</a><a class="nav-item" href="../../../../../course/04/">04 · 实战指南</a><a class="nav-item" href="../../../../../course/05/">05 · 智能家居实验</a><a class="nav-item" href="../../../../../course/06/">06 · 模型评测</a><a class="nav-item" href="../../../../../course/07/">07 · 实战应用</a><a class="nav-item" href="../../../../../course/08/">08 · 前沿研究</a><a class="nav-item" href="../../../../../course/09/">09 · Agent 集成</a><a class="nav-item" href="../../../../../course/10/">10 · 本地模型</a><a class="nav-item" href="../../../../../course/11/">11 · 知识库</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../introduction/">简介</a><a class="nav-item" href="../../../../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../../../../introduction/machine-learning-primer/">AI 入门</a><a class="nav-item" href="../../../../../introduction/coding-agents/">Jev 与编码智能体</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../concepts/system-one/">System One</a><a class="nav-item" href="../../../../../concepts/state/">状态（State）</a><a class="nav-item" href="../../../../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../../../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../primitives/">原语概览</a><a class="nav-item" href="../../../../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../../../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../../../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../../../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../patterns/">模式概览</a><a class="nav-item" href="../../../../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../../../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../../../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../../../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../cookbooks/">实战指南概览</a><a class="nav-item" href="../../../../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../../../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../../../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../../../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../../../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../../../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../../../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../../../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../../../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../../../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../../../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../../../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../../../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../../../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../../../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../../../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../../../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../../../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../demos/">示例概览</a><a class="nav-item" href="../../../../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../api/">HTTP API 参考</a><a class="nav-item" href="../../../../../models/">模型</a><a class="nav-item" href="../../../../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../../../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../../../../legal/">法律条款</a></div></div><div class="nav-group" data-group="9"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../sdk/">SDK 概览</a><a class="nav-item" href="../../../../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../../../../sdk/python/usage/">用法</a><a class="nav-item" href="../../../../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../../../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../../../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../../../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../../../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../../../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../../../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../../../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../../../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../../../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../../../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../../../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../../../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div><div class="nav-group open" data-group="10"><button class="nav-group-title" type="button">拓展阅读<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../materials/">全部知识库</a><a class="nav-item" href="../../../../../materials/sources/">来源、版本与许可</a><a class="nav-item" href="../../../../../materials/01-official-docs-zh/">TypeSafe 官方文档中文翻译</a><a class="nav-item" href="../../../../../materials/02-nanojev/">NanoJev：小型决策模型</a><a class="nav-item" href="../../../../../materials/03-jev-trader/">Jev Trader：交易决策工程</a><a class="nav-item" href="../../../../../materials/04-fast-jev-compaction/">Fast Jev Compaction：上下文压缩</a><a class="nav-item" href="../../../../../materials/05-awesome-jev/">Awesome Jev：生态资料导航</a><a class="nav-item" href="../../../../../materials/06-typesafe-skills/">TypeSafe Skills：代理技能</a><a class="nav-item" href="../../../../../materials/07-jev-ultrafast/">Jev Ultrafast：浏览器决策</a><a class="nav-item" href="../../../../../materials/08-eve-decision-models/">Eve：决策模型研究</a><a class="nav-item" href="../../../../../materials/09-typesafe-sdk-python/">TypeSafe Python SDK</a><a class="nav-item" href="../../../../../materials/10-feishu-research/">Jev 深度研究报告</a><a class="nav-item" href="../../../../../materials/11-typesafe-mario/">TypeSafe Mario：游戏决策案例</a><a class="nav-item" href="../../../../../materials/12-wechat-article/">聊聊 Jev 模型到底是什么</a><a class="nav-item" href="../../../../../materials/13-feishu-cookbook-plan/">Cookbook 规划与技术分析</a><a class="nav-item" href="../../../../../materials/14-feishu-lecture/">Jev 模型应用入门与实践</a><a class="nav-item" href="../../../../../materials/15-jevbench/">JevBench：独立评测基准</a><a class="nav-item" href="../../../../../materials/16-wechat-agent-engineering/">把 Agent 的判断题拆给 Jev</a><a class="nav-item" href="../../../../../materials/17-wechat-silicon-grail/">Jev：在硅基世界掷圣杯</a><a class="nav-item" href="../../../../../materials/rerank-lab/">Jev 能替代 Rerank 模型吗</a><a class="nav-item" href="../../../../../materials/laya-arch/">Laya 决策模型架构解析</a><a class="nav-item" href="../../../../../materials/laya-oss/">Laya 开源发布</a><a class="nav-item" href="../../../../../materials/laya-trend/">Laya 与 Hugging Face 社区</a><a class="nav-item" href="../../../../../materials/22-wechat-cookbook-intro/">Jev Cookbook 中文入门路线</a><a class="nav-item" href="../../../../../materials/clef/">Clef：开源决策模型与 RL 平台</a><a class="nav-item" href="../../../../../materials/polydao/">Jev 工程与置信度路由</a><a class="nav-item" href="../../../../../materials/25-vixhal-gero-rl/">Gero-4B：RL 微调平台</a><a class="nav-item" href="../../../../../materials/26-akshay-jev-judge/">Build a Jev Judge：评审实战</a><a class="nav-item" href="../../../../../materials/27-avichawla-diy-jev/">自己动手做一个本地 Jev</a><a class="nav-item" href="../../../../../materials/28-pg-jev/">pg-jev：在 SQL 中做语义判断</a><a class="nav-item" href="../../../../../materials/29-wechat-startlux-decision/">StartLux 开源决策模型</a><a class="nav-item" href="../../../../../materials/30-wechat-jev-skeptic/">Jev 演示的独立质疑与实测</a><a class="nav-item" href="../../../../../materials/31-avb-choice-invariance/">训练选项顺序不变性</a><a class="nav-item" href="../../../../../materials/32-omarsar-jev-as-judge/">Jev-as-a-Judge：智能体评估</a><a class="nav-item" href="../../../../../materials/33-arena-jev-router-eval/">Arena：Jev Router 独立评测</a><a class="nav-item" href="../../../../../materials/34-unsloth-train-decision-model/">用 Unsloth 训练决策模型</a><a class="nav-item" href="../../../../../materials/laya-model/">Laya：本地接口与微调方案</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content" id="main-content"><article class="doc">
+<p class="course-breadcrumb"><a href="../../../../../materials/">拓展阅读</a> / <a href="../../../../../materials/02-nanojev/">NanoJev：小型决策模型</a></p><p class="page-desc">知识库收录材料 · <a href="https://github.com/datawhalechina/jev-cookbook/blob/main/main/11_%E7%9F%A5%E8%AF%86%E5%BA%93/jev-cookbook/02-nanojev/research/pipeline_runbook.md" target="_blank" rel="noopener">原始文件 ↗</a> · <a href="../../../../../materials/sources/">来源、版本与许可</a></p><h1 id="nanojev-pipeline-data-training-evaluation-and-serving">NanoJev pipeline: data, training, evaluation, and serving</h1>
+<p><a href="../../../../../materials/02-nanojev/pages/README/">Back to NanoJev</a></p>
+<p>This guide follows a complete new run: generate programmatic targets, train a 0.6B decision model, extend it with navigation data, evaluate the checkpoint, and serve batched decisions. Every path below is relative to the repository root. Use new output directories for each run.</p>
+<h2 id="1-prepare-the-environment">1. Prepare the environment</h2>
+<p>Use Python 3.11 or newer for the scripts and a compatible NVIDIA CUDA environment for model training and inference. The package versions used by the implementation are recorded in <a href="https://github.com/TianyuCodings/NanoJev/blob/HEAD/requirements-toy.txt">requirements-toy.txt</a>.</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements-toy.txt</code></pre></div>
+<p>The data generators and schema validation use the Python standard library. The programmatic-supervision workflow below requires no API key or model-service calls.</p>
+<p>Cache the fixed Qwen3-0.6B revision before training:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python - &lt;&lt;&#x27;PY&#x27;
+from huggingface_hub import snapshot_download
+snapshot_download(
+    repo_id=&quot;Qwen/Qwen3-0.6B&quot;,
+    revision=&quot;c1899de289a04d12100db370d81485cdf75e47ca&quot;,
+)
+PY</code></pre></div>
+<h2 id="2-define-questions-and-target-distributions">2. Define questions and target distributions</h2>
+<p>Each JSONL training record contains a state, a question mapping, a split, and targets. The conceptual <code>target_distribution</code> is represented by the <strong><code>gold_probs</code></strong> field in the current training interface.</p>
+<p>For example, this complete record describes an unobserved draw from a known distribution:</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;id&quot;: &quot;bag_001&quot;,
+  &quot;state_id&quot;: &quot;bag_001&quot;,
+  &quot;family_id&quot;: &quot;known_bag_probability&quot;,
+  &quot;split&quot;: &quot;train&quot;,
+  &quot;state&quot;: &quot;A token is drawn uniformly from a bag containing three red tokens and one blue token. The draw has not been observed.&quot;,
+  &quot;questions&quot;: {
+    &quot;color&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;What is the probability distribution of the drawn token&#x27;s color?&quot;,
+      &quot;criteria&quot;: {&quot;red&quot;: &quot;The token is red&quot;, &quot;blue&quot;: &quot;The token is blue&quot;}
+    },
+    &quot;is_red&quot;: {
+      &quot;type&quot;: &quot;boolean&quot;,
+      &quot;instructions&quot;: &quot;The drawn token is red.&quot;
+    }
+  },
+  &quot;gold_probs&quot;: {
+    &quot;color&quot;: {&quot;red&quot;: 0.75, &quot;blue&quot;: 0.25},
+    &quot;is_red&quot;: {&quot;false&quot;: 0.25, &quot;true&quot;: 0.75}
+  },
+  &quot;gold_probs_kind&quot;: &quot;programmatic_conditional_distribution&quot;,
+  &quot;gold_label_kind&quot;: &quot;unobserved&quot;,
+  &quot;metadata&quot;: {&quot;source_group_id&quot;: &quot;bag:red3:blue1&quot;}
+}</code></pre></div>
+<p>Use one complete JSON object per line. <code>id</code> identifies the record, <code>state_id</code> identifies its physical or semantic state, and <code>metadata.source_group_id</code> groups related variations into the same split. Supported splits are <code>train</code>, <code>dev</code>, <code>calibration</code>, <code>test</code>, and <code>ood</code>.</p>
+<div class="table-wrap"><table><thead><tr><th>Question type</th><th>Question fields</th><th>Target keys and output</th></tr></thead><tbody><tr><td><code>choice</code></td><td><code>instructions</code> and a <code>criteria</code> object with 2–255 candidates</td><td>Every candidate ID maps to a probability</td></tr><tr><td><code>boolean</code></td><td><code>instructions</code>; optional <code>criteria</code> with <code>false</code> and/or <code>true</code> descriptions</td><td><code>false</code> and <code>true</code>; inference returns <code>p_true</code></td></tr><tr><td><code>score</code></td><td><code>instructions</code> and an ordered <code>criteria</code> array with 2–10 descriptions</td><td>String indices <code>&quot;0&quot;</code> through <code>&quot;K-1&quot;</code>; inference returns the distribution and expected level</td></tr></tbody></table></div>
+<p>Every probability must be finite and between zero and one. Each question&#x27;s target must cover exactly its candidates and sum to one. Zero probabilities are valid. Candidate sets may differ between questions.</p>
+<p><code>gold_probs_kind</code> is either a string for the whole record or a mapping from question IDs to one of these values:</p>
+<ul><li><p><code>deterministic_truth</code>: a one-hot target.</p></li><li><p><code>programmatic_conditional_distribution</code>: a known conditional event distribution.</p></li><li><p><code>optimal_action_policy</code>: an action-policy distribution, such as equal mass on all optimal actions.</p></li></ul>
+<p>Optional hard targets use <code>gold</code>: a Boolean value, a Choice candidate ID, or a zero-based Score integer. When <code>gold_probs</code> is present, it supplies the distribution loss. An unobserved probabilistic target can omit <code>gold</code> entirely, as in the example above.</p>
+<p>Only <code>type</code>, <code>instructions</code>, and optional <code>criteria</code> belong inside each question. Targets and grouping metadata stay outside the inference input.</p>
+<h2 id="3-generate-and-assemble-the-programmatic-dataset">3. Generate and assemble the programmatic dataset</h2>
+<p>Build support decisions, workflow tasks, and games:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python scripts/build_toy_decisions.py \
+  --output-dir data/support --seed 17
+python scripts/build_workflow_decisions.py \
+  --output-dir data/workflows --seed 20260917
+python scripts/build_game_decisions.py \
+  --output-dir data/games --seed 17</code></pre></div>
+<p>The generators write split files. Combine the support and workflow splits in their fixed order, then create the empty optional overlay file used by the assembler:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python - &lt;&lt;&#x27;PY&#x27;
+from pathlib import Path
+splits = (&quot;train&quot;, &quot;dev&quot;, &quot;calibration&quot;, &quot;test&quot;, &quot;ood&quot;)
+for name in (&quot;support&quot;, &quot;workflows&quot;):
+    directory = Path(&quot;data&quot;) / name
+    text = &quot;&quot;.join((directory / f&quot;{split}.jsonl&quot;).read_text() for split in splits)
+    (directory / &quot;all.jsonl&quot;).write_text(text)
+Path(&quot;data/empty_overlay.jsonl&quot;).write_text(&quot;&quot;)
+PY
+
+python scripts/assemble_pipeline_dataset.py \
+  --workflows data/workflows/all.jsonl \
+  --games-raw data/games/all.jsonl \
+  --games-labels data/empty_overlay.jsonl \
+  --toy data/support/all.jsonl \
+  --output-dir data/base_dataset --freeze
+
+python scripts/train_pipeline_decisions.py \
+  --input data/base_dataset/merged.jsonl --validate-only</code></pre></div>
+<p>The default generators produce <strong>2,312 states and 6,936 questions</strong>. The assembler preserves the existing splits, checks state and source-group separation, and writes <code>merged.jsonl</code> plus a manifest. <code>--freeze</code> writes the assembled dataset; without it, the command performs a source-data check.</p>
+<p>For your own JSONL dataset, pass its file directly to <code>train_pipeline_decisions.py</code>. The trainer also accepts a directory containing the standard split files. Use <code>--validate-only</code> to check either form before loading a model.</p>
+<h2 id="4-train-a-new-base-run">4. Train a new base run</h2>
+<p>The following command trains a new model from the requested Qwen revision using the generated target distributions:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">CUDA_VISIBLE_DEVICES=0 python scripts/train_pipeline_decisions.py \
+  --input data/base_dataset/merged.jsonl \
+  --output-dir runs/base_run \
+  --model Qwen/Qwen3-0.6B \
+  --revision c1899de289a04d12100db370d81485cdf75e47ca \
+  --objective gold_distribution --set-head attention \
+  --seed 17 --head-steps 12 --steps 600 \
+  --batch-questions 12 --microbatch-questions 4 \
+  --max-microbatch-tokens 6000 --max-length 512 \
+  --eval-every 50 --precision bf16 \
+  --backbone-lr 2e-5 --head-lr 2e-4 --head-warmup-lr 1e-3</code></pre></div>
+<p><code>--head-steps 12</code> performs 12 head-only updates, followed by the 600 full-model updates specified by <code>--steps</code>. The effective batch contains 12 complete questions. Microbatches contain at most four questions and must fit the declared padded candidate-token limit.</p>
+<p>For each complete question, the model computes:</p>
+<div class="codeblock"><span class="cb-title">text</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-text">p = softmax(z)
+L = -sum_i q_i * log(p_i)
+dL/dz_i = p_i - q_i</code></pre></div>
+<p>Each question has equal loss weight. Its entire candidate set shares one normalization denominator. Microbatches accumulate gradients into one optimizer update; padding does not enter the candidate distribution. Increase the explicit token limit when a complete question requires more space.</p>
+<p>Choice uses a shared scalar head and set attention. Boolean uses a single-path sigmoid. Score reads its level descriptions independently of set attention and returns their expected index.</p>
+<p>The trainer selects the checkpoint with the lowest dev target cross-entropy. It evaluates the selected checkpoint on the remaining splits after training. Results for this new run are saved under <code>runs/base_run</code>:</p>
+<div class="table-wrap"><table><thead><tr><th>Artifact</th><th>Contents</th></tr></thead><tbody><tr><td><code>best.safetensors</code></td><td>Selected model parameters</td></tr><tr><td><code>config.json</code></td><td>Model, revision, training arguments, and environment information</td></tr><tr><td><code>tokenizer/</code>, <code>backbone_config/</code></td><td>Files needed to load the checkpoint locally</td></tr><tr><td><code>train_log.json</code></td><td>Updates and dev evaluations</td></tr><tr><td><code>summary.json</code></td><td>Selected step, split metrics, timing, and memory statistics</td></tr><tr><td><code>predictions_dev.jsonl</code>, <code>predictions_calibration.jsonl</code>, <code>predictions_test.jsonl</code>, <code>predictions_ood.jsonl</code></td><td>Predictions and targets for each available split</td></tr></tbody></table></div>
+<p>The commands define your new programmatic-supervision run. Its generated artifacts are the results to use for evaluation and serving.</p>
+<h2 id="5-add-navigation-data-and-continue-from-a-checkpoint">5. Add navigation data and continue from a checkpoint</h2>
+<p>Generate the navigation dataset while excluding every source map in the earlier game dataset:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python scripts/build_navigation_v3.py \
+  --v2-input data/games/all.jsonl \
+  --output-dir data/navigation --seed 20260918
+
+python scripts/assemble_navigation_v3_views.py \
+  --canonical data/navigation/all.jsonl \
+  --labels data/navigation/all.jsonl \
+  --replay data/base_dataset/merged.jsonl \
+  --output-dir data/navigation_views --seed 17</code></pre></div>
+<p>For this programmatic path, <code>--labels</code> points to the same canonical records and uses their existing targets. The view assembler produces <code>ascii_single.jsonl</code>, <code>ascii_multi.jsonl</code>, <code>coords_single.jsonl</code>, and <code>coords_multi.jsonl</code>.</p>
+<p>The default navigation generator creates <strong>500 maps, 3,000 states, and 9,000 questions</strong>. Training covers 300 maps with eight exposure slots per map. Each view adds the same 984 non-navigation training records from the base dataset. The assembled training split contains 3,384 records and 10,152 questions.</p>
+<p>Continue training from the base checkpoint created above:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">CUDA_VISIBLE_DEVICES=0 python scripts/train_pipeline_decisions.py \
+  --input data/navigation_views/coords_multi.jsonl \
+  --init-checkpoint runs/base_run \
+  --output-dir runs/navigation_run \
+  --model Qwen/Qwen3-0.6B \
+  --revision c1899de289a04d12100db370d81485cdf75e47ca \
+  --objective gold_distribution \
+  --seed 17 --head-steps 0 --steps 1200 \
+  --batch-questions 12 --microbatch-questions 4 \
+  --max-microbatch-tokens 6000 --max-length 512 \
+  --eval-every 50 --precision bf16 \
+  --backbone-lr 2e-5 --head-lr 2e-4</code></pre></div>
+<p><code>--init-checkpoint</code> loads the exact model directory you select, including its decision-head configuration. It starts a new optimizer. Replace <code>runs/base_run</code> with another compatible checkpoint when continuing a different model, and give the new run its own output directory.</p>
+<p>The coordinates view contains the agent, goal, walls, complete map, and legal next-position descriptions. The ASCII view presents the map without those explicit coordinates. Use the same representation when evaluating a checkpoint trained on a particular view.</p>
+<h2 id="6-evaluate-predictions-and-closed-loop-navigation">6. Evaluate predictions and closed-loop navigation</h2>
+<p>Evaluate saved predictions by split, task family, and question type:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python scripts/evaluate_pipeline_decisions.py \
+  --input runs/navigation_run/predictions_test.jsonl \
+  --output runs/navigation_run/test_metrics.json
+
+python scripts/evaluate_pipeline_decisions.py \
+  --input runs/navigation_run/predictions_ood.jsonl \
+  --output runs/navigation_run/ood_metrics.json</code></pre></div>
+<p>The metrics separate deterministic accuracy/Brier/ECE, known-distribution TV/KL, and optimal-action accuracy/probability mass. Use these groups to evaluate the targets represented in your data.</p>
+<p>Run both navigation controllers with the same checkpoint and map cohort:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">mkdir -p artifacts/navigation_run
+
+CUDA_VISIBLE_DEVICES=0 python scripts/evaluate_navigation_v3.py \
+  --data-dir data/navigation \
+  --checkpoint-dir runs/navigation_run \
+  --policy greedy --representation coords --precision bf16 \
+  --seed 20260917 --per-split 20 \
+  --name navigation_run_greedy \
+  --output artifacts/navigation_run/greedy.json
+
+CUDA_VISIBLE_DEVICES=0 python scripts/evaluate_navigation_v3.py \
+  --data-dir data/navigation \
+  --checkpoint-dir runs/navigation_run \
+  --policy sample --representation coords --precision bf16 \
+  --seed 20260917 --per-split 20 \
+  --name navigation_run_sample \
+  --output artifacts/navigation_run/sample.json</code></pre></div>
+<p>The evaluator takes one initial state from each of 20 reachable test maps and 20 reachable OOD maps. It uses independent per-episode RNG and a horizon of <code>2 × size²</code>. Every active-state batch runs in one model forward. Outputs include complete trajectories, success rates, path efficiency, repeated visits, action probabilities, and single-legal-action moves.</p>
+<p><code>--policy random</code> and <code>--policy oracle</code> run the corresponding environment controllers without a checkpoint. For the original Qwen option-token baseline, see the <a href="../../../../../materials/02-nanojev/pages/research/navigation_v3_native_qwen_zh/">model preparation and baseline commands</a>.</p>
+<h2 id="7-send-batched-inference-requests">7. Send batched inference requests</h2>
+<p>Create an inference request containing three independent questions. Target fields are not needed for inference:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">cat &gt; data/request.json &lt;&lt;&#x27;JSON&#x27;
+{
+  &quot;states&quot;: [{
+    &quot;id&quot;: &quot;living_room&quot;,
+    &quot;state&quot;: &quot;The living room is 29 degrees. The target is 24 degrees. The window is closed and someone is home.&quot;,
+    &quot;questions&quot;: {
+      &quot;action&quot;: {
+        &quot;type&quot;: &quot;choice&quot;,
+        &quot;instructions&quot;: &quot;Choose the action that most directly lowers the room temperature.&quot;,
+        &quot;criteria&quot;: {
+          &quot;cool&quot;: &quot;Turn on air conditioning&quot;,
+          &quot;light&quot;: &quot;Turn on the lights&quot;,
+          &quot;wait&quot;: &quot;Keep the current settings&quot;
+        }
+      },
+      &quot;occupied&quot;: {&quot;type&quot;: &quot;boolean&quot;, &quot;instructions&quot;: &quot;Someone is home.&quot;},
+      &quot;heat&quot;: {
+        &quot;type&quot;: &quot;score&quot;,
+        &quot;instructions&quot;: &quot;Classify how far the room temperature exceeds the target.&quot;,
+        &quot;criteria&quot;: [&quot;At or below target&quot;, &quot;Above target by at most 3 degrees&quot;, &quot;Above target by more than 3 degrees&quot;]
+      }
+    }
+  }]
+}
+JSON
+
+CUDA_VISIBLE_DEVICES=0 python scripts/predict_toy_decisions.py \
+  --checkpoint-dir runs/navigation_run \
+  --input data/request.json \
+  --output artifacts/navigation_run/decisions.json \
+  --batch-questions 0 --precision bf16 --temperature 1</code></pre></div>
+<p>Add more objects to <code>states</code> to batch multiple states. <code>--batch-questions 0</code> evaluates all questions in one forward; a positive value batches complete questions. The response includes per-question distributions and execution counters.</p>
+<h2 id="8-start-the-persistent-service">8. Start the persistent service</h2>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">CUDA_VISIBLE_DEVICES=0 python scripts/serve_decisions.py \
+  --checkpoint-dir runs/navigation_run \
+  --web-root web --host 127.0.0.1 --port 8765 \
+  --precision bf16</code></pre></div>
+<p>Open <strong>http://127.0.0.1:8765</strong>. The checkpoint is loaded once and reused across requests. From a second terminal in the repository root:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">curl http://127.0.0.1:8765/api/health
+
+curl http://127.0.0.1:8765/api/evaluate \
+  -H &#x27;Content-Type: application/json&#x27; \
+  --data-binary @data/request.json</code></pre></div>
+<p>The local service accepts up to 32 states, 96 questions, and 256 candidate paths per request. Boolean uses one path; Choice and Score use one path per candidate or level.</p>
+<p>Both the inference CLI and service support <code>--precision fp32</code> as well as BF16. Add <code>--disable-native-triton</code> only when using the original host&#x27;s PyTorch native-Triton compatibility fallback.</p>
+<h2 id="9-replay-completed-games">9. Replay completed games</h2>
+<p>The repository&#x27;s interactive replay can be served independently of the model:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python -m http.server 8080 --bind 127.0.0.1 --directory web</code></pre></div>
+<p>Open <strong>http://127.0.0.1:8080/comparison.html</strong>. To assemble your completed navigation runs into a separate replay data file:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python scripts/build_demo_artifact.py \
+  --models artifacts/navigation_run/greedy.json \
+           artifacts/navigation_run/sample.json \
+  --output artifacts/navigation_run/demo_results.json</code></pre></div>
+<p>For a separate viewer using this run, copy the web files and install the generated replay data:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">cp -R web artifacts/navigation_run/web
+cp artifacts/navigation_run/demo_results.json artifacts/navigation_run/web/demo_results.json
+python -m http.server 8081 --bind 127.0.0.1 \
+  --directory artifacts/navigation_run/web</code></pre></div>
+<p>Open <strong>http://127.0.0.1:8081</strong> to inspect your completed runs and their recorded action distributions.</p>
+<h2 id="10-use-the-hosted-checkpoint-and-dataset">10. Use the hosted checkpoint and dataset</h2>
+<p><a href="https://huggingface.co/C-Tianyu/NanoJev" target="_blank" rel="noopener">Model: C-Tianyu/NanoJev</a> · <a href="https://huggingface.co/datasets/C-Tianyu/NanoJev-Data" target="_blank" rel="noopener">Dataset: C-Tianyu/NanoJev-Data</a></p>
+<p>The model and dataset are publicly downloadable. Install the dependencies in section 1 before continuing. The root checkpoint below reproduces the earlier navigation pipeline; the <a href="../../../../../materials/02-nanojev/pages/docs/GAME_RELEASE/">game release guide</a> maps the Maze, Snake, and calibrated-decision variants to their exact data.</p>
+<p>Download the final model and the complete dataset into explicit local directories:</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from huggingface_hub import snapshot_download
+
+snapshot_download(
+    repo_id=&quot;C-Tianyu/NanoJev&quot;,
+    local_dir=&quot;checkpoints/NanoJev&quot;,
+    allow_patterns=[
+        &quot;best.safetensors&quot;,
+        &quot;config.json&quot;,
+        &quot;tokenizer/*&quot;,
+        &quot;backbone_config/*&quot;,
+    ],
+)
+snapshot_download(
+    repo_id=&quot;C-Tianyu/NanoJev-Data&quot;,
+    repo_type=&quot;dataset&quot;,
+    local_dir=&quot;data/NanoJev&quot;,
+)</code></pre></div>
+<p>The model patterns select the final root checkpoint. The dataset provides <code>stage1/all.jsonl</code> and <code>stage2/all.jsonl</code>, each with its existing split assignments. Both files use the training record interface described in section 2.</p>
+<p>Validate the downloaded data locally:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">python scripts/train_pipeline_decisions.py \
+  --input data/NanoJev/stage1/all.jsonl --validate-only
+python scripts/train_pipeline_decisions.py \
+  --input data/NanoJev/stage2/all.jsonl --validate-only</code></pre></div>
+<p>Serve the downloaded model directly:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">CUDA_VISIBLE_DEVICES=0 python scripts/serve_decisions.py \
+  --checkpoint-dir checkpoints/NanoJev \
+  --web-root web --host 127.0.0.1 --port 8765 --precision bf16</code></pre></div>
+<p>To start a new continuation run from this model using the prepared stage 2 targets:</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">CUDA_VISIBLE_DEVICES=0 python scripts/train_pipeline_decisions.py \
+  --input data/NanoJev/stage2/all.jsonl \
+  --init-checkpoint checkpoints/NanoJev \
+  --output-dir runs/nanojev_continued \
+  --model Qwen/Qwen3-0.6B \
+  --revision c1899de289a04d12100db370d81485cdf75e47ca \
+  --objective gold_distribution \
+  --seed 17 --head-steps 0 --steps 300 \
+  --batch-questions 12 --microbatch-questions 4 \
+  --max-microbatch-tokens 6000 --max-length 512 \
+  --eval-every 50 --precision bf16 \
+  --backbone-lr 2e-5 --head-lr 2e-4</code></pre></div>
+<p>This command creates a new model run with a fresh optimizer and selects its checkpoint on dev target cross-entropy. Use <code>data/NanoJev/stage1/all.jsonl</code> as the input to section 4 when starting a new base run instead. The resulting run directories work with the same prediction and service commands above.</p><p class="reading-snapshot-note">快照未包含部分工程附件或配图；请通过上游链接或原始材料查看，收录范围见来源清单。</p>
+  </article>
+<nav class="pager"></nav>
+  <footer class="site-footer">第十一章知识库收录材料 · <a href="../../../../../materials/sources/">来源、版本与许可</a> · 第三方内容版权归各自作者；观点与数字请对照原始来源核验。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#1-prepare-the-environment">1. Prepare the environment</a><a class="toc-item toc-l2" href="#2-define-questions-and-target-distributions">2. Define questions and target distributions</a><a class="toc-item toc-l2" href="#3-generate-and-assemble-the-programmatic-dataset">3. Generate and assemble the programmatic dataset</a><a class="toc-item toc-l2" href="#4-train-a-new-base-run">4. Train a new base run</a><a class="toc-item toc-l2" href="#5-add-navigation-data-and-continue-from-a-checkpoint">5. Add navigation data and continue from a checkpoint</a><a class="toc-item toc-l2" href="#6-evaluate-predictions-and-closed-loop-navigation">6. Evaluate predictions and closed-loop navigation</a><a class="toc-item toc-l2" href="#7-send-batched-inference-requests">7. Send batched inference requests</a><a class="toc-item toc-l2" href="#8-start-the-persistent-service">8. Start the persistent service</a><a class="toc-item toc-l2" href="#9-replay-completed-games">9. Replay completed games</a><a class="toc-item toc-l2" href="#10-use-the-hosted-checkpoint-and-dataset">10. Use the hosted checkpoint and dataset</a></aside>
+</div>
+<script src="../../../../../assets/search-index.js"></script>
+<script src="../../../../../assets/lz-string.js"></script>
+<script src="../../../../../assets/app.js"></script>
+<script src="../../../../../assets/lab.js"></script>
+<script src="../../../../../assets/lesson.js"></script>
+</body>
+</html>
