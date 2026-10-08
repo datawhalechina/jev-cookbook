@@ -29,7 +29,7 @@ flowchart LR
 |---|---|
 | [模型介绍与对比](模型介绍与对比.md) | 按任务、语言、资源和模型卡信息选择 checkpoint |
 | [FINETUNING 操作指南](FINETUNING.md) 与 [RLCD 原理](RLCD原理与实验优化.md) | 理解数据审核、训练目标和实验运行边界 |
-| [中文数据构造 Notebook](zh_dataset_construction.ipynb) 与 data_generation | 从对话构造 state、问题和候选软标签，并保留审核流程 |
+| [中文数据构造 Notebook](notebooks/zh_dataset_construction.ipynb) 与 data_generation | 从对话构造 state、问题和候选软标签，并保留审核流程 |
 | [全量 v2 实验记录](experiments/full-v2-20260924/README.md) | 对照 Head-only SFT、LoRA-SFT 与 RLCD-style |
 | [官方配方适配复跑](experiments/rlcd-official-recipe-20260925/README.md) | 检查 proper-score 奖励、辅助交叉熵、温度拟合和结果差异 |
 | serve.py / client.py | 暴露本地服务并接入评测工具 |

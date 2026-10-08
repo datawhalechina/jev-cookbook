@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1540" height="690" viewBox="0 0 1540 690">
+<rect width="100%" height="100%" fill="#F3F7F6"/>
+<text x="58" y="54" font-family="Inter, Avenir, Arial, sans-serif" font-size="30" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle">Where planned tasks ended</text>
+<text x="58" y="91" font-family="Inter, Avenir, Arial, sans-serif" font-size="15" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle">Counts from each provider&#x27;s 231 task rows · one run per provider</text>
+<rect x="78" y="165" width="15" height="15" rx="4" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="102" y="173" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle">Valid response</text>
+<rect x="340" y="165" width="15" height="15" rx="4" fill="#D97767" stroke="none" stroke-width="1"/>
+<text x="364" y="173" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle">Empty probs parse error</text>
+<rect x="660" y="165" width="15" height="15" rx="4" fill="#E9A35B" stroke="none" stroke-width="1"/>
+<text x="684" y="173" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle">Other error</text>
+<rect x="895" y="165" width="15" height="15" rx="4" fill="#8A78AC" stroke="none" stroke-width="1"/>
+<text x="919" y="173" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle">Invalid</text>
+<rect x="1090" y="165" width="15" height="15" rx="4" fill="#D9E1E4" stroke="none" stroke-width="1"/>
+<text x="1114" y="173" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle">Not attempted</text>
+<line x1="330.0" y1="208" x2="330.0" y2="531" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="330.0" y="189" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">0</text>
+<line x1="524.8051948051948" y1="208" x2="524.8051948051948" y2="531" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="524.8051948051948" y="189" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">50</text>
+<line x1="719.6103896103896" y1="208" x2="719.6103896103896" y2="531" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="719.6103896103896" y="189" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">100</text>
+<line x1="914.4155844155844" y1="208" x2="914.4155844155844" y2="531" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="914.4155844155844" y="189" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">150</text>
+<line x1="1109.2207792207791" y1="208" x2="1109.2207792207791" y2="531" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="1109.2207792207791" y="189" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">200</text>
+<line x1="1230.0" y1="208" x2="1230.0" y2="531" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="1230.0" y="189" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">231</text>
+<text x="78" y="235" font-family="Inter, Avenir, Arial, sans-serif" font-size="15" font-weight="600" fill="#172B36" text-anchor="start" dominant-baseline="middle">DeepSeek Flash</text>
+<rect x="330" y="219" width="428.57142857142856" height="32" rx="0" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="544.2857142857142" y="235" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">110</text>
+<rect x="758.5714285714286" y="219" width="194.80519480519482" height="32" rx="0" fill="#D97767" stroke="none" stroke-width="1"/>
+<text x="855.974025974026" y="235" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">50</text>
+<rect x="953.3766233766233" y="219" width="15.584415584415584" height="32" rx="0" fill="#E9A35B" stroke="none" stroke-width="1"/>
+<rect x="968.961038961039" y="219" width="261.038961038961" height="32" rx="0" fill="#D9E1E4" stroke="none" stroke-width="1"/>
+<text x="1099.4805194805194" y="235" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle">67</text>
+<text x="1255" y="235" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle">valid 110 · failed 54 · not run 67</text>
+<text x="78" y="303" font-family="Inter, Avenir, Arial, sans-serif" font-size="15" font-weight="600" fill="#172B36" text-anchor="start" dominant-baseline="middle">Doubao 2.1 Pro</text>
+<rect x="330" y="287" width="409.09090909090907" height="32" rx="0" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="534.5454545454545" y="303" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">105</text>
+<rect x="739.090909090909" y="287" width="62.33766233766234" height="32" rx="0" fill="#E9A35B" stroke="none" stroke-width="1"/>
+<text x="770.2597402597402" y="303" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">16</text>
+<rect x="801.4285714285713" y="287" width="428.57142857142856" height="32" rx="0" fill="#D9E1E4" stroke="none" stroke-width="1"/>
+<text x="1015.7142857142856" y="303" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle">110</text>
+<text x="1255" y="303" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle">valid 105 · failed 16 · not run 110</text>
+<text x="78" y="371" font-family="Inter, Avenir, Arial, sans-serif" font-size="15" font-weight="600" fill="#172B36" text-anchor="start" dominant-baseline="middle">GLM 5.3 Codeplan</text>
+<rect x="330" y="355" width="253.24675324675326" height="32" rx="0" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="456.62337662337666" y="371" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">65</text>
+<rect x="583.2467532467533" y="355" width="257.14285714285717" height="32" rx="0" fill="#D97767" stroke="none" stroke-width="1"/>
+<text x="711.8181818181819" y="371" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">66</text>
+<rect x="840.3896103896104" y="355" width="19.48051948051948" height="32" rx="0" fill="#E9A35B" stroke="none" stroke-width="1"/>
+<rect x="859.8701298701299" y="355" width="15.584415584415584" height="32" rx="0" fill="#8A78AC" stroke="none" stroke-width="1"/>
+<rect x="875.4545454545455" y="355" width="354.54545454545456" height="32" rx="0" fill="#D9E1E4" stroke="none" stroke-width="1"/>
+<text x="1052.7272727272727" y="371" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle">91</text>
+<text x="1255" y="371" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle">valid 65 · failed 75 · not run 91</text>
+<text x="78" y="439" font-family="Inter, Avenir, Arial, sans-serif" font-size="15" font-weight="600" fill="#172B36" text-anchor="start" dominant-baseline="middle">Jev</text>
+<rect x="330" y="423" width="467.53246753246754" height="32" rx="0" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="563.7662337662338" y="439" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">120</text>
+<rect x="797.5324675324675" y="423" width="3.896103896103896" height="32" rx="0" fill="#E9A35B" stroke="none" stroke-width="1"/>
+<rect x="801.4285714285714" y="423" width="428.57142857142856" height="32" rx="0" fill="#D9E1E4" stroke="none" stroke-width="1"/>
+<text x="1015.7142857142858" y="439" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle">110</text>
+<text x="1255" y="439" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle">valid 120 · failed 1 · not run 110</text>
+<text x="78" y="507" font-family="Inter, Avenir, Arial, sans-serif" font-size="15" font-weight="600" fill="#172B36" text-anchor="start" dominant-baseline="middle">Kimi K3</text>
+<rect x="330" y="491" width="541.5584415584416" height="32" rx="0" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="600.7792207792209" y="507" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">139</text>
+<rect x="871.5584415584416" y="491" width="346.75324675324674" height="32" rx="0" fill="#D97767" stroke="none" stroke-width="1"/>
+<text x="1044.935064935065" y="507" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">89</text>
+<rect x="1218.3116883116884" y="491" width="11.688311688311689" height="32" rx="0" fill="#E9A35B" stroke="none" stroke-width="1"/>
+<text x="1255" y="507" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle">valid 139 · failed 92 · not run 0</text>
+<text x="330.0" y="567" font-family="Inter, Avenir, Arial, sans-serif" font-size="11" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">0</text>
+<text x="524.8051948051948" y="567" font-family="Inter, Avenir, Arial, sans-serif" font-size="11" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">50</text>
+<text x="719.6103896103896" y="567" font-family="Inter, Avenir, Arial, sans-serif" font-size="11" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">100</text>
+<text x="914.4155844155844" y="567" font-family="Inter, Avenir, Arial, sans-serif" font-size="11" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">150</text>
+<text x="1109.2207792207791" y="567" font-family="Inter, Avenir, Arial, sans-serif" font-size="11" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">200</text>
+<text x="1230.0" y="567" font-family="Inter, Avenir, Arial, sans-serif" font-size="11" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">231</text>
+<rect x="78" y="605" width="1384" height="46" rx="12" fill="#FFF4E7" stroke="#F0D2A8" stroke-width="1"/>
+<text x="98" y="628" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="500" fill="#172B36" text-anchor="start" dominant-baseline="middle">Empty-probs counts are a recorded parse-error subtype; they describe this run&#x27;s output path, not the model&#x27;s underlying capability.</text>
+</svg>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""TypeSafe 中文文档 — 静态站点生成器（仅用 Python 标准库）。
+"""Jev Cookbook 课程与中文参考文档 — 静态站点生成器（仅用 Python 标准库）。
 
 用法:
     python3 build.py            # 构建站点到 dist/
@@ -14,6 +14,7 @@ import posixpath
 import re
 import shutil
 import sys
+from urllib.parse import quote, unquote, urlsplit
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CONTENT = os.path.join(ROOT, "content")
@@ -21,8 +22,14 @@ ORIG = os.path.join(ROOT, "_orig")
 DIST = os.path.join(ROOT, "dist")
 ASSETS = os.path.join(ROOT, "assets")
 
-SITE_TITLE = "TypeSafe 中文文档"
+SITE_TITLE = "Jev Cookbook"
 ORIGIN_URL = "https://docs.typesafe.ai"
+REPO_URL = "https://github.com/datawhalechina/jev-cookbook"
+SITE = os.path.join(ROOT, "site")
+with open(os.path.join(SITE, "course.json"), encoding="utf-8") as course_file:
+    COURSES = json.load(course_file)
+
+COURSE_NAV = [("course/" + c["number"], c["number"] + " · " + c["title"]) for c in COURSES]
 
 # ---------------------------------------------------------------- 页面集合
 
@@ -38,7 +45,7 @@ def list_pages():
     pages.sort()
     return pages
 
-ROOT_PAGE = "introduction"  # 站点首页同时生成到 /index.html
+ROOT_PAGE = "introduction"  # 中文参考文档入口；站点首页独立介绍课程
 
 # ---------------------------------------------------------------- 导航（镜像原站结构）
 
@@ -279,6 +286,7 @@ MATERIALS = [
 ]
 
 NAV = [
+    ("课程目录", COURSE_NAV),
     ("开始", [
         ("introduction", "简介"),
         ("introduction/quickstart", "快速开始"),
@@ -1567,9 +1575,109 @@ def render_material(nav_slug, src_slug, title, desc):
 
 # ---------------------------------------------------------------- 外壳
 
+def course_source(course):
+    return os.path.join(ROOT, "main", course["directory"], "README.md")
+
+
+def course_repo_url(path):
+    """课程附件在仓库阅读或运行，目录与文件使用各自的 GitHub 地址。"""
+    kind = "tree" if os.path.isdir(os.path.join(ROOT, path)) else "blob"
+    return f"{REPO_URL}/{kind}/main/{quote(path, safe='/')}"
+
+
+def course_links(body, source):
+    """把 README 的相对链接接到课程页或仓库，仅复制文中引用的本地图片。"""
+    chapter_pages = {os.path.relpath(course_source(c), ROOT): "course/" + c["number"]
+                     for c in COURSES}
+    source_dir = os.path.dirname(source)
+
+    def replace(m):
+        attr, raw = m.group(1), html.unescape(m.group(2))
+        target = urlsplit(raw)
+        if target.scheme or target.netloc or not target.path or raw.startswith("/"):
+            return m.group(0)
+        resolved = os.path.abspath(os.path.join(source_dir, unquote(target.path)))
+        if os.path.commonpath([ROOT, resolved]) != ROOT:
+            raise ValueError(f"课程链接超出仓库: {source}: {raw}")
+        # 与在线章节导读同属本仓库的链接，在构建时验证实际材料存在。
+        if not os.path.exists(resolved):
+            raise ValueError(f"课程材料缺失: {source}: {raw}")
+        rel = os.path.relpath(resolved, ROOT).replace(os.sep, "/")
+        if attr == "src":
+            asset = "assets/course/" + rel
+            dest = os.path.join(DIST, asset)
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
+            shutil.copy2(resolved, dest)
+            url = "../../" + quote(asset, safe="/")
+        elif rel in chapter_pages and not target.fragment:
+            url = "../../" + chapter_pages[rel] + "/"
+        else:
+            url = course_repo_url(rel)
+            if target.fragment:
+                url += "#" + target.fragment
+        return f'{attr}="{esc(url)}"'
+
+    return re.sub(r'(href|src)="([^"]*)"', replace, body)
+
+
+def render_course(course):
+    source = course_source(course)
+    page = "course/" + course["number"]
+    renderer = Renderer(page)
+    src, fences = extract_fences(read(source))
+    renderer.fences = fences
+    body = renderer.render_md(src)
+    body = _CODE_TOKEN_RE.sub(lambda m: renderer.fence_html(int(m.group(1))), body)
+    body = course_links(fix_img_tags(body), source)
+    toc = [(int(m.group(1)), re.sub(r"<[^>]+>", "", m.group(3)).strip(), m.group(2))
+           for m in TOC_SCAN_RE.finditer(body)]
+    notebook_dir = os.path.join(os.path.dirname(source), course.get("notebook_directory", ""))
+    notebooks = sorted(fn for fn in os.listdir(notebook_dir) if fn.endswith(".ipynb"))
+    resources = []
+    for fn in notebooks:
+        path = os.path.relpath(os.path.join(notebook_dir, fn), ROOT).replace(os.sep, "/")
+        resources.append(f'<a href="{course_repo_url(path)}" target="_blank" rel="noopener">'
+                         f'{esc(fn[:-6])} <span aria-hidden="true">↗</span></a>')
+    if not resources:
+        path = f'main/{course["directory"]}'
+        resources.append(f'<a href="{course_repo_url(path)}" target="_blank" rel="noopener">'
+                         '查看本章工程与资料 <span aria-hidden="true">↗</span></a>')
+    breadcrumb = (f'<p class="course-breadcrumb"><a href="../../">课程首页</a> / '
+                  f'{esc(course["stage"])} / 第 {int(course["number"])} 章</p>')
+    intro = (f'<div class="chapter-overview"><p class="chapter-summary">{esc(course["summary"])}</p>'
+             f'<p><strong>学习目标</strong> · {esc(course["outcome"])}</p>'
+             '<p class="chapter-hint">本页为章节导读。Notebook 和工程在 GitHub 查阅、按各自说明在本地运行。</p>'
+             f'<div class="chapter-resources">{"".join(resources)}</div></div>')
+    # 标题之后给出实际材料入口，随后完整呈现当前章节 README。
+    body = re.sub(r'(<h1[^>]*>.*?</h1>)', lambda m: breadcrumb + m.group(1) + intro,
+                  body, count=1, flags=re.S)
+    write(os.path.join(DIST, page, "index.html"),
+          render_shell(page, course["title"], body, toc, "../../"))
+    text = re.sub(r"<[^>]+>", " ", body)
+    return {"p": page, "t": f'第 {int(course["number"])} 章 · {course["title"]}',
+            "g": "课程", "b": re.sub(r"\s+", " ", text).strip()[:12000]}
+
+
+def render_home():
+    groups = []
+    for index, stage in enumerate(dict.fromkeys(c["stage"] for c in COURSES), 1):
+        rows = []
+        for course in (c for c in COURSES if c["stage"] == stage):
+            topics = "".join(f'<span>{esc(t)}</span>' for t in course["topics"])
+            rows.append(f'<a class="chapter-row" href="course/{course["number"]}/">'
+                        f'<span class="chapter-number">{course["number"]}</span>'
+                        f'<div><h3>{esc(course["title"])}</h3><p>{esc(course["summary"])}</p></div>'
+                        f'<div class="chapter-topics">{topics}</div>'
+                        '<span class="chapter-arrow" aria-hidden="true">↗</span></a>')
+        groups.append(f'<div class="curriculum-group"><div class="curriculum-stage">'
+                      f'<span>0{index}</span><h3>{esc(stage)}</h3></div>'
+                      f'<div class="chapter-list">{"".join(rows)}</div></div>')
+    body = read(os.path.join(SITE, "home.html")).replace("{{curriculum}}", "".join(groups))
+    return render_shell("@home", "Jev 中文课程", body, [], "")
+
 def render_shell(page, title, body, toc, base):
-    if page == "@root":
-        page = ROOT_PAGE
+    is_home = page == "@home"
+    is_course = page.startswith("course/")
     if page in FLAT_NAV:
         p = FLAT_NAV.index(page)
         prev_page = FLAT_NAV[p - 1] if p > 0 else None
@@ -1578,8 +1686,9 @@ def render_shell(page, title, body, toc, base):
         prev_page = next_page = None
 
     nav_parts = ['<nav class="sidebar-nav" id="sidebar-nav">']
+    nav_parts.append(f'<a class="nav-home" href="{base}">课程首页</a>')
     for gi, (group, items) in enumerate(NAV):
-        has_current = any(ip == page for ip, _ in items)
+        has_current = any(ip == page for ip, _ in items) or (is_home and gi == 0)
         nav_parts.append(f'<div class="nav-group{" open" if has_current else ""}" data-group="{gi}">')
         nav_parts.append(f'<button class="nav-group-title" type="button">{esc(group)}'
                          f'<span class="chev">▾</span></button>')
@@ -1606,36 +1715,49 @@ def render_shell(page, title, body, toc, base):
                      f"<strong>{esc(NAV_LABELS[next_page])}</strong></a>")
     pager.append("</nav>")
 
+    if is_home or is_course:
+        footer = (f'Datawhale · Jev Cookbook 开源课程 · '
+                  f'<a href="{REPO_URL}/blob/main/LICENSE" target="_blank" rel="noopener">'
+                  '原创内容 CC BY-NC-SA 4.0</a> · 第三方内容遵循各自许可')
+    else:
+        footer = (f'配套中文参考文档：<a href="{ORIGIN_URL}" target="_blank" rel="noopener">'
+                  'docs.typesafe.ai</a> 的社区翻译，以英文原文为准；内容版权归原作者所有。')
+
     return f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{esc(title)} · {SITE_TITLE}</title>
+<meta name="description" content="{esc('Jev Cookbook：Datawhale 十一章中文开源课程，从三种问题原语到架构模式、实战应用、模型评测、Agent 集成与 Laya 本地模型。' if is_home else title + ' · Jev Cookbook 中文课程与参考文档')}" />
 <link rel="stylesheet" href="{base}assets/style.css" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="{base}assets/course.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23286852'/%3E%3Ctext x='21' y='46' font-size='44' font-family='sans-serif' fill='white'%3EJ%3C/text%3E%3C/svg%3E" />
 </head>
-<body>
+<body class="{'home-page' if is_home else 'course-page' if is_course else 'reference-page'}">
+<a class="skip-link" href="#main-content">跳到主要内容</a>
 <header class="topbar">
-  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
-  <a class="brand" href="{base}"><span class="brand-mark">🛡️</span>{SITE_TITLE}</a>
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">☰</button>
+  <a class="brand" href="{base}"><span class="brand-mark">J</span>{SITE_TITLE}</a>
   <div class="searchbox">
-    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <input id="search-input" type="search" aria-label="搜索课程与文档" placeholder="搜索课程与文档…" autocomplete="off" />
     <div class="search-results" id="search-results" hidden></div>
   </div>
   <div class="top-actions">
+    <a class="course-nav-link" href="{base}{'#curriculum' if is_home else ''}">{'课程目录' if is_home else '课程首页'}</a>
+    <a class="course-nav-link" href="{base}introduction/">中文文档</a>
     <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
-    <a class="origin-link" href="{ORIGIN_URL}" target="_blank" rel="noopener">原文档 ↗</a>
+    <a class="origin-link" href="{REPO_URL if is_home or is_course else ORIGIN_URL}" target="_blank" rel="noopener">{'GitHub' if is_home or is_course else '英文原文'} ↗</a>
   </div>
 </header>
 <div class="layout">
   <aside class="sidebar" id="sidebar">{nav_html}</aside>
   <div class="sidebar-mask" id="sidebar-mask"></div>
-  <main class="content"><article class="doc">
+  <main class="content" id="main-content"><article class="doc">
 {body}
   </article>
-  {"".join(pager)}
-  <footer class="site-footer">本站为 <a href="{ORIGIN_URL}" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+{'' if is_home else ''.join(pager)}
+  <footer class="site-footer">{footer}</footer>
   </main>
 {toc_html}
 </div>
@@ -1678,7 +1800,7 @@ def validate(pages):
                 target = href.split("#")[0]
                 if not target:
                     continue
-                resolved = posixpath.normpath(posixpath.join(cur_dir, target))
+                resolved = posixpath.normpath(posixpath.join(cur_dir, unquote(html.unescape(target))))
                 if not os.path.exists(os.path.join(DIST, resolved, "index.html")) \
                         and not os.path.isfile(os.path.join(DIST, resolved)):
                     problems.append(f"{rel}: 内链失效 {href}")
@@ -1690,7 +1812,7 @@ def validate(pages):
                     if "loom.com" not in src:  # demo 页的视频嵌入是有意保留的
                         problems.append(f"{rel}: 残留外部资源 {src}")
                     continue
-                resolved = posixpath.normpath(posixpath.join(cur_dir, src))
+                resolved = posixpath.normpath(posixpath.join(cur_dir, unquote(html.unescape(src))))
                 if not os.path.exists(os.path.join(DIST, resolved)):
                     problems.append(f"{rel}: 资源缺失 {src}")
     return problems
@@ -1713,10 +1835,14 @@ def main():
     os.makedirs(DIST)
     if os.path.isdir(os.path.join(ASSETS, "images")):
         shutil.copytree(os.path.join(ASSETS, "images"), os.path.join(DIST, "assets", "images"))
-    for fname in ("style.css", "app.js", "lab.js", "lesson.js", "lz-string.js"):
+    for fname in ("style.css", "course.css", "app.js", "lab.js", "lesson.js", "lz-string.js"):
         shutil.copy2(os.path.join(ASSETS, fname), os.path.join(DIST, "assets", fname))
 
     entries = build_search_index(pages)
+    # 课程页来自 main/ 的当前 README，修改课程后重建即可同步在线导读。
+    for course in COURSES:
+        entries.append(render_course(course))
+        print(f'[课程] course/{course["number"]}')
     write(os.path.join(DIST, "assets", "search-index.js"),
           "window.SEARCH_INDEX=" + json.dumps(entries, ensure_ascii=False) + ";")
 
@@ -1741,8 +1867,7 @@ def main():
         render_material(nav_slug, src_slug, m_title, m_desc)
         print(f"[素材] materials/{nav_slug}")
 
-    title, body, toc = render_page(ROOT_PAGE, pages, anchor_maps, from_root=True)
-    write(os.path.join(DIST, "index.html"), render_shell("@root", title, body, toc, ""))
+    write(os.path.join(DIST, "index.html"), render_home())
     print("根页面: /index.html")
 
     problems = validate(pages)
@@ -1750,6 +1875,7 @@ def main():
         print(f"\n校验发现 {len(problems)} 个问题:")
         for pr in problems[:40]:
             print("  " + pr)
+        sys.exit(1)
     else:
         print("\n校验通过：全部内链与资源有效。")
 

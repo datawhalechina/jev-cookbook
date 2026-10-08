@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1450" height="770" viewBox="0 0 1450 770">
+<rect width="100%" height="100%" fill="#F3F7F6"/>
+<text x="58" y="52" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="28" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle" >LoCoMo 样本 0｜419 轮对话中的质量与成本权衡</text>
+<text x="58" y="88" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle" >10 道同题对照 · 约 19.8k 对话 token · 本地实测；不是论文全量评测复现</text>
+<rect x="60" y="160" width="415" height="460" rx="18" fill="#FFFFFF" stroke="#E2EBE8" stroke-width="1"/>
+<text x="86" y="198" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="19" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle" >答案质量</text>
+<text x="86" y="226" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle" >LLM-as-a-Judge 均分 · 0–1</text>
+<text x="86" y="334" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle" >B 全上下文</text>
+<rect x="186" y="355" width="116.39999999999999" height="28" rx="9" fill="#E3A34B" stroke="none" stroke-width="1"/>
+<text x="453" y="369" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700" fill="#172B36" text-anchor="end" dominant-baseline="middle" >0.60</text>
+<text x="86" y="442" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle" >D Jev-Mem</text>
+<rect x="186" y="463" width="190.12" height="28" rx="9" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="453" y="477" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700" fill="#172B36" text-anchor="end" dominant-baseline="middle" >0.98</text>
+<line x1="86" y1="492" x2="449" y2="492" stroke="#DCE6E3" stroke-width="1"/>
+<text x="86" y="536" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle" >Jev-Mem 高 0.38 分</text>
+<rect x="518" y="160" width="415" height="460" rx="18" fill="#FFFFFF" stroke="#E2EBE8" stroke-width="1"/>
+<text x="544" y="198" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="19" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle" >输入 token</text>
+<text x="544" y="226" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle" >每题 prompt tokens · 越少越省</text>
+<text x="544" y="334" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle" >B 全上下文</text>
+<rect x="644" y="355" width="194.0" height="28" rx="9" fill="#E3A34B" stroke="none" stroke-width="1"/>
+<text x="911" y="369" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700" fill="#172B36" text-anchor="end" dominant-baseline="middle" >19,775</text>
+<text x="544" y="442" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle" >D Jev-Mem</text>
+<rect x="644" y="463" width="13" height="28" rx="9" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="911" y="477" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700" fill="#172B36" text-anchor="end" dominant-baseline="middle" >784</text>
+<line x1="544" y1="492" x2="907" y2="492" stroke="#DCE6E3" stroke-width="1"/>
+<text x="544" y="536" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle" >减少 96.0% · 约省 25.2 倍 token</text>
+<rect x="976" y="160" width="415" height="460" rx="18" fill="#FFFFFF" stroke="#E2EBE8" stroke-width="1"/>
+<text x="1002" y="198" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="19" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle" >查询延迟</text>
+<text x="1002" y="226" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle" >每题端到端秒数 · 越低越快</text>
+<text x="1002" y="334" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle" >B 全上下文</text>
+<rect x="1102" y="355" width="29.099999999999998" height="28" rx="9" fill="#E3A34B" stroke="none" stroke-width="1"/>
+<text x="1369" y="369" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700" fill="#172B36" text-anchor="end" dominant-baseline="middle" >0.60s</text>
+<text x="1002" y="442" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle" >D Jev-Mem</text>
+<rect x="1102" y="463" width="185.755" height="28" rx="9" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="1369" y="477" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700" fill="#172B36" text-anchor="end" dominant-baseline="middle" >3.83s</text>
+<line x1="1002" y1="492" x2="1365" y2="492" stroke="#DCE6E3" stroke-width="1"/>
+<text x="1002" y="536" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle" >Jev-Mem 查询约慢 6.4 倍</text>
+<rect x="60" y="650" width="1330" height="68" rx="14" fill="#E7F2EF" stroke="#D1E5DF" stroke-width="1"/>
+<text x="84" y="674" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="13" font-weight="700" fill="#2A9D8F" text-anchor="start" dominant-baseline="middle" >一次性建图</text>
+<text x="84" y="697" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle" >494 秒</text>
+<text x="290" y="685" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="400" fill="#172B36" text-anchor="start" dominant-baseline="middle" >本次小样本显示：质量与 token 账单明显改善，但查询延迟更高，且建图需要先投入。</text>
+<text x="60" y="746" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle" >样本仅 10 题；Notebook 同时提示本轮 judge 的 F1 为 57.3%。将数字视为方向性观察，不外推为全 LoCoMo 结论。</text>
+</svg>

@@ -4,7 +4,7 @@
 
 ## 快照范围
 
-本章含从上游 jev-cookbook 导出的 21 个资料板块和 Laya 示例，另收录 9 篇外部文章（23 Clef 决策模型，Cloudflare Blog；24 Jev 工程实战，@polydao；25 Gero-4B RL 训练平台，@TheVixhal；26 Jev 评审实战，@akshay_pachaar；27 本地自制 Jev，@_avichawla；28 pg-jev 上手，「AI工程化」；29 StartLux 决策模型报道，机器之心；30 Jev 质疑实测，「数字生命情酱」；31 选项顺序不变性训练笔记，@neural_avb）。目录重排和收录范围见[来源清单](jev-cookbook/SOURCES.md)，该清单记录了 2026-09-23 打包时各上游 commit、文件数量、未收录内容和许可。快照日期不代表资料仍是上游最新版本。
+本章保留从上游 jev-cookbook 导出的资料快照与 Laya 示例，并持续补充社区介绍、工程实践、独立评测和训练教程。当前编号目录为 01–34，另有 laya-model；各条目的实际材料与来源见下表及[来源清单](jev-cookbook/SOURCES.md)。来源清单保留了 2026-09-23 打包时的上游 commit、文件数量、未收录内容和许可，后续文章的来源与日期见各自导语。快照日期不代表资料仍是上游最新版本。
 
 ```mermaid
 flowchart LR
@@ -53,6 +53,9 @@ license: "代码、数据或文章的再使用条件"
 | [StartLux 决策模型报道](jev-cookbook/29-wechat-startlux-decision/article.md) | 中国开源决策模型 StartLux-Decision 在 Decision Index 0.2.1 登顶：五档参数、基准数字、架构与本地部署路线 | 媒体报道；评测数字来自厂商/榜单口径，引用前回 Decision Index 与模型卡复核 |
 | [Jev 质疑实测](jev-cookbook/30-wechat-jev-skeptic/article.md) | 拆解马里奥/Minecraft 刷屏视频：作者实跑 30 局、547 次请求的对照实验，指出部分项目默认未调用 Jev、仪表数字为写死 | 独立质疑视角；单作者自测口径，可与 [11 号 mario 复现](jev-cookbook/11-typesafe-mario/) 的上游 bug 记录互相印证 |
 | [选项顺序不变性训练笔记](jev-cookbook/31-avb-choice-invariance/article.md) | 训练 System One 模型的实战研究：位置偏差的成因与消解，276K 样本数据集与 0.4B 模型的训练记录 | 个人研究笔记；自述含半成品想法，结论以附推文与模型演示为准 |
+| [Jev-as-a-Judge 译文](jev-cookbook/32-omarsar-jev-as-judge/article.md) | 将整段 Agent 运行拆成有界评估问题，设计依据性与动作核查标准 | 作者实践介绍；使用前在自己的任务和标注上检查判定质量 |
+| [Arena 路由评测译文](jev-cookbook/33-arena-jev-router-eval/article.md) | 阅读真实 Agent 会话上的 Jev Router 路由、质量与延迟对照 | 第三方报告快照；结论受任务分布、基线和成本口径限制 |
+| [Unsloth 决策模型训练译文](jev-cookbook/34-unsloth-train-decision-model/article.md) | 从数据格式、训练代码到校准、保存与决策 API 的操作路线 | 官方教程快照；不代表本仓库已复现其中的训练与结果 |
 | Laya 资料 | [架构](jev-cookbook/19-wechat-laya-architecture/article.md)、[开源发布](jev-cookbook/20-wechat-laya-oss-release/article.md)、[榜单报道](jev-cookbook/21-wechat-laya-hf-trending/article.md)、[本地接口](jev-cookbook/laya-model/README.md) | 参数、排行榜和下载信息都要回到当前模型卡复核 |
 | 其他板块 | trader、技能、SDK、飞书研究与公众号文章 | 私有文档或受版权保护的内容不能因被收录就自由再分发 |
 

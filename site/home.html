@@ -1,0 +1,71 @@
+<div class="course-home">
+  <section class="course-hero" aria-labelledby="course-title">
+    <div class="hero-copy">
+      <p class="eyebrow">DATAWHALE 开源课程 · JEV COOKBOOK</p>
+      <h1 id="course-title">把模型判断，<br>接入你的代码<span class="accent-dot">。</span></h1>
+      <p class="hero-lead">从认识 Jev 到构建判断驱动的应用。用中文讲解、Jupyter Notebook 与项目案例，学习 System One 决策模型的开发方法。</p>
+      <div class="hero-actions">
+        <a class="course-button primary" href="course/01/">从第一章开始 <span aria-hidden="true">↗</span></a>
+        <a class="course-button secondary" href="#curriculum">浏览课程目录 <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="hero-note">适合具备基础 Python 能力的开发者与学生 · 实验使用 Python 3.10+</p>
+    </div>
+    <div class="decision-map" aria-label="本课程的开发流程：状态和问题输入 Jev，模型答案由代码策略处理后执行动作">
+      <div class="map-caption"><span>本课程的核心思路</span><span class="map-label">DECISION → CODE</span></div>
+      <div class="map-input"><span class="map-step">01 / 输入</span><strong>State + Questions</strong><span>给出证据，定义有限答案空间</span></div>
+      <div class="map-connector" aria-hidden="true">↓</div>
+      <div class="map-model"><strong>Jev</strong><span>Choice · Score · Noul</span></div>
+      <div class="map-connector" aria-hidden="true">↓</div>
+      <div class="map-output"><span class="map-step">02 / 判断</span><strong>类型化答案与概率</strong><span>Choice / Score 另含 confidence</span></div>
+      <div class="map-connector" aria-hidden="true">↓</div>
+      <div class="map-policy"><span class="map-step">03 / 代码策略</span><strong>分支 · 排序 · 路由 · 执行动作</strong><span>阈值、权限、规则与回退由代码处理</span></div>
+    </div>
+  </section>
+
+  <div class="course-facts" aria-label="课程概览">
+    <div><strong>11<span>章</span></strong><p>从入门到研究与生态</p></div>
+    <div><strong>18<span>篇</span></strong><p>实战配方与配套 Notebook</p></div>
+    <div><strong>3<span>种</span></strong><p>问题原语：Choice / Score / Noul</p></div>
+    <div><strong>理论 + 实验</strong><p>读概念，改输入，观察结果</p></div>
+  </div>
+
+  <section class="course-section course-intro" aria-labelledby="about-course">
+    <div><p class="eyebrow">你会学到什么</p><h2 id="about-course">从一次判断，<br>到一个完整流程。</h2></div>
+    <div class="intro-body"><p>Jev 接收状态与类型化问题，返回代码可以直接使用的结构化答案。本课程从三种原语起步，逐步连接架构模式、RAG 配方、应用控制、模型评测与 Agent 集成。</p><p>每一步都围绕同一个问题：模型负责哪些判断，程序怎样据此作出可检查、可复盘的动作？最后，你可以继续探索 Laya 本地模型的数据构造、训练与服务。</p></div>
+  </section>
+
+  <section class="course-section" id="curriculum" aria-labelledby="curriculum-title">
+    <div class="section-heading"><div><p class="eyebrow">课程目录</p><h2 id="curriculum-title">十一章，循序渐进。</h2></div><p>章节导读在本站阅读；Notebook 与工程链接到仓库。</p></div>
+    {{curriculum}}
+  </section>
+
+  <section class="course-section" id="learning-path" aria-labelledby="learning-title">
+    <div class="section-heading"><div><p class="eyebrow">按目标选择路线</p><h2 id="learning-title">找到你的学习起点。</h2></div><p>先走通 1 → 2 → 3 章，再按目标深入。</p></div>
+    <div class="learning-routes">
+      <a href="course/01/"><span class="route-label">第一次接触 Jev</span><h3>建立判断模型的基本图景</h3><p>认识 Jev → 核心概念 → 架构模式</p><span class="route-chapters">01 / 02 / 03 <span aria-hidden="true">↗</span></span></a>
+      <a href="course/04/"><span class="route-label">想动手做应用</span><h3>从配方走到完整项目</h3><p>实战指南 → 智能家居 → 实战应用</p><span class="route-chapters">04 / 05 / 07 <span aria-hidden="true">↗</span></span></a>
+      <a href="course/09/"><span class="route-label">想接入自己的 Agent</span><h3>理解判断与执行的分工</h3><p>置信度与门控 → Pi / DSH 集成</p><span class="route-chapters">02 / 03 / 09 <span aria-hidden="true">↗</span></span></a>
+      <a href="course/06/"><span class="route-label">想评测或训练模型</span><h3>用数据检查概率与效果</h3><p>模型评测 → Laya 数据、训练与部署</p><span class="route-chapters">06 / 10 <span aria-hidden="true">↗</span></span></a>
+    </div>
+  </section>
+
+  <section class="course-section getting-started" id="getting-started" aria-labelledby="start-title">
+    <div><p class="eyebrow">开始学习</p><h2 id="start-title">先读一章，再跑一个实验。</h2><p>在线阅读导读无需密钥。动手实验请先阅读对应 Notebook 或项目的运行要求。</p><a class="course-button primary" href="course/01/">阅读第一章 <span aria-hidden="true">↗</span></a></div>
+    <div class="start-steps">
+      <div><span>01</span><div><h3>阅读章节导读</h3><p>看实验地图与学习目标，选择本章的 Notebook 或工程。</p></div></div>
+      <div><span>02</span><div><h3>准备本地环境</h3><p>克隆仓库，进入 <code>main/</code>，按 <a href="https://github.com/datawhalechina/jev-cookbook/blob/main/main/README.md" target="_blank" rel="noopener">运行说明 ↗</a>执行 <code>./setup_env.sh</code>。</p></div></div>
+      <div><span>03</span><div><h3>修改输入，观察变化</h3><p>支持离线模式的 Notebook 可用示例响应理解控制流；实时实验需配置 <code>TYPESAFE_API_KEY</code>，可能产生 API 费用。</p></div></div>
+    </div>
+  </section>
+
+  <section class="course-section reference-section" aria-labelledby="reference-title">
+    <div class="section-heading"><div><p class="eyebrow">配套资料</p><h2 id="reference-title">学习时，随手查阅。</h2></div><p>课程是主线，文档与知识库提供补充。</p></div>
+    <div class="reference-links">
+      <a href="introduction/"><span>文档翻译</span><h3>TypeSafe 中文参考文档 <span aria-hidden="true">↗</span></h3><p>概念、原语、架构模式、HTTP API 与客户端 SDK。社区翻译，接口以英文原文为准。</p></a>
+      <a href="course/11/"><span>来源与扩展阅读</span><h3>第十一章 · 知识库 <span aria-hidden="true">↗</span></h3><p>查找社区案例、研究文章与实验数字的出处、快照版本和许可。</p></a>
+    </div>
+    <p class="evidence-note">读实验时，请区分实时 API、真实归档回放与人工离线示例。各项目的运行方式不同，示例输出与单次实验不代表模型的普遍效果。</p>
+  </section>
+
+  <div class="course-closing"><div><span class="eyebrow">一起学习，持续完善</span><h2>Jev Cookbook · Datawhale</h2><p>欢迎补充实验、修正讲解，分享你的判断模型应用。</p></div><a class="course-button secondary" href="https://github.com/datawhalechina/jev-cookbook" target="_blank" rel="noopener">查看 GitHub 仓库 <span aria-hidden="true">↗</span></a></div>
+</div>

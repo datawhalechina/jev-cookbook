@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1450" height="770" viewBox="0 0 1450 770">
+<rect width="100%" height="100%" fill="#F3F7F6"/>
+<text x="58" y="54" font-family="Inter, Avenir, Arial, sans-serif" font-size="30" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle">JevBench-style composite | uploaded summaries</text>
+<text x="58" y="91" font-family="Inter, Avenir, Arial, sans-serif" font-size="15" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle">Four-axis formula output · values are provisional because valid-response counts differ</text>
+<line x1="330.0" y1="177" x2="330.0" y2="565" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="330.0" y="160" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">0</text>
+<line x1="486.0" y1="177" x2="486.0" y2="565" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="486.0" y="160" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">20</text>
+<line x1="642.0" y1="177" x2="642.0" y2="565" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="642.0" y="160" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">40</text>
+<line x1="798.0" y1="177" x2="798.0" y2="565" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="798.0" y="160" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">60</text>
+<line x1="954.0" y1="177" x2="954.0" y2="565" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="954.0" y="160" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">80</text>
+<line x1="1110.0" y1="177" x2="1110.0" y2="565" stroke="#DCE6E3" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="1110.0" y="160" font-family="Inter, Avenir, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="middle" dominant-baseline="middle">100</text>
+<text x="76" y="205" font-family="Inter, Avenir, Arial, sans-serif" font-size="18" font-weight="600" fill="#172B36" text-anchor="start" dominant-baseline="middle">Jev</text>
+<rect x="330" y="187" width="780" height="36" rx="18" fill="#EDF2F1" stroke="none" stroke-width="1"/>
+<rect x="330" y="187" width="669.7363278093163" height="36" rx="18" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="1015.7363278093163" y="205" font-family="Inter, Avenir, Arial, sans-serif" font-size="17" font-weight="700" fill="#1E716B" text-anchor="start" dominant-baseline="middle">85.9</text>
+<text x="1260" y="205" font-family="Inter, Avenir, Arial, sans-serif" font-size="14" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle">valid 120 / 231</text>
+<text x="76" y="287" font-family="Inter, Avenir, Arial, sans-serif" font-size="18" font-weight="600" fill="#172B36" text-anchor="start" dominant-baseline="middle">DeepSeek Flash</text>
+<rect x="330" y="269" width="780" height="36" rx="18" fill="#EDF2F1" stroke="none" stroke-width="1"/>
+<rect x="330" y="269" width="585.324068680931" height="36" rx="18" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="931.324068680931" y="287" font-family="Inter, Avenir, Arial, sans-serif" font-size="17" font-weight="700" fill="#1E716B" text-anchor="start" dominant-baseline="middle">75.0</text>
+<text x="1260" y="287" font-family="Inter, Avenir, Arial, sans-serif" font-size="14" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle">valid 110 / 231</text>
+<text x="76" y="369" font-family="Inter, Avenir, Arial, sans-serif" font-size="18" font-weight="600" fill="#172B36" text-anchor="start" dominant-baseline="middle">GLM 5.3 Codeplan</text>
+<rect x="330" y="351" width="780" height="36" rx="18" fill="#EDF2F1" stroke="none" stroke-width="1"/>
+<rect x="330" y="351" width="575.027849490205" height="36" rx="18" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="921.027849490205" y="369" font-family="Inter, Avenir, Arial, sans-serif" font-size="17" font-weight="700" fill="#1E716B" text-anchor="start" dominant-baseline="middle">73.7</text>
+<text x="1260" y="369" font-family="Inter, Avenir, Arial, sans-serif" font-size="14" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle">valid 65 / 231</text>
+<text x="76" y="451" font-family="Inter, Avenir, Arial, sans-serif" font-size="18" font-weight="600" fill="#172B36" text-anchor="start" dominant-baseline="middle">Kimi K3</text>
+<rect x="330" y="433" width="780" height="36" rx="18" fill="#EDF2F1" stroke="none" stroke-width="1"/>
+<rect x="330" y="433" width="571.1315110411707" height="36" rx="18" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="917.1315110411707" y="451" font-family="Inter, Avenir, Arial, sans-serif" font-size="17" font-weight="700" fill="#1E716B" text-anchor="start" dominant-baseline="middle">73.2</text>
+<text x="1260" y="451" font-family="Inter, Avenir, Arial, sans-serif" font-size="14" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle">valid 139 / 231</text>
+<text x="76" y="533" font-family="Inter, Avenir, Arial, sans-serif" font-size="18" font-weight="600" fill="#172B36" text-anchor="start" dominant-baseline="middle">Doubao 2.1 Pro</text>
+<rect x="330" y="515" width="780" height="36" rx="18" fill="#EDF2F1" stroke="none" stroke-width="1"/>
+<rect x="330" y="515" width="532.0815665476005" height="36" rx="18" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="878.0815665476005" y="533" font-family="Inter, Avenir, Arial, sans-serif" font-size="17" font-weight="700" fill="#1E716B" text-anchor="start" dominant-baseline="middle">68.2</text>
+<text x="1260" y="533" font-family="Inter, Avenir, Arial, sans-serif" font-size="14" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle">valid 105 / 231</text>
+<rect x="58" y="650" width="1334" height="72" rx="14" fill="#FFF4E7" stroke="#F0D2A8" stroke-width="1"/>
+<text x="82" y="676" font-family="Inter, Avenir, Arial, sans-serif" font-size="15" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle">Read as a snapshot diagnostic, not a final model ranking.</text>
+<text x="82" y="703" font-family="Inter, Avenir, Arial, sans-serif" font-size="13" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle">The source formula uses conditional accuracy and divides spend by 231 planned tasks even when many tasks were not completed.</text>
+</svg>

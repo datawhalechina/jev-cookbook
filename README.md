@@ -23,7 +23,7 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 
 ## 📚 快速开始
 
-- **在线阅读**：[https://datawhalechina.github.io/jev-cookbook/](https://datawhalechina.github.io/jev-cookbook/)（官方文档中文翻译站）
+- **在线阅读**：[课程首页](https://datawhalechina.github.io/jev-cookbook/)（课程介绍、十一章导读与学习路线）
 - **动手学习**：克隆本仓库，进入 [`main/`](main/README.md) 运行各章 Notebook（`./setup_env.sh` 一键建环境）
 
 **✨ 你将收获什么？**
@@ -54,14 +54,14 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 | 第八章 前沿研究 | Jev-Mem（记忆）与 JevHarness（控制流）研究快照 | ✅ |
 | 第九章 Agent 集成 | Pi 工具调用 gate 判断 + DSH 决策协作复盘 | ✅ |
 | 第十章 本地模型 | Laya 全流程：介绍对比、RLCD 微调、中文数据集、本地服务 | ✅ |
-| 第十一章 知识库 | 21 板块快照：官方文档中译、JevBench、公众号长文 | ✅ |
+| 第十一章 知识库 | 官方文档中译、社区项目快照、独立评测与训练文章 | ✅ |
 
 ### 社区贡献精选
 
 欢迎通过 PR 投稿你的 Jev 实验与实践
 ### 配套资源
 
-- **官方文档中文站**：[https://datawhalechina.github.io/jev-cookbook/](https://datawhalechina.github.io/jev-cookbook/)（非官方社区翻译，以[英文原版](https://docs.typesafe.ai)为准）
+- **TypeSafe 中文参考文档**：[文档入口](https://datawhalechina.github.io/jev-cookbook/introduction/)（非官方社区翻译，以[英文原版](https://docs.typesafe.ai)为准）
 - **下一步规划**：视频讲解、WebSocket 双向流式语音、JevBench 中文扩展集
 
 ## 💡 如何学习

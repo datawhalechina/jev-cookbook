@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1450" height="790" viewBox="0 0 1450 790">
+<rect width="100%" height="100%" fill="#F3F7F6"/>
+<text x="58" y="52" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="28" font-weight="700" fill="#172B36" text-anchor="start" dominant-baseline="middle" >16 轮短对话｜记忆决策的收益落在哪类问题？</text>
+<text x="58" y="88" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle" >中文合成对话 · 10 道题 · 同一答案模型与 judge · 分数为 0–1 语义评分</text>
+<rect x="50" y="130" width="1350" height="540" rx="18" fill="#FFFFFF" stroke="#E2EBE8" stroke-width="1"/>
+<text x="92" y="165" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="13" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle" >问题类型 / 样本量</text>
+<rect x="365" y="145" width="225" height="42" rx="12" fill="#EAF1EF" stroke="none" stroke-width="1"/>
+<text x="477.5" y="166" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >A 滑动窗口</text>
+<rect x="610" y="145" width="225" height="42" rx="12" fill="#EAF1EF" stroke="none" stroke-width="1"/>
+<text x="722.5" y="166" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >B 全上下文</text>
+<rect x="855" y="145" width="225" height="42" rx="12" fill="#EAF1EF" stroke="none" stroke-width="1"/>
+<text x="967.5" y="166" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >C 朴素 RAG</text>
+<rect x="1100" y="145" width="225" height="42" rx="12" fill="#E5F3EF" stroke="none" stroke-width="1"/>
+<text x="1212.5" y="166" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="700" fill="#2A9D8F" text-anchor="middle" dominant-baseline="middle" >D Jev-Mem</text>
+<text x="92" y="245" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="650" fill="#172B36" text-anchor="start" dominant-baseline="middle" >单跳</text>
+<text x="92" y="269" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle" >4 题</text>
+<rect x="365" y="222" width="225" height="52" rx="12" fill="#EBDDD6" stroke="none" stroke-width="1"/>
+<text x="477.5" y="248" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.25</text>
+<rect x="610" y="222" width="225" height="52" rx="12" fill="#D5ECE3" stroke="none" stroke-width="1"/>
+<text x="722.5" y="248" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.95</text>
+<rect x="855" y="222" width="225" height="52" rx="12" fill="#D6EBE2" stroke="none" stroke-width="1"/>
+<text x="967.5" y="248" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.90</text>
+<rect x="1100" y="222" width="225" height="52" rx="12" fill="#D5ECE3" stroke="#2A9D8F" stroke-width="2"/>
+<text x="1212.5" y="248" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.95</text>
+<text x="92" y="333" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="650" fill="#172B36" text-anchor="start" dominant-baseline="middle" >多跳</text>
+<text x="92" y="357" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle" >2 题</text>
+<rect x="365" y="310" width="225" height="52" rx="12" fill="#D9E9E0" stroke="none" stroke-width="1"/>
+<text x="477.5" y="336" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.80</text>
+<rect x="610" y="310" width="225" height="52" rx="12" fill="#D3EDE4" stroke="none" stroke-width="1"/>
+<text x="722.5" y="336" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >1.00</text>
+<rect x="855" y="310" width="225" height="52" rx="12" fill="#D9E9E0" stroke="none" stroke-width="1"/>
+<text x="967.5" y="336" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.80</text>
+<rect x="1100" y="310" width="225" height="52" rx="12" fill="#D9E9E0" stroke="#2A9D8F" stroke-width="2"/>
+<text x="1212.5" y="336" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.80</text>
+<text x="92" y="421" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="650" fill="#172B36" text-anchor="start" dominant-baseline="middle" >时间</text>
+<text x="92" y="445" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle" >2 题</text>
+<rect x="365" y="398" width="225" height="52" rx="12" fill="#F3D8D1" stroke="none" stroke-width="1"/>
+<text x="477.5" y="424" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.00</text>
+<rect x="610" y="398" width="225" height="52" rx="12" fill="#D6EBE2" stroke="none" stroke-width="1"/>
+<text x="722.5" y="424" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.90</text>
+<rect x="855" y="398" width="225" height="52" rx="12" fill="#F3D8D1" stroke="none" stroke-width="1"/>
+<text x="967.5" y="424" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.00</text>
+<rect x="1100" y="398" width="225" height="52" rx="12" fill="#E3E2DA" stroke="#2A9D8F" stroke-width="2"/>
+<text x="1212.5" y="424" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.50</text>
+<text x="92" y="509" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="650" fill="#172B36" text-anchor="start" dominant-baseline="middle" >对抗</text>
+<text x="92" y="533" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle" >2 题</text>
+<rect x="365" y="486" width="225" height="52" rx="12" fill="#D3EDE4" stroke="none" stroke-width="1"/>
+<text x="477.5" y="512" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >1.00</text>
+<rect x="610" y="486" width="225" height="52" rx="12" fill="#D3EDE4" stroke="none" stroke-width="1"/>
+<text x="722.5" y="512" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >1.00</text>
+<rect x="855" y="486" width="225" height="52" rx="12" fill="#D3EDE4" stroke="none" stroke-width="1"/>
+<text x="967.5" y="512" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >1.00</text>
+<rect x="1100" y="486" width="225" height="52" rx="12" fill="#D3EDE4" stroke="#2A9D8F" stroke-width="2"/>
+<text x="1212.5" y="512" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >1.00</text>
+<line x1="90" y1="575" x2="1360" y2="575" stroke="#DCE6E3" stroke-width="1"/>
+<text x="92" y="621" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="600" fill="#647780" text-anchor="start" dominant-baseline="middle" >按各题型题数加权的平均分</text>
+<rect x="365" y="595" width="225" height="52" rx="12" fill="#EAF1EF" stroke="none" stroke-width="1"/>
+<text x="477.5" y="622" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.46</text>
+<rect x="610" y="595" width="225" height="52" rx="12" fill="#EAF1EF" stroke="none" stroke-width="1"/>
+<text x="722.5" y="622" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.96</text>
+<rect x="855" y="595" width="225" height="52" rx="12" fill="#EAF1EF" stroke="none" stroke-width="1"/>
+<text x="967.5" y="622" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="700" fill="#172B36" text-anchor="middle" dominant-baseline="middle" >0.72</text>
+<rect x="1100" y="595" width="225" height="52" rx="12" fill="#2A9D8F" stroke="none" stroke-width="1"/>
+<text x="1212.5" y="622" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle" >0.84</text>
+<rect x="50" y="690" width="1350" height="58" rx="14" fill="#E7F2EF" stroke="#D1E5DF" stroke-width="1"/>
+<text x="76" y="715" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="700" fill="#2A9D8F" text-anchor="start" dominant-baseline="middle" >读图</text>
+<text x="140" y="715" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="14" font-weight="400" fill="#172B36" text-anchor="start" dominant-baseline="middle" >D 相对 C 总分 +0.12；时间题从 0.00 升到 0.50。短对话里，B 全上下文仍以 0.96 最高。</text>
+<text x="58" y="772" font-family="Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="400" fill="#647780" text-anchor="start" dominant-baseline="middle" >单轮小样本观察；总体分由已显示的题型均分按题数加权，不能外推为通用排名。</text>
+</svg>

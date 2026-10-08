@@ -6,8 +6,9 @@
 
 ## 项目是什么
 
-- **docs.typesafe.ai 官方文档的中文镜像站**：109 页翻译，`content/`（Markdown 源）经 `build.py` 生成 `dist/` 静态站，部署在 GitHub Pages。
-- **章节实验笔记本**：`main/` 下每个章节一个 `.ipynb`（理论 + 真实 API 实验）+ 一个生成器脚本。已完成：架构模式（patterns）。
+- **Jev Cookbook 中文课程站**：首页介绍课程、十一章目录与学习路线；`course/01/` 至 `course/11/` 从 `main/` 各章 README 生成在线导读，Notebook 与工程通过仓库链接阅读和运行。
+- **配套中文参考文档**：`introduction/` 为 docs.typesafe.ai 社区翻译的入口，`content/` 经 `build.py` 生成静态页面，保留原文档 URL 路径。
+- **章节实验与项目材料**：`main/` 按十一章组织 Notebook、生成器、工程与知识库。实时 API、归档回放和人工离线示例的验证范围，以各章说明为准。
 
 ## 目录与关键文件
 
@@ -17,6 +18,7 @@ jev-cookbook/
 ├── build.py            # 站点生成器（python3 build.py 一键重建 + 自动校验内链）
 ├── dist/               # 构建产物（Pages 部署的就是它）
 ├── assets/             # 站点样式/脚本/图片
+├── site/               # 课程首页模板、章节元数据与站点维护说明
 ├── anchor_maps.json    # 跨页锚点「原文↔译文」映射（构建数据）
 ├── _orig/              # 英文原稿存档（本地有、gitignore 不入库）
 ├── apps/               # DSH × Jev 配套工程（main/09_Agent集成 的实体）
@@ -138,8 +140,9 @@ EOF
 git add -A && git commit -m "新增《<章节>》中文实战笔记本" && git push
 ```
 
-Pages 只部署 `dist/`，笔记本更新不影响站点；若同时改了 `content/` 需先 `python3 build.py`
-重建（构建自带内链/资源校验），确认无误再推。
+Pages 工作流会执行 `python build.py --check`，然后部署 `dist/`。修改站点模板、课程元数据、
+章节 README、`content/` 或已挂载的 Notebook 后，先在本地运行 `python3 build.py --check`，
+确认内链/资源校验通过并检查构建差异，再推送。详细说明见 `site/README.md`。
 
 ---
 

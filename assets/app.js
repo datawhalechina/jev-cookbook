@@ -1,4 +1,4 @@
-/* TypeSafe 中文文档 — 前端交互 */
+/* Jev Cookbook — 课程与参考文档交互 */
 (function () {
   "use strict";
 
@@ -8,6 +8,7 @@
   function applyTheme(dark) {
     root.classList.toggle("dark", dark);
     toggle.textContent = dark ? "☀️" : "🌙";
+    toggle.setAttribute("aria-label", dark ? "切换浅色模式" : "切换深色模式");
     try { localStorage.setItem("tszh-theme", dark ? "dark" : "light"); } catch (e) {}
   }
   var saved = null;
@@ -24,10 +25,12 @@
   menuBtn.addEventListener("click", function () {
     var open = sidebar.classList.toggle("open");
     mask.classList.toggle("show", open);
+    menuBtn.setAttribute("aria-expanded", String(open));
   });
   mask.addEventListener("click", function () {
     sidebar.classList.remove("open");
     mask.classList.remove("show");
+    menuBtn.setAttribute("aria-expanded", "false");
   });
 
   /* ---------- 侧栏分组折叠 ---------- */
@@ -157,17 +160,18 @@
 
   function score(entry, terms) {
     var total = 0;
+    var body = entry.b.toLowerCase();
     for (var i = 0; i < terms.length; i++) {
       var t = terms[i].toLowerCase();
       var sc = 0;
       var ti = entry.t.toLowerCase().indexOf(t);
       if (ti >= 0) sc += 60 - Math.min(ti, 30);
       if (entry.g && entry.g.toLowerCase().indexOf(t) >= 0) sc += 15;
-      var bi = entry.b.indexOf(t);
+      var bi = body.indexOf(t);
       if (bi >= 0) {
         sc += 20;
         var count = 0, pos = 0;
-        while ((pos = entry.b.indexOf(t, pos)) >= 0 && count < 20) { count++; pos += t.length; }
+        while ((pos = body.indexOf(t, pos)) >= 0 && count < 20) { count++; pos += t.length; }
         sc += Math.min(count, 10) * 2;
       }
       if (sc === 0) return 0;
