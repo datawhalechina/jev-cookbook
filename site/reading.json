@@ -264,5 +264,12 @@
     "title": "RSI-Jev 自我改进环路",
     "group": "模型原理与训练",
     "summary": "智能体假设登记环路、多层出口头与 496 个实验的训练原则。"
+  },
+  {
+    "directory": "38-wechat-jev27b-vl",
+    "slug": "38-wechat-jev27b-vl",
+    "title": "JEV-27B-VL 多模态决策模型",
+    "group": "模型原理与训练",
+    "summary": "System 1/2 双通道结构与 Decision Index 0.3 双榜第一的跑分整理。"
   }
 ]
