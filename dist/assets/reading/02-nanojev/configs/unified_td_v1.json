@@ -1,0 +1,155 @@
+{
+  "schema_version": "nanojev-unified-td-experiment-v1",
+  "registered_at": "2026-09-19T00:07:22.479795+00:00",
+  "path_root": "..",
+  "cases": "configs/unified_games_v1_cases.jsonl",
+  "expected_case_count": 228,
+  "frozen_dataset": "data/unified_v2/outcomes_v2",
+  "td_episodes": "data/unified_v2/remote/q_paired_brier_pg_v1_episodes.jsonl",
+  "mc_condition": "mc",
+  "primary_comparison": {
+    "treatment": "mix_n3",
+    "control": "mc",
+    "game_metric": "equal-task mean success over complete held-out episodes",
+    "probability_metrics": [
+      "outcome_nll",
+      "outcome_vector_brier"
+    ],
+    "evaluation_splits": [
+      "test",
+      "ood"
+    ]
+  },
+  "training_seeds": [
+    17,
+    29
+  ],
+  "rollout_seed": 17,
+  "conditions": {
+    "mc": {
+      "config": {
+        "td_n_step": 3,
+        "td_weight": 0.0
+      }
+    },
+    "mix_n3": {
+      "config": {
+        "td_n_step": 3,
+        "td_weight": 0.5
+      }
+    },
+    "mix_n8": {
+      "config": {
+        "td_n_step": 8,
+        "td_weight": 0.5
+      }
+    },
+    "td_n8": {
+      "config": {
+        "td_n_step": 8,
+        "td_weight": 1.0
+      }
+    }
+  },
+  "shared_training": {
+    "stage": "critic",
+    "loss": "brier",
+    "steps": 200,
+    "head_steps": 0,
+    "batch_questions": 24,
+    "microbatch_questions": 8,
+    "max_microbatch_tokens": 32768,
+    "max_length": 8192,
+    "eval_every": 100,
+    "backbone_lr": 2e-05,
+    "head_lr": 0.0002,
+    "weight_decay": 0.01,
+    "precision": "bf16",
+    "gradient_checkpointing": true,
+    "disable_native_triton": true,
+    "balance": "task",
+    "retention_fraction": 0.25,
+    "target_update_every": 25
+  },
+  "initial_checkpoint_sha256": "06097c76d35013cd98bf6cfc675b6f8a21e787fbe4766e388ed2cafecbbaf398",
+  "continuation_policy_id": "763b8433e5ed77fef0aa7f304f992112de7b7f6d50bc43a755f296978e584593",
+  "selection": "minimum task/role-weighted development CE at updates 0,100,200; actual outcomes only",
+  "controller": {
+    "controller": "q_greedy",
+    "epsilon": 0.15,
+    "seed": 17,
+    "env_batch": 16,
+    "batch_questions": 16,
+    "max_length": 8192
+  },
+  "gamma": 1.0,
+  "n_step_unit": "recorded model decision, including forced singleton actions",
+  "target_policy": "frozen recorded behavior probabilities, not current online argmax",
+  "compute_comparison": "same online questions and update count; report extra target forwards and wall time separately",
+  "arms": [
+    {
+      "name": "mc_seed17",
+      "condition": "mc",
+      "seed": 17,
+      "run_dir": "runs/unified_td_v1/mc_seed17",
+      "episodes": "data/unified_td_v1/q_mc_seed17.jsonl"
+    },
+    {
+      "name": "mix_n3_seed17",
+      "condition": "mix_n3",
+      "seed": 17,
+      "run_dir": "runs/unified_td_v1/mix_n3_seed17",
+      "episodes": "data/unified_td_v1/q_mix_n3_seed17.jsonl"
+    },
+    {
+      "name": "mix_n8_seed17",
+      "condition": "mix_n8",
+      "seed": 17,
+      "run_dir": "runs/unified_td_v1/mix_n8_seed17",
+      "episodes": "data/unified_td_v1/q_mix_n8_seed17.jsonl"
+    },
+    {
+      "name": "td_n8_seed17",
+      "condition": "td_n8",
+      "seed": 17,
+      "run_dir": "runs/unified_td_v1/td_n8_seed17",
+      "episodes": "data/unified_td_v1/q_td_n8_seed17.jsonl"
+    },
+    {
+      "name": "mc_seed29",
+      "condition": "mc",
+      "seed": 29,
+      "run_dir": "runs/unified_td_v1/mc_seed29",
+      "episodes": "data/unified_td_v1/q_mc_seed29.jsonl"
+    },
+    {
+      "name": "mix_n3_seed29",
+      "condition": "mix_n3",
+      "seed": 29,
+      "run_dir": "runs/unified_td_v1/mix_n3_seed29",
+      "episodes": "data/unified_td_v1/q_mix_n3_seed29.jsonl"
+    },
+    {
+      "name": "mix_n8_seed29",
+      "condition": "mix_n8",
+      "seed": 29,
+      "run_dir": "runs/unified_td_v1/mix_n8_seed29",
+      "episodes": "data/unified_td_v1/q_mix_n8_seed29.jsonl"
+    },
+    {
+      "name": "td_n8_seed29",
+      "condition": "td_n8",
+      "seed": 29,
+      "run_dir": "runs/unified_td_v1/td_n8_seed29",
+      "episodes": "data/unified_td_v1/q_td_n8_seed29.jsonl"
+    }
+  ],
+  "case_sha256": "6348cebda686166cbbb50044e96bfe97b6f14ac0740aad9d01dc432856d07383",
+  "execution_preflight": {
+    "recorded_at": "2026-09-19T00:14:50.651769+00:00",
+    "online_microbatch_questions": 8,
+    "online_max_microbatch_tokens": 32768,
+    "target_microbatch_questions": 4,
+    "reason": "Previous completed 8-question/32768-token training measured 16.86 GB peak on 80 GB A100; retain its throughput, with separately bounded no-gradient target passes."
+  }
+}

@@ -2,11 +2,13 @@
 
 > 原文：[LLM2Jev: LLMs Are Already Jev-Style Decision Models—When and How to Fine-Tune Them](https://arxiv.org/abs/2610.02076) · arXiv 2610.02076 · Yinheng Li, Justin Wagle（Microsoft）· 2026-10
 >
-> 译文为社区学习用途的非官方中文翻译，版权归原作者所有。公式按原文以简明形式重排；图 1–4 的图形请对照 `media/llm2jev-2610.02076.pdf` 原文查看。
+> 译文为社区学习用途的非官方中文翻译，版权归原作者所有。公式按原文以简明形式重排；图 1–4 的图形请对照[原文 PDF](media/llm2jev-2610.02076.pdf)查看。
 
 ---
 
 ## 作者与来源
+
+> 📄 **原文 PDF（随本页附带）**：[media/llm2jev-2610.02076.pdf](media/llm2jev-2610.02076.pdf)
 
 **Yinheng Li、Justin Wagle**，均为微软研究员（论文预留微软邮箱联系）。这篇论文回答一个本库反复出现的问题：**训练-free 直接读 next-token 概率的路线（27 号教程的实践）到底有多能打？微调又在什么时候才值得做？**
 
@@ -277,4 +279,4 @@ listwise 决策损失 = 金标候选 y 的负对数似然：ℒ_tree = −log q_
   - 表 2 的 Winnow-12B（86.6%）与演讲材料 local-jev-bench 上的 Winnow-E4B（73%）不是同一评测口径——前者是 JevBench 公开 231 题诊断集，后者是第三方本地榜，不可直接比较。
 - **"诊断性准确率"**：本文只用 JevBench 的 231 道公开题，与官方榜单（含留出/密封套件）名次不可比——引用 81.4%/84.0% 时注意标注口径。
 - **公式呈现**：原文公式为 LaTeX 排版，此处按语义重排为简明文本形式（式 (1)–(6)），符号含义以原文为准。
-- 论文的图 1–4 在 arXiv HTML 版中未渲染，请对照 `media/llm2jev-2610.02076.pdf` 查看。
+- 论文的图 1–4 在 arXiv HTML 版中未渲染，请对照[原文 PDF](media/llm2jev-2610.02076.pdf)查看。

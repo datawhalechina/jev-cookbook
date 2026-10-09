@@ -243,5 +243,19 @@
     "title": "Laya：本地接口与微调方案",
     "group": "模型原理与训练",
     "summary": "模型比较、本地调用与数据构建、微调说明。"
+  },
+  {
+    "directory": "35-llm2jev-paper",
+    "slug": "35-llm2jev-paper",
+    "title": "LLM2Jev 论文全译",
+    "group": "模型原理与训练",
+    "summary": "免训练与微调配方、KL 锚定与微调时机（arXiv 2610.02076 全译）。"
+  },
+  {
+    "directory": "36-llm2jev-code",
+    "slug": "36-llm2jev-code",
+    "title": "LLM2Jev 开源实现",
+    "group": "应用与 Agent 工程",
+    "summary": "三后端纯 prefill 打分、前缀复用与 JevBench 延迟对比。"
   }
 ]

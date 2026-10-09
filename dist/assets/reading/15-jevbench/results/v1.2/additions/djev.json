@@ -1,0 +1,151 @@
+{
+ "key": "djev",
+ "display": "djev (Maisa, diffusion-gemma)",
+ "class": "jev-rebuild",
+ "open": "planned",
+ "author": "Maisa (David Villalón)",
+ "repo": "https://djev.dev",
+ "licence": "hosted API; open-sourcing announced, not yet released",
+ "underlying": "diffusion-gemma (Gemma-based diffusion model, djev-0.1, one denoising step)",
+ "has_distribution": true,
+ "probability_source": [
+  "native"
+ ],
+ "tiers": {
+  "easy": 1.0,
+  "standard": 0.9791666666666666,
+  "judge": 0.9315068493150684,
+  "hard": 0.6954545454545454
+ },
+ "hard": {
+  "run": "runs/djev--hard (job djev-jevbench-20260919)",
+  "n_items": 220,
+  "n_ok": 220,
+  "n_attempted": 220,
+  "coverage": 1.0,
+  "success_rate": 1.0,
+  "accuracy": 0.6954545454545454,
+  "by_family": {
+   "adversarial": {
+    "correct": 12,
+    "n": 12,
+    "accuracy": 1.0
+   },
+   "ambiguous": {
+    "correct": 10,
+    "n": 14,
+    "accuracy": 0.7142857142857143
+   },
+   "judge_hard": {
+    "correct": 29,
+    "n": 33,
+    "accuracy": 0.8787878787878788
+   },
+   "long_policy": {
+    "correct": 18,
+    "n": 38,
+    "accuracy": 0.47368421052631576
+   },
+   "multi_hop": {
+    "correct": 29,
+    "n": 35,
+    "accuracy": 0.8285714285714286
+   },
+   "probability": {
+    "correct": 12,
+    "n": 20,
+    "accuracy": 0.6
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 10,
+    "n": 30,
+    "accuracy": 0.3333333333333333
+   },
+   "tradeoff": {
+    "correct": 8,
+    "n": 12,
+    "accuracy": 0.6666666666666666
+   },
+   "trap": {
+    "correct": 15,
+    "n": 16,
+    "accuracy": 0.9375
+   }
+  },
+  "has_distribution": true,
+  "brier_mean": 0.4680494813450917,
+  "ece": 0.17503581317955752,
+  "probability_fidelity": 65.83617501611904,
+  "calibration_score": 65.41450619010376,
+  "onehot": {
+   "ece": 0.30454545454545456,
+   "probability_fidelity": 52.93449999999999,
+   "calibration_score": 46.01270454545454
+  },
+  "latency_p50_s": 0.24707749113440514,
+  "latency_p95_s": 0.3622760258615016,
+  "mean_input_tokens": 1233.540909090909,
+  "mean_output_tokens": 8.0,
+  "charged_usd": 0.009498265000000002
+ },
+ "speed_block": {
+  "measured_where": "from a Hetzner server in Germany, network included",
+  "n": 242,
+  "p50_s": 0.2370578795671463,
+  "p95_s": 0.30865143015980717,
+  "run": "serial 242-decision standard+judge run"
+ },
+ "cost": {
+  "kind": "announced",
+  "usd_per_1000": 0.025951254681647943,
+  "usd_per_1000_v11_tiers": 0.01388441082802548,
+  "usd_per_1000_hard": 0.04317393181818183,
+  "basis_v11": "ANNOUNCED PRICE (free preview): djev's docs state $0.035 per million input tokens, output tokens free (https://api.djev.dev/docs, 'Usage & credits'; prepaid billing not yet switched on, 19 Sep 2026, so nothing was charged) x measured input tokens (741 per decision on average over all 534 decisions)",
+  "basis_hard": "announced tariff x measured tokens (hard-tier run)",
+  "basis_final": "ANNOUNCED PRICE (free preview): djev's docs state $0.035 per million input tokens, output tokens free (https://api.djev.dev/docs, 'Usage & credits'; prepaid billing not yet switched on, 19 Sep 2026, so nothing was charged) x measured input tokens (741 per decision on average over all 534 decisions)",
+  "self_host_sensitivity": null
+ },
+ "calibration": {
+  "score": 65.41450619010376,
+  "score_label_only_as_onehot": null,
+  "ece_hard": 0.17503581317955752,
+  "probability_fidelity": 65.83617501611904,
+  "brier_hard": 0.4680494813450917,
+  "brier_standard_judge_v11": 0.08268269187152161
+ },
+ "partial": false,
+ "endpoint_condition": "production API (api.djev.dev, free preview)",
+ "note": "djev's own probabilities (native), which its docs call experimental and uncalibrated; scored like every other distribution.",
+ "tier_blocks_v11": {
+  "easy": {
+   "n_planned": 72,
+   "n_attempted": 72,
+   "accuracy": 1.0,
+   "operational_success": 1.0,
+   "brier_mean": 5.087286994632918e-07,
+   "first_request_s": 1.1090530827641487
+  },
+  "standard": {
+   "n_planned": 96,
+   "n_attempted": 96,
+   "accuracy": 0.9791666666666666,
+   "operational_success": 1.0,
+   "brier_mean": 0.036599273539643117,
+   "first_request_s": 1.4296030849218369
+  },
+  "judge": {
+   "n_planned": 146,
+   "n_attempted": 146,
+   "accuracy": 0.9315068493150684,
+   "operational_success": 1.0,
+   "brier_mean": 0.11298411762398966,
+   "first_request_s": 0.7758965417742729
+  }
+ },
+ "footnote": "Hosted API in free preview: the cost uses djev's announced price ($0.035 per million input tokens, output free); nothing is charged yet. Open-sourcing is planned, not yet released. Probabilities are djev's own (its docs call them experimental and uncalibrated)."
+}

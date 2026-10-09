@@ -1640,8 +1640,23 @@ def knowledge_links(body, source, page):
         dest = dest or KNOWLEDGE_DIRS.get(resolved)
         if dest:
             url = base + quote(dest, safe="/") + "/"
-        elif os.path.exists(resolved):
-            url = course_repo_url(os.path.relpath(resolved, ROOT).replace(os.sep, "/"))
+        elif (os.path.isfile(resolved)
+              and not resolved.lower().endswith((".html", ".htm", ".md", ".markdown", ".ipynb"))):
+            # PDF 等文档附件随站点本地分发；HTML/Markdown/Notebook 在 GitHub 渲染
+            # 更好（HTML 常含外部脚本），仍出站链 GitHub。
+            relative = os.path.relpath(resolved, KB_ROOT).replace(os.sep, "/")
+            if relative.startswith("../"):
+                relative = "shared/" + os.path.relpath(resolved, ROOT).replace(os.sep, "/")
+            asset = "assets/reading/" + relative
+            if item and item["slug"] != item["directory"]:
+                folder = os.path.join(KB_ROOT, item["directory"])
+                if os.path.commonpath([folder, resolved]) == folder:
+                    # 兼容早期六篇文章已发布的配图地址。
+                    asset = item["page"] + "/" + os.path.relpath(resolved, folder).replace(os.sep, "/")
+            dest_asset = os.path.join(DIST, asset)
+            os.makedirs(os.path.dirname(dest_asset), exist_ok=True)
+            shutil.copy2(resolved, dest_asset)
+            url = base + quote(asset, safe="/")
         else:
             missing.append(raw)
             if upstream:

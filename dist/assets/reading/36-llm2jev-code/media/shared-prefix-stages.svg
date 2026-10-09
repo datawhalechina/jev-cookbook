@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="990" viewBox="0 0 1080 990" role="img" aria-labelledby="title description">
+  <title id="title">LLM2Jev staged scoring with SGLang Radix Cache</title>
+  <desc id="description">Six criteria candidates run in three stages. First, shipping establishes cached state and department instructions. Next, billing and returns reuse them while severity criteria[0] establishes cached severity instructions. Finally, criteria[1] and criteria[2] reuse those prefixes. LLM2Jev plans submissions; SGLang manages KV reuse. Solid blue blocks are new computation; dashed green blocks reuse cached KV.</desc>
+  <defs>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #ffffff; }
+      .heading { font-size: 29px; font-weight: 700; }
+      .subtitle { font-size: 17px; fill: #ffffff; }
+      .section { font-size: 21px; font-weight: 700; }
+      .label { font-size: 17px; }
+      .small { font-size: 15px; fill: #ffffff; }
+      .new { fill: #172b50; stroke: #6e9fe8; stroke-width: 1.5; }
+      .reuse { fill: #123d30; stroke: #59b58b; stroke-width: 1.5; stroke-dasharray: 6 4; }
+      .cache { fill: #171c26; stroke: #637086; }
+      .arrow { fill: none; stroke: #8596ac; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#8596ac" stroke-width="1.5"/></marker>
+  </defs>
+  <rect width="1080" height="990" fill="#000000"/>
+  <text x="36" y="49" class="heading">How does one cold request reuse shared prefixes?</text>
+  <text x="36" y="81" class="subtitle">1 state → 2 questions → 3 criteria candidates each; every candidate scored once</text>
+  <rect x="36" y="103" width="24" height="20" rx="4" class="new"/>
+  <text x="70" y="120" class="small">New computation</text>
+  <rect x="216" y="103" width="24" height="20" rx="4" class="reuse"/>
+  <text x="250" y="120" class="small">Reuse cached KV</text>
+  <text x="754" y="120" class="small">Shared cache after each stage</text>
+
+  <rect x="24" y="145" width="1032" height="174" rx="14" fill="none" stroke="#465267"/>
+  <text x="44" y="178" class="section">1. Score one real candidate first</text>
+  <text x="44" y="204" class="small">Compute state and department.instructions, then the selected criteria candidate</text>
+  <rect x="44" y="222" width="207" height="47" rx="7" class="new"/>
+  <text x="147" y="251" class="label" text-anchor="middle">state · new</text>
+  <rect x="261" y="222" width="211" height="47" rx="7" class="new"/>
+  <text x="366" y="251" class="small" text-anchor="middle">department.instructions</text>
+  <rect x="482" y="222" width="210" height="47" rx="7" class="new"/>
+  <text x="587" y="251" class="label" text-anchor="middle">criteria.shipping</text>
+  <path d="M702 245 H740" class="arrow"/>
+  <rect x="754" y="198" width="280" height="98" rx="10" class="cache"/>
+  <text x="771" y="226" class="label">SGLang Radix Cache</text>
+  <text x="771" y="254" class="small">state</text>
+  <text x="787" y="278" class="small">└ department.instructions</text>
+  <text x="44" y="297" class="small">The shared prefix is now available for later candidates.</text>
+  <path d="M537 325 V344" class="arrow"/>
+
+  <rect x="24" y="356" width="1032" height="256" rx="14" fill="none" stroke="#465267"/>
+  <text x="44" y="389" class="section">2. Remaining department criteria + severity criteria[0]</text>
+  <text x="44" y="415" class="small">Reuse state; establish the KV cache for severity.instructions</text>
+  <rect x="44" y="431" width="207" height="43" rx="7" class="reuse"/>
+  <text x="147" y="458" class="label" text-anchor="middle">state · cached</text>
+  <rect x="261" y="431" width="211" height="43" rx="7" class="reuse"/>
+  <text x="366" y="458" class="small" text-anchor="middle">department.instructions</text>
+  <rect x="482" y="431" width="210" height="43" rx="7" class="new"/>
+  <text x="587" y="458" class="label" text-anchor="middle">criteria.billing</text>
+  <rect x="44" y="484" width="207" height="43" rx="7" class="reuse"/>
+  <text x="147" y="511" class="label" text-anchor="middle">state · cached</text>
+  <rect x="261" y="484" width="211" height="43" rx="7" class="reuse"/>
+  <text x="366" y="511" class="small" text-anchor="middle">department.instructions</text>
+  <rect x="482" y="484" width="210" height="43" rx="7" class="new"/>
+  <text x="587" y="511" class="label" text-anchor="middle">criteria.returns</text>
+  <rect x="44" y="537" width="207" height="43" rx="7" class="reuse"/>
+  <text x="147" y="564" class="label" text-anchor="middle">state · cached</text>
+  <rect x="261" y="537" width="211" height="43" rx="7" class="new"/>
+  <text x="366" y="564" class="small" text-anchor="middle">severity.instructions</text>
+  <rect x="482" y="537" width="210" height="43" rx="7" class="new"/>
+  <text x="587" y="564" class="label" text-anchor="middle">criteria[0] · low</text>
+  <path d="M702 505 H740" class="arrow"/>
+  <rect x="754" y="442" width="280" height="131" rx="10" class="cache"/>
+  <text x="771" y="470" class="label">SGLang Radix Cache</text>
+  <text x="771" y="498" class="small">state</text>
+  <text x="787" y="522" class="small">├ department.instructions</text>
+  <text x="787" y="546" class="small">└ severity.instructions (new)</text>
+  <path d="M537 618 V637" class="arrow"/>
+
+  <rect x="24" y="649" width="1032" height="202" rx="14" fill="none" stroke="#465267"/>
+  <text x="44" y="682" class="section">3. Batch severity criteria[1] and criteria[2]</text>
+  <text x="44" y="708" class="small">Reuse state and severity.instructions; compute the criteria suffixes</text>
+  <rect x="44" y="725" width="207" height="43" rx="7" class="reuse"/>
+  <text x="147" y="752" class="label" text-anchor="middle">state · cached</text>
+  <rect x="261" y="725" width="211" height="43" rx="7" class="reuse"/>
+  <text x="366" y="752" class="small" text-anchor="middle">severity.instructions</text>
+  <rect x="482" y="725" width="210" height="43" rx="7" class="new"/>
+  <text x="587" y="752" class="label" text-anchor="middle">criteria[1] · medium</text>
+  <rect x="44" y="778" width="207" height="43" rx="7" class="reuse"/>
+  <text x="147" y="805" class="label" text-anchor="middle">state · cached</text>
+  <rect x="261" y="778" width="211" height="43" rx="7" class="reuse"/>
+  <text x="366" y="805" class="small" text-anchor="middle">severity.instructions</text>
+  <rect x="482" y="778" width="210" height="43" rx="7" class="new"/>
+  <text x="587" y="805" class="label" text-anchor="middle">criteria[2] · high</text>
+  <path d="M702 773 H740" class="arrow"/>
+  <rect x="754" y="725" width="280" height="98" rx="10" class="cache"/>
+  <text x="771" y="754" class="label">All 6 candidates scored</text>
+  <text x="771" y="781" class="small">Restore order; assemble answers</text>
+  <text x="771" y="805" class="small">Scoring only; no text generation</text>
+
+  <text x="36" y="887" class="label" font-weight="700">LLM2Jev schedules submissions. SGLang Radix Cache manages KV reuse.</text>
+  <text x="36" y="918" class="small">Blocks show state / instructions / criteria. Actual matching uses token prefixes; widths are illustrative.</text>
+  <text x="36" y="944" class="small">Only shared cache portions are shown. Each candidate computes its final scoring token. Stage counts vary.</text>
+  <text x="36" y="970" class="small">Cache misses or eviction require recomputation. This example assumes sufficient available cache capacity.</text>
+</svg>
