@@ -39,6 +39,7 @@
 | `34-unsloth-train-decision-model/` | [Unsloth 官方文档「Train your own Decision Model with Unsloth」](https://unsloth.ai/docs/basics/train-your-own-decision-model-with-unsloth) | `文章快照 2026-10-08` | 7 |
 | `35-llm2jev-paper/` | [arXiv 2610.02076「LLM2Jev: LLMs Are Already Jev-Style Decision Models」](https://arxiv.org/abs/2610.02076)（正文全译 + 附录速览，含原文 PDF） | `论文快照 2026-10-09` | 2 |
 | `36-llm2jev-code/` | [GitHub Yinsongxu/LLM2Jev README](https://github.com/Yinsongxu/LLM2Jev) + [docs/jevbench.md](https://github.com/Yinsongxu/LLM2Jev/blob/main/docs/jevbench.md)（整理编译，附官方中文 README） | `仓库快照 2026-10-09` | 4 |
+| `37-rsi-jev/` | [GitHub Shanghua-Gao/RSI-Jev README](https://github.com/Shanghua-Gao/RSI-Jev)（整理编译，含原理与 496 实验清单） | `仓库快照 2026-10-09` | 3 |
 | `laya-model/` | [NandhaKishorM/laya](https://github.com/NandhaKishorM/laya) | `本地接口快照 2026-09-23；模型卡 2026-09-20` | 8 |
 
 ## 收录原则

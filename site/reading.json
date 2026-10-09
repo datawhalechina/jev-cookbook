@@ -257,5 +257,12 @@
     "title": "LLM2Jev 开源实现",
     "group": "应用与 Agent 工程",
     "summary": "三后端纯 prefill 打分、前缀复用与 JevBench 延迟对比。"
+  },
+  {
+    "directory": "37-rsi-jev",
+    "slug": "37-rsi-jev",
+    "title": "RSI-Jev 自我改进环路",
+    "group": "模型原理与训练",
+    "summary": "智能体假设登记环路、多层出口头与 496 个实验的训练原则。"
   }
 ]
