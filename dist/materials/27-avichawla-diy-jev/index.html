@@ -234,7 +234,7 @@ for label in choices:
 &#x27;B&#x27; -&gt; [33]
 &#x27;C&#x27; -&gt; [34]</code></pre></div>
 <p>每个列表都只包含一个整数。因此我们确知每个标签只占一个 token。后面的打分请求将读取词表的 32、33、34 号位置。</p>
-<p>这项检查也让我们避免想当然地认为各模型的分词结果一致。在 Qwen 下可用的标签，换一个分词器就可能被拆开。</p>
+<p>这项检查还挡住了一个想当然：各模型的分词结果并不一致。在 Qwen 下可用的标签，换一个分词器就可能被拆开。</p>
 <h3 id="第-4-步向-sglang-请求三个概率">第 4 步：向 SGLang 请求三个概率</h3>
 <p>接着添加打分请求：</p>
 <div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">response = requests.post(

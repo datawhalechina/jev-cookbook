@@ -10,7 +10,7 @@
 
 **Achint Srivastava**，微软 CTO 办公室软件工程 VP。发布平台是微软官方博客 Command Line（即原文标题里的「Microsoft Decision-1 Model Foundry」：模型已在 **Microsoft Foundry** 上架，并可通过 **OpenRouter** 调用）。
 
-**本库第一条巨头厂商官方决策模型条目**——此前收录的决策模型来自厂商（23 号 Cloudflare Clef）、社区团队（15 号 JevBench 生态、37 号 RSI-Jev、38 号 JEV-27B-VL）与个人研究者（25/27/31 号），微软以自营云产品形态入场，生态从「社区内战」进入「平台竞争」。两个值得注意的细节：模型**后训练自 Qwen3.5-9B**（开源底座，与 35/37/38 号的底座选择同源），官方预告将改基到 Microsoft AI（MAI）与 OpenAI 底座；**定价与 Jev 官方完全一致**——输入 $0.042/百万 token、输出免费。
+**本库第一条巨头厂商官方决策模型条目**——此前收录的决策模型来自厂商（23 号 Cloudflare Clef）、社区团队（15 号 JevBench 生态、37 号 RSI-Jev、38 号 JEV-27B-VL）与个人研究者（25/27/31 号），微软以自营云产品形态入场，生态从「社区内战」进入「平台竞争」。两个细节：模型**后训练自 Qwen3.5-9B**（开源底座，与 35/37/38 号的底座选择同源），官方预告将改基到 Microsoft AI（MAI）与 OpenAI 底座；**定价与 Jev 官方完全一致**——输入 $0.042/百万 token、输出免费。
 
 ![发布文头图：Microsoft-Decision-1](media/hero.png)
 

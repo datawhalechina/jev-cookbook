@@ -30,7 +30,7 @@
 
 ## Clef 与其他决策模型有何不同？
 
-尽管市面上的决策模型正日趋饱和，Clef 仍有一些独特的性质，让我们非常乐于将它公开发布。首先，它带有视觉编码器，能够接收图像并对视觉内容进行分类，这与目前仅支持文本分类的 Jev 不同。其次，我们的模型拥有 64k 上下文窗口（Jev 为 32k），用户可以放入更多的输入状态供模型进行分类。
+市面上的决策模型正日趋饱和，Clef 仍有几样独到的性质，这也是我们乐于把它公开发布的原因。首先，它带有视觉编码器，能够接收图像并对视觉内容进行分类，这与目前仅支持文本分类的 Jev 不同。其次，我们的模型拥有 64k 上下文窗口（Jev 为 32k），用户可以放入更多的输入状态供模型进行分类。
 
 第三，我们的模型准确而强大，在多项质量基准测试中与其他市售决策模型相比得分颇具竞争力。我们从 [Jev Decision Index](https://huggingface.co/spaces/multimodalart/jev-decision-index) 定义的对决策至关重要的评估中精选了一部分，并据此为市面上一些较为热门的模型打分。基准测试结果见下表，你也可以在[决策指数在线演示站点](https://clef-evals.workers-ai-mle.workers.dev)上查看得分：
 
@@ -47,7 +47,7 @@
 | Amazon ESCI · macro-F1 | 57.48 | 57.39 | 55.21 | 53.37 | 49.22 | 24.40 |
 | PhishNChips · accuracy | 79.60 | 75.05 | 62.55 | 85.35 | 50.75 | 50.15 |
 
-我们还在 [Typesafe 自己的评估套件](https://huggingface.co/collections/typesafe/workflowevals)上运行了基准测试，我们的 Clef 模型表现出色，在 4 个领域中的 3 个击败了 Jev。尤其值得一提的是，考虑到 Clef-flash 的速度之快，它的表现格外出色。
+我们还在 [Typesafe 自己的评估套件](https://huggingface.co/collections/typesafe/workflowevals)上运行了基准测试，我们的 Clef 模型表现出色，在 4 个领域中的 3 个击败了 Jev。更难得的是，跑得这么快的 Clef-flash，表现也相当能打。
 
 | Workflow | Clef | Clef-flash | Jev |
 |---|---|---|---|

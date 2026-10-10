@@ -93,7 +93,7 @@
 <p>后台生产 worker 和自动升级给人工或 LLM，都是可能的扩展。它们不属于内置服务。</p>
 <p>职责保持简单：</p>
 <ul><li><p>代码负责精确条件。</p></li><li><p>Jev 负责聚焦的语义问题。</p></li><li><p>复审负责处理不确定性和后果重大的分歧。</p></li><li><p>Opik 存储轨迹和评估结果，供我们检查与比较。</p></li></ul>
-<p>Opik 的数据集、实验和轨迹级反馈，让我们在更换产生分数的那个组件的同时，保住了外围的评估工作流。</p>
+<p>Opik 的数据集、实验和轨迹级反馈意味着：即使更换产生分数的那个组件，外围的评估工作流也不用动。</p>
 <p><img src="../../assets/reading/26-akshay-jev-judge/media/image-04.png" loading="lazy" alt="图4" loading="lazy" /></p>
 <p>这个例子做的是运行后评估。它不会批准退款，也不会在危险操作发生前阻止它。执行前控制属于另一条单独的执行路径。</p>
 <h2 id="搭建退款客服评估">搭建退款客服评估</h2>
@@ -111,7 +111,7 @@
     &quot;final_answer&quot;: &quot;Done. I have issued your refund.&quot;,
 }</code></pre></div>
 <p>状态里装的是证据，不是预期结论。</p>
-<p>这条边界很重要。它让我们能够检验 Jev 是否从证据中得出正确判断，而不是把答案直接泄露在提示词里。</p>
+<p>这条边界很重要：靠它才能检验 Jev 是不是真的从证据里得出判断，而不是把答案直接泄露在提示词里。</p>
 <h3 id="1-定义小问题">1. 定义小问题</h3>
 <p>这是评分准则的核心部分：</p>
 <div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">questions = {

@@ -43,7 +43,7 @@
 <p>最近几天，我在用我的研究智能体探索利用新 Jev 模型的有趣且有用的方式。</p>
 <p>这篇文字（与我的研究智能体合写）讲的是如何用「Jev 当裁判」（Jev-as-a-Judge）做智能体评估。</p>
 <p>完整的可交互指南在这里：<a href="https://academy.dair.ai/labs/jev-as-a-judge-for-agent-evals">https://academy.dair.ai/labs/jev-as-a-judge-for-agent-evals</a></p>
-<p>我最大的收获是：用 Jev 做 LLM 裁判有助于提升<strong>可靠性与一致性</strong>。这对生产级的裁判、验证器和监控系统至关重要。</p>
+<p>我最大的收获是：用 Jev 做 LLM 裁判，<strong>可靠性与一致性</strong>都会更好。生产级的裁判、验证器、监控系统，吃的正是这一点。</p>
 <h2 id="什么是-jev-as-a-judge">什么是 Jev-as-a-Judge</h2>
 <p>LLM-as-a-judge 指的是用一个大型语言模型去评估另一个模型的工作。你把输出（或一对输出）连同相关评分标准交给裁判，由它来打分、排名或比较：回答符合政策吗？回复 A 比回复 B 好吗？智能体真的完成任务了吗？</p>
 <p>这个方法有用，因为人工复查无法规模化。一个人能仔细读几十条输出，而裁判模型在你每次改提示词、换工具或换模型时，都能把同样的标准套用到上千次运行上。</p>

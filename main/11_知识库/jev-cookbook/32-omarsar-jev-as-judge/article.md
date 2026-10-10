@@ -24,7 +24,7 @@
 
 完整的可交互指南在这里：<https://academy.dair.ai/labs/jev-as-a-judge-for-agent-evals>
 
-我最大的收获是：用 Jev 做 LLM 裁判有助于提升**可靠性与一致性**。这对生产级的裁判、验证器和监控系统至关重要。
+我最大的收获是：用 Jev 做 LLM 裁判，**可靠性与一致性**都会更好。生产级的裁判、验证器、监控系统，吃的正是这一点。
 
 ## 什么是 Jev-as-a-Judge
 
