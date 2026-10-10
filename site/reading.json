@@ -278,5 +278,12 @@
     "title": "Microsoft-Decision-1 官方发布",
     "group": "模型原理与训练",
     "summary": "微软自营决策模型：36 基准盲测、鲁棒性扰动与定价，含官方演示视频。"
+  },
+  {
+    "directory": "40-embodied-jev",
+    "slug": "40-embodied-jev",
+    "title": "EmbodiedJev 具身决策工作台",
+    "group": "应用与 Agent 工程",
+    "summary": "MuJoCo 机械臂上的 Jev 决策：分层子目标、费用对照与实测边界。"
   }
 ]
