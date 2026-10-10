@@ -271,5 +271,12 @@
     "title": "JEV-27B-VL 多模态决策模型",
     "group": "模型原理与训练",
     "summary": "System 1/2 双通道结构与 Decision Index 0.3 双榜第一的跑分整理。"
+  },
+  {
+    "directory": "39-microsoft-decision-1",
+    "slug": "39-microsoft-decision-1",
+    "title": "Microsoft-Decision-1 官方发布",
+    "group": "模型原理与训练",
+    "summary": "微软自营决策模型：36 基准盲测、鲁棒性扰动与定价，含官方演示视频。"
   }
 ]

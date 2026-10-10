@@ -778,8 +778,8 @@ def fix_img_tags(html_text):
 ALLOWED_TAGS = {"a", "abbr", "b", "blockquote", "br", "button", "code", "del",
                 "details", "div", "em", "h1", "h2", "h3", "h4", "h5", "h6", "hr",
                 "i", "img", "kbd", "li", "mark", "ol", "p", "pre", "q", "s",
-                "section", "small", "span", "strong", "sub", "summary", "sup",
-                "table", "tbody", "td", "th", "thead", "tr", "u", "ul"}
+                "section", "small", "source", "span", "strong", "sub", "summary", "sup",
+                "table", "tbody", "td", "th", "thead", "tr", "u", "ul", "video"}
 TAG_RE = re.compile(r"</?([a-zA-Z][a-zA-Z0-9]*)((?:\"[^\"]*\"|'[^']*'|[^>])*?)>")
 # 已成形的 HTML 实体不再转义，避免组件内部已 esc 的内容被二次转义
 _ENTITY_RE = re.compile(r"&(?:[a-zA-Z][a-zA-Z0-9]{1,20};|#[0-9]{1,7};|#[xX][0-9a-fA-F]{1,6};)")
@@ -1704,7 +1704,14 @@ def knowledge_links(body, source, page):
                 return f'<span class="reading-missing-media">{esc(label)}（见原始材料）</span>'
         return tag[:attr.start()] + f'src="{esc(url)}" loading="lazy"' + tag[attr.end():]
 
-    body = re.sub(r"<img\b[^>]*>", image_replace, body)
+    # 图片与视频（<video src> / <source src>）统一本地化；loading 提示只对图片有意义。
+    def media_replace(match):
+        tag = image_replace(match)
+        if not tag.lstrip().lower().startswith("<img"):
+            tag = tag.replace(' loading="lazy"', "")
+        return tag
+
+    body = re.sub(r"<(?:img|source|video)\b[^>]*>", media_replace, body)
     if missing:
         body += ('<p class="reading-snapshot-note">快照未包含部分工程附件或配图；'
                  '请通过上游链接或原始材料查看，收录范围见来源清单。</p>')
