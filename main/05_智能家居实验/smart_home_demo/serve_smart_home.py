@@ -45,6 +45,7 @@ stepfun_key = os.environ.get("STEPFUN_API_KEY", "")  # platform.stepfun.com 获�
 jev_key = os.environ.get("TYPESAFE_API_KEY", "")
 # 与官方 SDK 同名约定：指向自建/代理上游（默认官方端点），用于联调与离线测试
 jev_base = os.environ.get("TYPESAFE_BASE_URL", "https://api.typesafe.ai").rstrip("/")
+jev_model = os.environ.get("TYPESAFE_DEFAULT_MODEL", "jev-latest")
 asr_model = os.environ.get("STEPFUN_ASR_MODEL", "stepaudio-2.5-asr")
 chat_model = os.environ.get("STEPFUN_CHAT_MODEL", "step-1o-turbo-vision")        # 拆指令：求快
 answer_model = os.environ.get("STEPFUN_ANSWER_MODEL", "step-3.5-flash")          # 知识问答：求准
@@ -104,6 +105,7 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path == "/api/health":
             self._send_json({
                 "jev": bool(jev_key),
+                "jev_model": jev_model,
                 "asr": bool(stepfun_key),
                 "chat": bool(stepfun_key),
                 "asr_model": asr_model,
@@ -132,6 +134,8 @@ class Handler(BaseHTTPRequestHandler):
             self._send_json({"ok": False, "status": 0,
                              "error": "未设置 TYPESAFE_API_KEY，服务端以模拟模式运行"}, 503)
             return
+        if jev_base.startswith(("http://127.0.0.1:", "http://localhost:")):
+            payload["model"] = jev_model
         body = json.dumps(payload, ensure_ascii=False).encode()
         req = urllib.request.Request(
             f"{jev_base}{JEV_PATH}", data=body, method="POST",

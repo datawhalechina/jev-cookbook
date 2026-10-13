@@ -72,4 +72,4 @@ Notebook 展示一次投机调用；浏览器应用支持实时追踪。具体�
 
 ## 运行与下一步
 
-配套服务与 3D 页面在 [smart_home_demo](smart_home_demo/)。运行方法、环境变量和演示边界以该目录和 Notebook 内说明为准。先读[第三章架构模式](../03_架构模式/README.md)，再运行[智能家居 Notebook](01_智能家居实验.ipynb)；想看更完整的端到端应用，可接着读[第七章](../07_实战应用/README.md)。
+配套服务与 3D 页面在 [smart_home_demo](smart_home_demo/)。运行方法、环境变量和演示边界以该目录和 Notebook 内说明为准。先读[第三章架构模式](../03_架构模式/README.md)，再运行[智能家居 Notebook](01_智能家居实验.ipynb)；想看更完整的端到端应用，可接着读[第七章](../07_实战应用/README.md)。无远程 TypeSafe API key 时，先用项目内核对 [LocalJev.ipynb](../LocalJev/LocalJev.ipynb) 执行 Run All 并保持其服务运行，再用同一项目环境的新内核运行[智能家居 Notebook](01_智能家居实验.ipynb)。Notebook 会将本地 TypeSafe 连接传给网页服务；语音识别和开放式聊天仍需各自的服务配置。没有本地连接时沿用原有远程设置。其他运行方法和演示边界以该目录和 Notebook 内说明为准。

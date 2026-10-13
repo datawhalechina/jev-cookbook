@@ -26,3 +26,9 @@ main/07_实战应用/logs/
 main/07_实战应用/app/typesafe-mario-repro/artifacts/viz/
 
 main/10_本地模型/experiments/
+
+# Local model connection credentials and transient writes
+main/.local-jev.json
+main/.local-jev.tmp
+main/.models/
+.local-validation/

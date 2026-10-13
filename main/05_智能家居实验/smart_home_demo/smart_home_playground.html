@@ -839,6 +839,7 @@ smartHome.executeCommand('打开客厅的灯');
        ========================================================================= */
     const ENGINE = {
       jevAvailable: false,   // 服务端配了 TYPESAFE_API_KEY
+      jevModel: 'jev-latest',
       asrAvailable: false,
       chatModel: '-',
       answerModel: '-',
@@ -851,6 +852,7 @@ smartHome.executeCommand('打开客厅的灯');
           const r = await fetch('/api/health');
           const h = await r.json();
           this.jevAvailable = !!h.jev;
+          this.jevModel = h.jev_model || 'jev-latest';
           this.asrAvailable = !!h.asr;
           this.chatModel = h.chat_model || '-';
           this.answerModel = h.answer_model || h.chat_model || '-';
@@ -867,7 +869,7 @@ smartHome.executeCommand('打开客厅的灯');
     function renderEngineBadges() {
       const badge = document.getElementById('engineBadge');
       if (ENGINE.jevAvailable) {
-        badge.textContent = '真实 Jev · jev-latest';
+        badge.textContent = `本地/远程模型 · ${ENGINE.jevModel}`;
         badge.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 whitespace-nowrap';
       } else {
         badge.textContent = '模拟引擎 · 未配 KEY';
@@ -1122,7 +1124,7 @@ smartHome.executeCommand('打开客厅的灯');
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           state: stateObj || jevState(utterance),
-          model: 'jev-latest',
+          model: ENGINE.jevModel,
           questions: questions || jevQuestions()
         })
       });
