@@ -3,6 +3,7 @@
 from pathlib import Path
 
 import nbformat as nbf
+from local_jev_support import connect_local_service
 
 nb = nbf.v4.new_notebook()
 cells = []
@@ -826,6 +827,7 @@ nb["metadata"]["kernelspec"] = {"display_name": "Python 3", "language": "python"
 nb["metadata"]["language_info"] = {"name": "python", "version": "3.12"}
 
 out = Path(__file__).resolve().parent.parent / "03_架构模式/01_架构模式.ipynb"
+connect_local_service(nb)
 with open(out, "w", encoding="utf-8") as f:
     nbf.write(nb, f)
 print("written:", out, "| cells:", len(cells))

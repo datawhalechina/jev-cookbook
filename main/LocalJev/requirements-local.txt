@@ -1,0 +1,13 @@
+# 初始化默认小模型 Laya 的环境；D1 / 新版 LFM 使用另一个环境。
+-r ../requirements.txt
+typesafe-sdk>=0.7,<0.8
+jupyterlab>=4.0,<5
+ipykernel>=6.0,<8
+nbformat>=5.9,<6
+nbclient>=0.10,<1
+laya[serve]==0.4.1
+transformers==4.57.6
+huggingface-hub>=0.36,<1
+torch>=2.5,<3
+psutil>=5.9
+requests>=2.31

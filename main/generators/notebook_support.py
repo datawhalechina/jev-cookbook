@@ -280,6 +280,8 @@ print(json.dumps(AUDIT, ensure_ascii=False, indent=2))''', tags=["execution-audi
         self.nb.metadata["kernelspec"] = {"display_name": "Python 3", "language": "python", "name": "python3"}
         self.nb.metadata["jev_cookbook"] = {"chapter": self.slug, "source_path": self.path,
                                           "live_validation": "pending"}
+        from local_jev_support import connect_local_service
+        connect_local_service(self.nb)
         nbf.validate(self.nb)
         path = ROOT / f"{FILENAMES.get(self.slug, self.slug + '_experiments')}.ipynb"
         nbf.write(self.nb, path)

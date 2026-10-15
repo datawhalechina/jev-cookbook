@@ -3,6 +3,7 @@
 from pathlib import Path
 
 import nbformat as nbf
+from local_jev_support import connect_local_service
 
 nb = nbf.v4.new_notebook()
 cells = []
@@ -1012,6 +1013,7 @@ md("""---
 
 # ============================================================ 写入
 nb["cells"] = cells
-OUTPUT = Path(__file__).resolve().parent.parent / "../02_核心概念/03_原语.ipynb"
+OUTPUT = Path(__file__).resolve().parent.parent / "02_核心概念/03_原语.ipynb"
+connect_local_service(nb)
 nbf.write(nb, OUTPUT)
 print(f"✅ 已生成 {OUTPUT.name}，共 {len(cells)} 个单元格")

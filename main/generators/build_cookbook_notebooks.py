@@ -9,6 +9,7 @@
 from pathlib import Path
 
 import nbformat as nbf
+from local_jev_support import connect_local_service
 
 
 ROOT = Path(__file__).resolve().parent.parent   # notebooks/
@@ -641,6 +642,7 @@ def main():
         nb.cells.insert(len(nb.cells) - 1, supp)  # 插在小结前
         out = out_dir / f"{CHAPTER4_NAMES[slug]}.ipynb"
         with open(out, "w", encoding="utf-8") as f:
+            connect_local_service(nb)
             nbf.write(nb, f)
         print(out.name)
 
