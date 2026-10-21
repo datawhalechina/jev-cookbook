@@ -28,6 +28,8 @@
 
 **兼容基线：DSH `0.1.5-rc.2`，Cordis `4.0.2`。** 开发和验收使用 Node.js 24。DSH 主分支的预设接口已有变化，本项目不宣称兼容 `0.1.7-alpha`。请先按锁文件运行，再考虑升级。
 
+`package.json` 的 `overrides` 同时固定锁文件中的 Cordis HMR `1.0.17` 和 timer `1.1.4`，避免 npm 重新解析 DSH 依赖树时选择锁文件之外的新插件版本，导致普通 `npm ci` 拒绝现有锁文件。安装无需启用 `legacy-peer-deps`。
+
 ## 1. 先运行不需要密钥的演示
 
 安装 Node.js 24 和 pnpm，在本项目目录执行：
