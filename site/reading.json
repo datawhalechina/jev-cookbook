@@ -299,5 +299,12 @@
     "title": "Jev 1.14.0 开「野区」",
     "group": "模型原理与训练",
     "summary": "多模态解锁、box 类型、262k 上下文与首次公开的内部评测。"
+  },
+  {
+    "directory": "43-hamel-decision-evals",
+    "slug": "43-hamel-decision-evals",
+    "title": "决策模型评测方法论",
+    "group": "评测与独立观察",
+    "summary": "阈值调优、精确率-召回率约束与概率校准的完整实测（Hamel Husain）。"
   }
 ]
