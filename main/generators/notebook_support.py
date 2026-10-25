@@ -62,10 +62,11 @@ class Chapter:
 - Python ≥ 3.10；本章使用 `typesafe-sdk==0.7.0`。
 - 真实实验需要启动进程的 `TYPESAFE_API_KEY` 环境变量，密钥不要写进 Notebook。
 
-在本仓库 `main/` 目录创建环境并打开本文件：
+从仓库根目录进入 `main/`，创建环境并打开本文件：
 
 ```bash
-./setup_env.sh
+cd main
+bash setup_env.sh
 .venv/bin/python -m pip install -r requirements.txt -c generators/constraints-foundations.txt
 .venv/bin/jupyter lab {FILENAMES.get(slug, slug + '_experiments')}.ipynb
 ```
@@ -75,7 +76,7 @@ class Chapter:
 正式验收设置 `JEV_RUN_MODE=live`（无密钥直接报错、不回退）；强制纯离线学习设置 `JEV_RUN_MODE=offline`。
 
 {PENDING_STATUS}
-批量执行、离线预览和验收记录见本目录 `MAINTENANCE.md`。
+批量执行、离线预览和验收记录见仓库中的 `main/MAINTENANCE.md`。
 """)
 
     def md(self, text):
